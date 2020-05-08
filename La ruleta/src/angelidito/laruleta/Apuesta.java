@@ -1,6 +1,7 @@
 package angelidito.laruleta;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import angelidito.escaner.Escaner;
 import angelidito.escaner.TipoEntero;
@@ -321,58 +322,82 @@ public class Apuesta {
 			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.parImpar[0] > 0)
+			if (this.parImpar[0] > 0) {
 				info += String.format("%d a pares. ", this.parImpar[0]);
+				totalAnotado += this.parImpar[0];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.parImpar[1] > 0)
+			if (this.parImpar[1] > 0) {
 				info += String.format("%d a impares. ", this.parImpar[1]);
+				totalAnotado += this.parImpar[1];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.rojoNegro[0] > 0)
+			if (this.rojoNegro[0] > 0) {
 				info += String.format("%d al rojo. ", this.rojoNegro[0]);
+				totalAnotado += this.rojoNegro[0];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.rojoNegro[1] > 0)
+			if (this.rojoNegro[1] > 0) {
 				info += String.format("%d al negro. ", this.rojoNegro[1]);
+				totalAnotado += this.rojoNegro[1];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.mitades[0] > 0)
+			if (this.mitades[0] > 0) {
 				info += String.format("%d a la primera mitad. ", this.mitades[0]);
+				totalAnotado += this.mitades[0];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.mitades[1] > 0)
+			if (this.mitades[1] > 0) {
 				info += String.format("%d a la segunda mitad. ", this.mitades[1]);
 
+			}
+
 		if (totalAnotado < this.totalApostado())
-			if (this.docenas[0] > 0)
+			if (this.docenas[0] > 0) {
 				info += String.format("%d a la primera docena. ", this.docenas[0]);
+				totalAnotado += this.docenas[0];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.docenas[1] > 0)
+			if (this.docenas[1] > 0) {
 				info += String.format("%d a la segunda docena. ", this.docenas[1]);
+				totalAnotado += this.docenas[1];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.docenas[2] > 0)
+			if (this.docenas[2] > 0) {
 				info += String.format("%d a la tercera docena. ", this.docenas[2]);
+				totalAnotado += this.docenas[2];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.modulos[1] > 0)
+			if (this.modulos[1] > 0) {
 				info += String.format("%d a la primera fila 2 a 1. ", this.modulos[1]);
+				totalAnotado += this.modulos[1];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.modulos[2] > 0)
+			if (this.modulos[2] > 0) {
 				info += String.format("%d a la segunda fila 2 a 1. ", this.modulos[2]);
+				totalAnotado += this.modulos[2];
+			}
 
 		if (totalAnotado < this.totalApostado())
-			if (this.modulos[0] > 0)
+			if (this.modulos[0] > 0) {
 				info += String.format("%d a la tercera fila 2 a 1. ", this.modulos[0]);
+				totalAnotado += this.modulos[0];
+			}
 
 		if (totalAnotado == 0)
 			info = "todavia no ha apostado nada.";
 
 		if (totalAnotado != this.totalApostado())
-			info = "ERROR DE CONTEO EN Apuesta.info()";
+			throw new RuntimeException("ERROR DE CONTEO EN Apuesta.info()");
 
 		return info;
 	}
@@ -385,10 +410,17 @@ public class Apuesta {
 	 * @return Toda la información de la apuesta.
 	 */
 	public String informacion() {
-		return "Apuesta: [\n\t     numeros=" + Arrays.toString(numeros) + "\n\t     parImpar="
+		int[] cantidades = new int[numeros.length];
+
+		for (int i = 0; i < cantidades.length; i++) {
+			cantidades[i] = numeros[i].getCantidadApostada();
+		}
+
+		String informacion = "Apuesta: [\n\t     numeros=" + Arrays.toString(cantidades) + "\n\t     parImpar="
 				+ Arrays.toString(parImpar) + "\n\t     rojoNegro=" + Arrays.toString(rojoNegro) + "\n\t     mitades="
 				+ Arrays.toString(mitades) + "\n\t     docenas=" + Arrays.toString(docenas) + "\n\t     modulos="
 				+ Arrays.toString(modulos) + "\n\t     ]";
+		return informacion;
 	}
 
 	// ****** Métodos para ajustar las apuestas ********
