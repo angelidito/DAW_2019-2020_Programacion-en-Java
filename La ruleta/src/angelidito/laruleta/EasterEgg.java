@@ -1,0 +1,33 @@
+package angelidito.laruleta;
+
+import java.util.Random;
+
+/**
+ * Nadie sabe lo que hace esta clase y ni falta que hace.
+ * 
+ * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
+ *
+ */
+public class EasterEgg {
+
+	public static void huevoDePascua(String nombreDelJugador) {
+		Random r = new Random();
+
+		String[] eggs = { "%s ha contraído una deduda lo pagará con sangre... O sea, sudor quiero decir.",
+				"A %s le acaban de partir las piernas.", "%s está apagado o fuera de cobertura.",
+				"El casino ha enviado a %s a un lugar mejor.", "El funeral de %s será  mañana a las 12:=00.",
+				"%s ya no está entre nosotros...", "%s ha sido acompañado a la salida. De la vida.",
+				"Parece que %s ha apostado el cuello. Y lo ha perdido...",
+				"Hoy es un buen día para morir, ¿verdad, %s?",
+				"Los perros del inferno han arrastrado a %s hasta sus llamas.",
+				"%s, esto se te ha ido de las manos.%nAhora tus manos se van a ir de ti.%s*sonido de cuchillo cortando hueso*",
+				"No debiste pedir prestado a la mafia, %s.", "Ahora %s tiene un dedo menos. En cada mano y pie.",
+				"La policia está investigando la desaparición de %s", "%s no vio venir que la deuda. Tampoco la bala.",
+				"Míralo por el lado bueno, %s, ahora puedes aparcar en minusvalidos.",
+				"Saludos de mi parte para San Pedro, %s.", "Deuda + casino + %s = paliza para %s. :D" };
+
+		System.err.printf(eggs[r.nextInt(eggs.length)], nombreDelJugador);
+		System.err.println();
+	}
+
+}
