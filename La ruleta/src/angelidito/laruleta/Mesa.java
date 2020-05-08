@@ -92,11 +92,9 @@ public class Mesa {
 	 */
 	private static void mostrarEstadisticas() {
 		// TODO
-		NumeroRuleta[] historico = Ruleta.getHistorico();
+		
 
-		for (int i = 0; i < historico.length; i++) {
-			System.out.println(historico[i]);
-		}
+		System.out.println(Ruleta.estadisticas());
 
 		System.out.println("");
 

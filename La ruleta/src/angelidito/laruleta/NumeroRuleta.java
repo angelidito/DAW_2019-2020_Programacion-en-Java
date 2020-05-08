@@ -1,7 +1,11 @@
 package angelidito.laruleta;
 
 public class NumeroRuleta extends NumeroTablero {
+	private static final long serialVersionUID = -6284727951773680634L;
 
+	/**
+	 * Ocurrencias del número {@code n}.
+	 */
 	private int ocurrencias = 0;
 
 	/**
@@ -18,6 +22,9 @@ public class NumeroRuleta extends NumeroTablero {
 		this.ocurrencias = ocurrencias;
 	}
 
+	/**
+	 * Añadie una ocurrencia al número.
+	 */
 	public void añadirOcurrencia() {
 		ocurrencias++;
 
@@ -31,11 +38,13 @@ public class NumeroRuleta extends NumeroTablero {
 	public NumeroRuleta(int numero, int ocurrencias) {
 		super(numero);
 		this.ocurrencias = ocurrencias;
+
 	}
 
 	@Override
 	public String toString() {
-		return "Nº" + getN() + ": " + ocurrencias + " ocurrencias";
+		String str = String.format("Nº%d: %d ocurrencias", this.getN(), this.ocurrencias);
+		return str;
 	}
 
 }

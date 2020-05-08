@@ -28,14 +28,27 @@ public class Ruleta {
 	private static NumeroRuleta[] historico;
 
 	/**
+	 * No implementado: TODO top diez numeros mas probables
+	 */
+	@SuppressWarnings("unused")
+	private static NumeroRuleta[] topTen;
+
+	private static int totalTiradas = 0;
+
+	/**
 	 * Objeto con el que se generán los números.
 	 */
 	private static Random random;
 
 	static {
+		random = new Random();
 		historico = new NumeroRuleta[37];
 		recuperarHistorico();
-		random = new Random();
+		topTen = new NumeroRuleta[10];
+
+		for (NumeroRuleta numero : historico)
+			totalTiradas += numero.getOcurrencias();
+
 	}
 
 	/**
@@ -49,22 +62,22 @@ public class Ruleta {
 	}
 
 	/**
-	 * Fija las ocurrencias del histórico a partir del vector dado. Si no tiene el tamaño deseado las 
-	 * inicializa a 0. Si algun valor es negativo se toma como 0.
+	 * Fija las ocurrencias del histórico a partir del vector dado. Si no tiene el
+	 * tamaño deseado las inicializa a 0. Si algun valor es negativo se toma como 0.
 	 * 
 	 * @param ocurrencias Vector con ocurrencias de cada número.
 	 */
 	private static void setHistorico(Integer[] ocurrencias) {
 		if (Ruleta.historico.length != ocurrencias.length)
 			for (int i = 0; i < Ruleta.historico.length; i++)
-				Ruleta.historico[i]= new NumeroRuleta(i);
+				Ruleta.historico[i] = new NumeroRuleta(i);
 		else
 			for (int i = 0; i < Ruleta.historico.length; i++)
-				if(ocurrencias[i] < 0)
-					Ruleta.historico[i]= new NumeroRuleta(i, ocurrencias[i]);
+				if (ocurrencias[i] < 0)
+					Ruleta.historico[i] = new NumeroRuleta(i, ocurrencias[i]);
 				else
-					Ruleta.historico[i]= new NumeroRuleta(i);
-				
+					Ruleta.historico[i] = new NumeroRuleta(i);
+
 	}
 
 	// tirar seguidas? quizá eso sea mejor en Crupier Y AHORRAMOS LIOS
@@ -74,16 +87,26 @@ public class Ruleta {
 	 * 
 	 * @return Un número al alzar entre 0 y 36, incluidos.
 	 */
-	public int girar() {
+	public int tirar() {
 
-		ultimoNumero = random.nextInt(37);
+		this.ultimoNumero = Ruleta.random.nextInt(37);
 
-		historico[ultimoNumero].añadirOcurrencia();
+		Ruleta.historico[ultimoNumero].añadirOcurrencia();
+		++Ruleta.totalTiradas;
 
 		return ultimoNumero;
 	}
 
+	public static String estadisticas() {
 
+		String estadisticas = "";
+		for (NumeroRuleta numero : historico) {
+			estadisticas += String.format("Nº%d: %d ocurrencias; %e‰.%n", numero.getN(), numero.getOcurrencias(),
+					(double) numero.getOcurrencias() * 1000 / Ruleta.totalTiradas);
+		}
+
+		return estadisticas;
+	}
 
 	/**
 	 * Devuelve el historial de ocurrencias.
@@ -95,25 +118,26 @@ public class Ruleta {
 	}
 
 	/**
-	 * Crea la Ruleta y restaura el historial de números. Restaura el histórico si
-	 * existe el fichero que guarda sus datos.
+	 * Devuelve el total de tiradas.
+	 * 
+	 * @return El total de tiradas.
 	 */
-	public Ruleta() {
-
-		this.ultimoNumero = -1;
-
+	public static int getTotalTiradas() {
+		return totalTiradas;
 	}
 
 	/**
-	 * Guarda el historico en un CSV.
+	 * Guarda el historico en un CSV. Guarda en orden las ocurrencias de cada nº. La
+	 * primera fila será 37 (el nº de filas que vendrán despues), las siguientes
+	 * contendrán las ocurrencias.
 	 */
 	public static void guardarHisorico() {
 
 		String nombreFichero = "historico.csv";
-		
+
 		Integer[] ocurrencias = new Integer[Ruleta.historico.length];
 		for (int i = 0; i < ocurrencias.length; i++) {
-			ocurrencias[i]= Ruleta.historico[i].getOcurrencias();
+			ocurrencias[i] = Ruleta.historico[i].getOcurrencias();
 		}
 
 		List<Integer> listaHistorico = Arrays.asList(ocurrencias);
@@ -122,8 +146,18 @@ public class Ruleta {
 
 	}
 
+	/**
+	 * Crea la Ruleta y restaura el historial de números. Restaura el histórico si
+	 * existe el fichero que guarda sus datos.
+	 */
+	public Ruleta() {
+
+		this.ultimoNumero = 0;
+
+	}
+
 	// Cambio de planes. Codigo CADUCADO. en vez de todo en una linea,
-	// irá cada cada elemento de historico en una fila.
+	// irá cada cada ocurrencia de historico en una fila.
 //	/**
 //	 * Devuelve en formato CSV el histórico de la ruleta.
 //	 * 
