@@ -87,7 +87,7 @@ public class Ruleta {
 	 * 
 	 * @return Un número al alzar entre 0 y 36, incluidos.
 	 */
-	public int tirar() {
+	public int lanzar() {
 
 		this.ultimoNumero = Ruleta.random.nextInt(37);
 
@@ -115,6 +115,12 @@ public class Ruleta {
 	 */
 	public static NumeroRuleta[] getHistorico() {
 		return historico;
+	}
+
+	public NumeroRuleta getNumeroRuleta(int n) {
+
+		return Ruleta.historico[n];
+
 	}
 
 	/**

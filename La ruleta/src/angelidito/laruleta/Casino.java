@@ -1,5 +1,7 @@
 package angelidito.laruleta;
 
+import java.util.ArrayList;
+
 import angelidito.escaner.Escaner;
 import angelidito.laruleta.gestion.GestionCSV;
 
@@ -12,11 +14,25 @@ public class Casino {
 
 	public static void main(String[] args) {
 
-		Crupier crupier = new Crupier(new ListaJugadores());
+		ArrayList<Crupier> crupiers = new ArrayList<Crupier>();
+		// TODO: para un futuro se podria arreglar esta clase para que mejase distintos
+		// crupiers. Por el momento en el array list solo habrá 1.
+		/*
+		 * Habria que contar los archivos que hay que se llamen jugadoresEnMesaXX.csv,
+		 * siendo XX el id de la lista de jugadores.
+		 * 
+		 * Después habrá que añadir la opción de si jugar con un crupier o con todos a
+		 * la vez. Para lo cual vendría genial la concurrencia.
+		 * 
+		 * Debería añadirse otro menú para añadir crupiers, que contendría el menú de
+		 * las listas de jugadores. Cada crupier el suyo, está claro.
+		 */
+		crupiers.add(new Crupier(new ListaJugadores()));
 
-		System.out.println("Bienvenido al casino");
+		System.out.println("Bienvenido al casino Ruleta Afortunada");
 
 		System.out.println("");
+
 		int opcion;
 		do {
 
@@ -34,7 +50,7 @@ public class Casino {
 
 			case 2:
 				// Lista de jugadores
-				crupier.getJugadores().menu();
+				crupiers.get(0).getJugadores().menu();
 				break;
 
 			case 3:
@@ -55,7 +71,7 @@ public class Casino {
 
 		} while (opcion != 0);
 
-		guardarDatos(crupier.getJugadores());
+		guardarDatos(crupiers.get(0).getJugadores());
 	}
 
 	/**
@@ -91,7 +107,7 @@ public class Casino {
 	 * Muestra las estadísticas del historial de ocurrencias.
 	 */
 	private static void mostrarEstadisticas() {
-		// TODO
+		// TODO Por el momento está, pero queda soso.
 
 		System.out.println(Ruleta.estadisticas());
 

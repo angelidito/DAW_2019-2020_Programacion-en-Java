@@ -130,6 +130,7 @@ public class ListaJugadores {
 			System.out.println("2 - Añadir nuevos jugadores");
 			System.out.println("3 - Retirar jugadores");
 			System.out.println("4 - Editar jugadores");
+			System.out.println("9 - RAW info.");
 			System.out.println("0 - Volver atrás");
 			System.out.println("");
 
@@ -154,6 +155,11 @@ public class ListaJugadores {
 				this.menuEditarJugador();
 				break;
 
+			case 9:
+				for (Jugador jugador : jugadoresEnMesa) {
+					System.out.println(jugador.info() + "\n" + jugador.getApuesta().informacion());
+				}
+				break;
 			case 0:
 				// NO TIENE QUE HACER NADA
 				break;
@@ -347,9 +353,9 @@ public class ListaJugadores {
 	}
 
 	/**
-	 * NO IMPLEMENTADO: Comprueba si hay que retirar al jugador. Si es así lo retira. Esto sucede
-	 * cuando no le queda crédito, ha alcanzado el credito objetivo o ha superado
-	 * las rondas máximas.
+	 * NO IMPLEMENTADO: Comprueba si hay que retirar al jugador. Si es así lo
+	 * retira. Esto sucede cuando no le queda crédito, ha alcanzado el credito
+	 * objetivo o ha superado las rondas máximas.
 	 * 
 	 * @param jugadorParaComprobar
 	 */
@@ -365,19 +371,19 @@ public class ListaJugadores {
 		System.out.println("");
 	}
 
-	private void retirarJugador(Jugador jugadorParaRetirar) {
+	public void retirarJugador(Jugador jugadorParaRetirar) {
 
 		boolean retirado = false;
 
 		for (int i = 0; i < this.jugadoresEnMesa.size() && !retirado; i++) {
 			if (this.jugadoresEnMesa.get(i).getId() == jugadorParaRetirar.getId()) {
-				
+
 				ListaJugadores.jugadoresRetirados.add(jugadorParaRetirar);
-				
+
 				this.jugadoresEnMesa.remove(i);
-				
+
 				retirado = true;
-				
+
 			}
 		}
 		if (retirado)
