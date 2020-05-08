@@ -347,7 +347,7 @@ public class ListaJugadores {
 	}
 
 	/**
-	 * Comprueba si hay que retirar al jugador. Si es así lo retira. Esto sucede
+	 * NO IMPLEMENTADO: Comprueba si hay que retirar al jugador. Si es así lo retira. Esto sucede
 	 * cuando no le queda crédito, ha alcanzado el credito objetivo o ha superado
 	 * las rondas máximas.
 	 * 
