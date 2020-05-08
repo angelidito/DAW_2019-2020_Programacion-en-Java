@@ -8,11 +8,11 @@ import angelidito.laruleta.gestion.GestionCSV;
  * 
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  */
-public class Mesa {
+public class Casino {
 
 	public static void main(String[] args) {
 
-		ListaJugadores listaJugadores = new ListaJugadores();
+		Crupier crupier = new Crupier(new ListaJugadores());
 
 		System.out.println("Bienvenido al casino");
 
@@ -34,7 +34,7 @@ public class Mesa {
 
 			case 2:
 				// Lista de jugadores
-				listaJugadores.menu();
+				crupier.getJugadores().menu();
 				break;
 
 			case 3:
@@ -55,7 +55,7 @@ public class Mesa {
 
 		} while (opcion != 0);
 
-		guardarDatos(listaJugadores);
+		guardarDatos(crupier.getJugadores());
 	}
 
 	/**
@@ -92,7 +92,6 @@ public class Mesa {
 	 */
 	private static void mostrarEstadisticas() {
 		// TODO
-		
 
 		System.out.println(Ruleta.estadisticas());
 
