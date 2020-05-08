@@ -387,8 +387,10 @@ public class ListaJugadores {
 			}
 		}
 		if (retirado) {
-			System.out.println("Jugador retirado.");
-			EasterEgg.huevoDePascua();
+			if (jugadorParaRetirar.getCredito() < 0)
+				EasterEgg.huevoDePascua(jugadorParaRetirar.getNombre());
+			else
+				System.out.println("Jugador retirado.");
 		} else {
 			System.err.println("No se ha podido retirar al jugador.");
 		}

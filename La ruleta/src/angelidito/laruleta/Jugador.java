@@ -247,6 +247,13 @@ public class Jugador {
 	}
 
 	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
 	 * Cambia el nombre del Jugador.
 	 * 
 	 * @param nombre el nombre a fijar.
