@@ -386,10 +386,12 @@ public class ListaJugadores {
 
 			}
 		}
-		if (retirado)
+		if (retirado) {
 			System.out.println("Jugador retirado.");
-		else
+			EasterEgg.huevoDePascua();
+		} else {
 			System.err.println("No se ha podido retirar al jugador.");
+		}
 	}
 
 	/**
