@@ -353,25 +353,30 @@ public class ListaJugadores {
 	}
 
 	/**
-	 * NO IMPLEMENTADO: Comprueba si hay que retirar al jugador. Si es así lo
-	 * retira. Esto sucede cuando no le queda crédito, ha alcanzado el credito
-	 * objetivo o ha superado las rondas máximas.
+	 * Comprueba si hay que retirar al jugador. Esto es cuando no le queda crédito,
+	 * ha alcanzado el credito objetivo o ha superado las rondas máximas.
 	 * 
-	 * @param jugadorParaComprobar
+	 * @param jugadorParaComprobar jugador qu ehay que comprobar la retirada
+	 * @return {@code true} si hay que retirarlo; {@code false} si no.
 	 */
-	private void comprobarRetidadaJugador(Jugador jugadorParaComprobar) {
-		// TODO Auto-generated method stub
+	public boolean comprobarRetidadaJugador(Jugador jugadorParaComprobar) {
+		boolean hayQue = false;
 
-		System.out.println("ListaJugadores.comprobarRetidadaJugador(Jugador)");
-		System.out.println("No implementado todavia");
-		System.out.println("No implementado todavia");
-		System.out.println("No implementado todavia");
-		System.out.println("No implementado todavia");
-		System.out.println("");
-		System.out.println("");
+		if (jugadorParaComprobar.getCredito() < 1
+				|| jugadorParaComprobar.getCreditoObjetivo() <= jugadorParaComprobar.getCredito()
+				|| jugadorParaComprobar.getRondas() >= jugadorParaComprobar.getRondasMaximas())
+			hayQue = true;
+
+		return hayQue;
 	}
 
-	public void retirarJugador(Jugador jugadorParaRetirar) {
+	/**
+	 * Retira a un jugador. Lo quita de jugadores en mesa y lo pasa a jugadores
+	 * retirados.
+	 * 
+	 * @param jugadorParaRetirar jugador a retirar.
+	 */
+	private void retirarJugador(Jugador jugadorParaRetirar) {
 
 		boolean retirado = false;
 
@@ -394,6 +399,7 @@ public class ListaJugadores {
 		} else {
 			System.err.println("No se ha podido retirar al jugador.");
 		}
+
 	}
 
 	/**
