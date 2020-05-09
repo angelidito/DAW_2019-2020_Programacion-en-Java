@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import angelidito.laruleta.Jugador;
-import angelidito.laruleta.excepciones.*;
 
 /**
  * Clase que gestiona los archivos con extensión CSV. Los escribe y lee cuando

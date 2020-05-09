@@ -101,8 +101,8 @@ public class Ruleta {
 
 		String estadisticas = "";
 		for (NumeroRuleta numero : historico) {
-			estadisticas += String.format("Nº%d: %d ocurrencias; %e‰.%n", numero.getN(), numero.getOcurrencias(),
-					(double) numero.getOcurrencias() * 1000 / Ruleta.totalTiradas);
+			estadisticas += String.format("Nº%d: %d ocurrencias; %.4f‰.%n", numero.getN(), numero.getOcurrencias(),
+					(float) numero.getOcurrencias() * 1000 / Ruleta.totalTiradas);
 		}
 
 		return estadisticas;

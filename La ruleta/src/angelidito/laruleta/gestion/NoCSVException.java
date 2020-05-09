@@ -1,4 +1,4 @@
-package angelidito.laruleta.excepciones;
+package angelidito.laruleta.gestion;
 
 /**
  * Excepción lanzable cuando no se encuentra un archivoCSV. Esto lo hacen las

@@ -1,4 +1,4 @@
-package angelidito.laruleta.excepciones;
+package angelidito.laruleta.gestion;
 
 /**
  * Excepcion lanzable cuando la cantidad de campo del CSV es incorrecta. Esto se

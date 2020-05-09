@@ -12,6 +12,17 @@ import angelidito.laruleta.gestion.GestionCSV;
  */
 public class Casino {
 
+	private static int ganancias = 0;
+
+	/**
+	 * Suma una cantidad a las ganancias.
+	 * 
+	 * @param cantidad Cantidad a sumar
+	 */
+	public static void ganado(int cantidad) {
+		Casino.ganancias += cantidad;
+	}
+
 	public static void main(String[] args) {
 
 		ArrayList<Crupier> crupiers = new ArrayList<Crupier>();
@@ -45,7 +56,7 @@ public class Casino {
 			switch (opcion) {
 
 			case 1:
-				jugar();
+				jugar(crupiers);
 				break;
 
 			case 2:
@@ -72,6 +83,7 @@ public class Casino {
 		} while (opcion != 0);
 
 		guardarDatos(crupiers.get(0).getJugadores());
+
 	}
 
 	/**
@@ -81,7 +93,7 @@ public class Casino {
 	private static void mostrarMenu() {
 
 		System.out.println("¡ESTO ES LA RULETA!");
-//		System.out.println("");
+		System.out.println("");
 		System.out.println("  Escoja una opción:");
 		System.out.println("1 - ¡Juguemos!");
 		System.out.println("2 - Lista de jugadores");
@@ -92,15 +104,16 @@ public class Casino {
 
 	}
 
-	private static void jugar() {
-		// TODO Auto-generated method stub
-		System.out.println("Mesa.Jugar()");
-		System.out.println("No implementado todavia");
-		System.out.println("No implementado todavia");
-		System.out.println("No implementado todavia");
-		System.out.println("No implementado todavia");
-		System.out.println("");
-		System.out.println("");
+	/**
+	 * De entre todos los crupiers da uno a elegir y pregunta cuantos lanzamientos
+	 * hacer. Ahora que sólo hay uno, no da a elegir crupier.
+	 * 
+	 * @param crupiers
+	 */
+	private static void jugar(ArrayList<Crupier> crupiers) {
+
+		crupiers.get(0).preguntarNumeroLanzamientos();
+
 	}
 
 	/**
@@ -111,6 +124,9 @@ public class Casino {
 
 		System.out.println(Ruleta.estadisticas());
 
+		System.out.println("");
+
+		System.out.printf("Hoy la casa ha ganado %d créditos.%n", Casino.ganancias);
 		System.out.println("");
 
 		System.out.println("");
@@ -128,6 +144,9 @@ public class Casino {
 
 		} else
 			System.out.println("Borrado no realizado.");
+		
+		System.out.println("");
+		System.out.println("");
 
 	}
 

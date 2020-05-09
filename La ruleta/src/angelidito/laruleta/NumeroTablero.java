@@ -33,10 +33,10 @@ public class NumeroTablero extends Number implements Comparable<NumeroTablero> {
 	 */
 	private int mitad;
 	/**
-	 * -1, 0, 1 o 2, para el cero, la primera, segunda o tercera decena,
+	 * -1, 0, 1 o 2, para el cero, la primera, segunda o tercera docena,
 	 * respectivamente.
 	 */
-	private int decena;
+	private int docena;
 	/**
 	 * -1, 0, 1 o 2, para el cero, la fila del 1, del 2 y del 3, respectivamente.
 	 */
@@ -58,7 +58,7 @@ public class NumeroTablero extends Number implements Comparable<NumeroTablero> {
 			paridad = -1;
 			color = -1;
 			mitad = -1;
-			decena = -1;
+			docena = -1;
 			fila = -1;
 		}
 
@@ -78,11 +78,11 @@ public class NumeroTablero extends Number implements Comparable<NumeroTablero> {
 				mitad = 2;
 
 			if (n < 13)
-				decena = 1;
+				docena = 1;
 			else if (n < 25)
-				decena = 2;
+				docena = 2;
 			else
-				decena = 3;
+				docena = 3;
 
 			if (n % 3 == 1)
 				fila = 1;
@@ -122,15 +122,15 @@ public class NumeroTablero extends Number implements Comparable<NumeroTablero> {
 	}
 
 	/**
-	 * @return 0, 1 o 2, para la primera, segunda o tercera decena,
+	 * @return 0, 1 o 2, para la primera, segunda o tercera docena,
 	 *         respectivamente; -1 si cero.
 	 */
-	public int getDecena() {
-		return decena;
+	public int getDocena() {
+		return docena;
 	}
 
 	/**
-	 * @return 0, 1 o 2, para la fila del 1, del 2 y del 3,
+	 * @return 0, 1 o 2, para la fila del 3, del 1 y del 2,
 	 *         respectivamente; -1 si cero.
 	 */
 	public int getFila() {

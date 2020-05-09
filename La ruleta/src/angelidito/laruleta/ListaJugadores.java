@@ -157,7 +157,7 @@ public class ListaJugadores {
 
 			case 9:
 				for (Jugador jugador : jugadoresEnMesa) {
-					System.out.println(jugador.info() + "\n" + jugador.getApuesta().informacion());
+					System.out.println(jugador.informacion());
 				}
 				break;
 			case 0:
@@ -283,8 +283,12 @@ public class ListaJugadores {
 
 		System.out.print("  ¿Desea añadirle ahora la apuesta? ");
 		// TODO quizá mas adelante ofrecer copiar la apuesta a otro jugador.
-		if (Escaner.yesNoQuestionRecursivo())
+		if (Escaner.yesNoQuestionRecursivo()) {
+			System.out.println();
+			System.out.println();
+			System.out.println();
 			jugador.menuEditarApuesta();
+		}
 
 		return jugador;
 	}
@@ -304,15 +308,15 @@ public class ListaJugadores {
 
 		do {
 
-			System.out.printf("Ha slecionado a %s.%n", jugadorParaEditar.info());
+			System.out.printf("Ha slecionado a %s%n%n", jugadorParaEditar.info());
 
 			System.out.println("  Escoja una opción:");
-			System.out.println("1 - Cambiar nombre.");
-			System.out.println("2 - Variar crédito.");
-			System.out.println("3 - Cambiar crédito objetivo.");
-			System.out.println("4 - Cambiar rondas máximas.");
-			System.out.println("5 - Cambiar apuesta.");
-			System.out.println("0 - Volver atrás.");
+			System.out.println("1 - Cambiar nombre");
+			System.out.println("2 - Variar crédito");
+			System.out.println("3 - Cambiar crédito objetivo");
+			System.out.println("4 - Cambiar rondas máximas");
+			System.out.println("5 - Cambiar apuesta");
+			System.out.println("0 - Volver atrás");
 			System.out.println("");
 
 			opcion = Escaner.entero();
@@ -376,7 +380,7 @@ public class ListaJugadores {
 	 * 
 	 * @param jugadorParaRetirar jugador a retirar.
 	 */
-	private void retirarJugador(Jugador jugadorParaRetirar) {
+	public void retirarJugador(Jugador jugadorParaRetirar) {
 
 		boolean retirado = false;
 

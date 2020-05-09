@@ -1,7 +1,6 @@
 package angelidito.laruleta;
 
 import angelidito.escaner.Escaner;
-import angelidito.escaner.TipoEntero;
 
 /**
  * Es la clase encargada de manejar la ruleta y a los jugadors, así como
@@ -59,15 +58,9 @@ public class Crupier {
 	}
 
 	/**
-	 * Realiza una tirada en la ruleta y cobra o paga a los jugadores. Devuelve una
-	 * cantidad entera que representa el crédito que ha perdido la banca, si es
-	 * negativo es que lo ha ganado.
-	 * 
-	 * @return Crédito que ha perdido la banca, si es negatico es que lo gana.
+	 * TODO
 	 */
-	public int lanzar() {
-		int perdidasBanca = 0;
-		int n;
+	public void preguntarNumeroLanzamientos() {
 		int lanzamientos = 1;
 		int opcion = 0;
 
@@ -86,28 +79,52 @@ public class Crupier {
 			System.out.println();
 		}
 
-		for (int i = 0; i < lanzamientos; i++) {
+		int gananciasBanca = lanzar(lanzamientos);
 
-			n = ruleta.lanzar();
-			NumeroRuleta numero = ruleta.getNumeroRuleta(n);
+		Casino.ganado(gananciasBanca);
+		
+	}
 
-			if (numero.getN() != n)
-				throw new RuntimeException("Esto no deberia haber pasado nunca.\n"
-						+ "Hay un error en Ruleta.java al crear el array de NumeroRuleta.\n"
-						+ "El índice de la posición no coincide con la N del NumeroRuleta.");
+	/**
+	 * Realiza lanzamientos en la ruleta y cobra o paga a los jugadores. Devuelve
+	 * una cantidad entera que representa el crédito que ha ganado la banca.
+	 * 
+	 * @param lanzamientos Lanzamientos a realizar.
+	 * 
+	 * @return Crédito que ha ganado la banca.
+	 */
+	private int lanzar(int lanzamientos) {
+		int gananciasBanca = 0;
 
-			// Aquí cobramos o pagamos a los jugadores
-			// Se cumple que: numero.getN() == n
-			for (Jugador jugador : listaJugadores.getJugadoresEnMesa()) {
-				if (numero.getN() == 0)
-					perdidasBanca -= this.ganaLaBanca(jugador);
-				else
-					perdidasBanca += administrarJugador(jugador, numero);
-			}
+		gananciasBanca = lanzarRecursivo(lanzamientos, gananciasBanca);
 
+		return gananciasBanca;
+
+	}
+	
+	private int lanzarRecursivo(int lanzamientos, int gananciasBanca) {
+		int n;
+		n = ruleta.lanzar();
+		NumeroRuleta numero = ruleta.getNumeroRuleta(n);
+
+		if (numero.getN() != n)
+			throw new BadProgramingRTException("Esto no deberia haber pasado nunca.\n"
+					+ "Hay un error en Ruleta.java al crear el array de NumeroRuleta.\n"
+					+ "El índice de la posición no coincide con la N del NumeroRuleta.");
+
+		// Aquí cobramos o pagamos a los jugadores
+		// Se cumple que: numero.getN() == n
+		for (Jugador jugador : listaJugadores.getJugadoresEnMesa()) {
+			if (numero.getN() == 0)
+				gananciasBanca += this.ganaLaBanca(jugador);
+			else
+				gananciasBanca += this.administrarJugador(jugador, numero);
 		}
 
-		return perdidasBanca;
+		if (lanzamientos == 1)
+			return gananciasBanca;
+		else
+			return lanzarRecursivo((--lanzamientos), gananciasBanca);
 
 	}
 
@@ -117,17 +134,18 @@ public class Crupier {
 	 * 
 	 * @param jugador Jugador al que hay que administrar.
 	 * 
-	 * @return el dinero que ha ganado la banca del jugador.
+	 * @return El dinero que ha ganado la banca del jugador.
 	 */
 	private int ganaLaBanca(Jugador jugador) {
 
-		int totalPerdido = (-1) * jugador.totalApostado();
+		int gananciasBanca = jugador.totalApostado();
 
-		jugador.variarCredito(totalPerdido);
+		jugador.variarCredito(-gananciasBanca);
 
-		listaJugadores.retirarJugador(jugador);
+		if (listaJugadores.comprobarRetidadaJugador(jugador))
+			listaJugadores.retirarJugador(jugador);
 
-		return totalPerdido;
+		return gananciasBanca;
 
 	}
 
@@ -137,37 +155,25 @@ public class Crupier {
 	 * 
 	 * @param jugador Jugador al que hay que administrar.
 	 * @param num     Número que ha salido en la ruleta.
-	 * @return el dinero que ha ganado la banca del jugador.
+	 * 
+	 * @return El dinero que ha ganado la banca del jugador.
 	 */
-	public int administrarJugador(Jugador jugador, NumeroRuleta num) {
+	private int administrarJugador(Jugador jugador, NumeroRuleta num) {
 		Apuesta apuesta = jugador.getApuesta();
 		int totalApostado = apuesta.totalApostado();
-		// variable auxiliar par ano hacer operaciones innecesarias
+		// variable auxiliar para evitar operaciones innecesarias
 		int totalAnotado = 0;
-		int balanceJugador;
 		int ganado = 0;
 		int perdido = 0;
+		int balance;
 		// variable auxiliar
 		int cantidadApostada;
-
-		for (NumeroApuesta numeroApostado : apuesta.getNumeros()) {
-			cantidadApostada = numeroApostado.getCantidadApostada();
-			if (cantidadApostada > 0) {
-
-				totalAnotado += cantidadApostada;
-
-				if (num.compareTo(numeroApostado) == 0)
-					ganado += cantidadApostada * 35;
-				else
-					perdido += cantidadApostada;
-
-			}
-		}
 
 		for (int i = 0; i < apuesta.getRojoNegro().length; i++) {
 			if (totalAnotado < totalApostado) {
 				cantidadApostada = apuesta.getRojoNegro()[i];
 				if (cantidadApostada > 0) {
+					totalAnotado += cantidadApostada;
 					if (num.getColor() == i)
 						ganado += cantidadApostada;
 					else
@@ -180,6 +186,7 @@ public class Crupier {
 			if (totalAnotado < totalApostado) {
 				cantidadApostada = apuesta.getParImpar()[i];
 				if (cantidadApostada > 0) {
+					totalAnotado += cantidadApostada;
 					if (num.getParidad() == i)
 						ganado += cantidadApostada;
 					else
@@ -187,86 +194,66 @@ public class Crupier {
 				}
 			}
 		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getParImpar()[1] > 0) {
-//				String.format("%d a impares. ", jugador.getApuesta().getParImpar()[1]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getRojoNegro()[0] > 0) {
-//				String.format("%d al rojo. ", jugador.getApuesta().getRojoNegro()[0]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getRojoNegro()[1] > 0) {
-//				String.format("%d al negro. ", jugador.getApuesta().getRojoNegro()[1]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getMitades()[0] > 0) {
-//				String.format("%d a la primera mitad. ", jugador.getApuesta().getMitades()[0]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getMitades()[1] > 0) {
-//				String.format("%d a la segunda mitad. ", jugador.getApuesta().getMitades()[1]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getDocenas()[0] > 0) {
-//				String.format("%d a la primera docena. ", jugador.getApuesta().getDocenas()[0]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getDocenas()[1] > 0) {
-//				String.format("%d a la segunda docena. ", jugador.getApuesta().getDocenas()[1]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getDocenas()[2] > 0) {
-//				String.format("%d a la tercera docena. ", jugador.getApuesta().getDocenas()[2]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getModulos()[1] > 0) {
-//				String.format("%d a la primera fila 2 a 1. ", jugador.getApuesta().getModulos()[1]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getModulos()[2] > 0) {
-//				String.format("%d a la segunda fila 2 a 1. ", jugador.getApuesta().getModulos()[2]);
-//
-//			}
-//		}
-//		if (totalAnotado < totalApostado) {
-//			cantidadApostada = 0;
-//			if (jugador.getApuesta().getModulos()[0] > 0) {
-//				String.format("%d a la tercera fila 2 a 1. ", jugador.getApuesta().getModulos()[0]);
-//			}
-//		}
 
-		balanceJugador = ganado - perdido;
+		for (int i = 0; i < apuesta.getModulos().length; i++) {
+			if (totalAnotado < totalApostado) {
+				cantidadApostada = apuesta.getModulos()[i];
+				if (cantidadApostada > 0) {
+					totalAnotado += cantidadApostada;
+					if (num.getFila() == i)
+						ganado += cantidadApostada;
+					else
+						perdido += cantidadApostada;
+				}
+			}
+		}
 
-		return balanceJugador;
+		for (int i = 0; i < apuesta.getMitades().length; i++) {
+			if (totalAnotado < totalApostado) {
+				cantidadApostada = apuesta.getMitades()[i];
+				if (cantidadApostada > 0) {
+					totalAnotado += cantidadApostada;
+					if (num.getMitad() == i)
+						ganado += cantidadApostada;
+					else
+						perdido += cantidadApostada;
+				}
+			}
+		}
+
+		for (int i = 0; i < apuesta.getDocenas().length; i++) {
+			if (totalAnotado < totalApostado) {
+				cantidadApostada = apuesta.getDocenas()[i];
+				if (cantidadApostada > 0) {
+					totalAnotado += cantidadApostada;
+					if (num.getDocena() == i)
+						ganado += cantidadApostada;
+					else
+						perdido += cantidadApostada;
+				}
+			}
+		}
+
+		for (NumeroApuesta numeroApostado : apuesta.getNumeros()) {
+			if (totalAnotado < totalApostado) {
+				cantidadApostada = numeroApostado.getCantidadApostada();
+				if (cantidadApostada > 0) {
+					totalAnotado += cantidadApostada;
+					if (num.compareTo(numeroApostado) == 0)
+						ganado += cantidadApostada * 35;
+					else
+						perdido += cantidadApostada;
+				}
+			}
+		}
+
+		balance = ganado - perdido;
+
+		jugador.variarCredito(balance);
+		if (listaJugadores.comprobarRetidadaJugador(jugador))
+			listaJugadores.retirarJugador(jugador);
+
+		return -balance;
 	}
 
 }

@@ -1,10 +1,10 @@
 package angelidito.laruleta;
 
 import angelidito.escaner.Escaner;
-import angelidito.laruleta.excepciones.BadCSVException;
-import angelidito.laruleta.excepciones.CantidadCamposCSVException;
-import angelidito.laruleta.excepciones.ContenidoCorruptoCSVException;
-import angelidito.laruleta.excepciones.ContenidoNullCSVException;
+import angelidito.laruleta.gestion.BadCSVException;
+import angelidito.laruleta.gestion.CantidadCamposCSVException;
+import angelidito.laruleta.gestion.ContenidoCorruptoCSVException;
+import angelidito.laruleta.gestion.ContenidoNullCSVException;
 
 /**
  * 
@@ -367,7 +367,7 @@ public class Jugador {
 	public void setApuesta(Apuesta apuesta) {
 
 		if (apuesta.totalApostado() > credito)
-			throw new RuntimeException();
+			throw new BadProgramingRTException();
 
 		this.apuesta = apuesta;
 	}
@@ -417,7 +417,7 @@ public class Jugador {
 
 		String apuesta = "sin apuestas.";
 		if (this.totalApostado() > 0)
-			apuesta = String.format("total apostado: %d; apuestas: [ %s ]", this.totalApostado(), this.apuesta.info());
+			apuesta = String.format("total apostado: %d; apuestas: [ %s]", this.totalApostado(), this.apuesta.info());
 
 		jugador = String.format("%s, crédito: %d; %s", this.nombre, this.credito, apuesta);
 		return jugador;
@@ -446,7 +446,8 @@ public class Jugador {
 //						+ "***    Ganado:    %d%n" 
 //						+ "***    Perdido:   %d%n" 
 //						+ "***    Balance:   %d%n"
-//						+ "*** Apuesta: información no disponible%n" 
+//						+ "*** Apuesta: %s%n" 
+//						+ "***   %s%n" 
 //						+ "****************************************%n"
 //						+ "****************************************%n",
 		jugador = String.format(
@@ -454,10 +455,10 @@ public class Jugador {
 						+ "*** Jugador: %s%n" + "*** Rondas%n" + "***    Máximas:   %d%n" + "***    Actual:    %d%n"
 						+ "***    Restantes: %d%n" + "*** Crédito%n" + "***    Actual:    %d%n"
 						+ "***    Objetivo:  %d%n" + "***    Ganado:    %d%n" + "***    Perdido:   %d%n"
-						+ "***    Balance:   %d%n" + "*** Apuesta: información no disponible%n"
+						+ "***    Balance:   %d%n" + "*** Apuesta: %n" + "%s%n"
 						+ "****************************************%n" + "****************************************%n",
 				nombre, rondasMaximas, rondas, rondasMaximas - rondas, credito, creditoObjetivo, ganado, perdido,
-				getBalance());
+				getBalance(), apuesta.informacion());
 		return jugador;
 	}
 
@@ -568,7 +569,7 @@ public class Jugador {
 	public void menuEditarApuesta() {
 		int op;
 		do {
-			System.out.printf("Apuesta: %s%n", this.getApuesta().info());
+			System.out.printf("Apuesta: %s%n%n", this.getApuesta().info());
 			System.out.println("¿Qué parte desea editar de la apuesta?");
 			System.out.println("  Escoja una opción:");
 			System.out.println("1 - Apuestas números");

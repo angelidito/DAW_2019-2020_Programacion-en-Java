@@ -5,9 +5,9 @@ import java.util.Iterator;
 
 import angelidito.escaner.Escaner;
 import angelidito.escaner.TipoEntero;
-import angelidito.laruleta.excepciones.BadCSVException;
-import angelidito.laruleta.excepciones.CantidadCamposCSVException;
-import angelidito.laruleta.excepciones.ContenidoNullCSVException;
+import angelidito.laruleta.gestion.BadCSVException;
+import angelidito.laruleta.gestion.CantidadCamposCSVException;
+import angelidito.laruleta.gestion.ContenidoNullCSVException;
 
 /**
  * 
@@ -397,7 +397,7 @@ public class Apuesta {
 			info = "todavia no ha apostado nada.";
 
 		if (totalAnotado != this.totalApostado())
-			throw new RuntimeException("ERROR DE CONTEO EN Apuesta.info()");
+			throw new BadProgramingRTException("ERROR DE CONTEO EN Apuesta.info()");
 
 		return info;
 	}
@@ -416,10 +416,10 @@ public class Apuesta {
 			cantidades[i] = numeros[i].getCantidadApostada();
 		}
 
-		String informacion = "Apuesta: [\n\t     numeros=" + Arrays.toString(cantidades) + "\n\t     parImpar="
-				+ Arrays.toString(parImpar) + "\n\t     rojoNegro=" + Arrays.toString(rojoNegro) + "\n\t     mitades="
-				+ Arrays.toString(mitades) + "\n\t     docenas=" + Arrays.toString(docenas) + "\n\t     modulos="
-				+ Arrays.toString(modulos) + "\n\t     ]";
+		String informacion = "***    numeros   = " + Arrays.toString(cantidades) + "\n***    parImpar  = "
+				+ Arrays.toString(parImpar) + "\n***    rojoNegro = " + Arrays.toString(rojoNegro) + "\n***    mitades   = "
+				+ Arrays.toString(mitades) + "\n***    docenas   = " + Arrays.toString(docenas) + "\n***    modulos   = "
+				+ Arrays.toString(modulos);
 		return informacion;
 	}
 

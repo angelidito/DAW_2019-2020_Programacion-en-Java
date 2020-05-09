@@ -1,4 +1,4 @@
-package angelidito.laruleta.excepciones;
+package angelidito.laruleta.gestion;
 
 /**
  * Excepcion general lanzable por las clases que manejan el guardado y
@@ -25,7 +25,6 @@ public class BadCSVException extends Exception {
 	 */
 	public BadCSVException(String message) {
 		super(message);
-		System.err.println(message);
 	}
 
 	/**
