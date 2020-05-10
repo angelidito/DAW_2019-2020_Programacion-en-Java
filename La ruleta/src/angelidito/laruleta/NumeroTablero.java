@@ -68,28 +68,28 @@ public class NumeroTablero extends Number implements Comparable<NumeroTablero> {
 
 			if ((0 < n && n < 10 && n % 2 == 1) || (11 < n && n < 19 && n % 2 == 0) || (18 < n && n < 28 && n % 2 == 1)
 					|| (29 < n && n < 37 && n % 2 == 0))
-				color = 1;
+				color = 0;
 			else
-				color = 2;
+				color = 1;
 
 			if (n < 19)
-				mitad = 1;
+				mitad = 0;
 			else
-				mitad = 2;
+				mitad = 1;
 
 			if (n < 13)
-				docena = 1;
+				docena = 0;
 			else if (n < 25)
-				docena = 2;
+				docena = 1;
 			else
-				docena = 3;
+				docena = 2;
 
 			if (n % 3 == 1)
 				fila = 1;
 			else if (n % 3 == 2)
 				fila = 2;
 			else
-				fila = 3;
+				fila = 0;
 		}
 	}
 

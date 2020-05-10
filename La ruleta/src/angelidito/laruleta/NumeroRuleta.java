@@ -43,7 +43,7 @@ public class NumeroRuleta extends NumeroTablero {
 
 	@Override
 	public String toString() {
-		String str = String.format("Nº%d: %d ocurrencias", this.getN(), this.ocurrencias);
+		String str = String.format("Nº%02d - %d ocurrencias", this.getN(), this.ocurrencias);
 		return str;
 	}
 

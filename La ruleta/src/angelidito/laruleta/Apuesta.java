@@ -394,7 +394,7 @@ public class Apuesta {
 			}
 
 		if (totalAnotado == 0)
-			info = "todavia no ha apostado nada.";
+			info = "ninguna";
 
 		if (totalAnotado != this.totalApostado())
 			throw new BadProgramingRTException("ERROR DE CONTEO EN Apuesta.info()");

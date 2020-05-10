@@ -1,5 +1,7 @@
 package angelidito.laruleta;
 
+import java.util.ArrayList;
+
 import angelidito.escaner.Escaner;
 
 /**
@@ -14,6 +16,7 @@ public class Crupier {
 	 * Lista de jugadores que maneja el Crupier.
 	 */
 	private ListaJugadores listaJugadores;
+	private ArrayList<Jugador> jugadoresParaRetirar;
 
 	/**
 	 * Ruleta que aneja el Crupier.
@@ -61,28 +64,20 @@ public class Crupier {
 	 * TODO
 	 */
 	public void preguntarNumeroLanzamientos() {
+		int gananciasBanca = 0;
 		int lanzamientos = 1;
-		int opcion = 0;
+		int minLanzamientos = 1;
+		int maxLanzamientos = 1000000;
 
-		while (opcion == 0) {
-			System.out.println("  ¿Desa realizar uno o más lanzamientos?");
-			System.out.println("1 - Uno");
-			System.out.println("2 - Dos o más");
-			opcion = Escaner.entero(1, 2);
-		}
-
+		System.out.printf("¿Cuantos lanzamientos desea realizar?%n" + "De %d a %d: ", minLanzamientos, maxLanzamientos);
+		lanzamientos = Escaner.entero(minLanzamientos, maxLanzamientos);
 		System.out.println();
 
-		if (opcion == 2) {
-			System.out.print("  ¿Cuantos lanzamientos desea realizar?\nDe 2 a 1000: ");
-			lanzamientos = Escaner.entero(2, 1000);
-			System.out.println();
-		}
-
-		int gananciasBanca = lanzar(lanzamientos);
+		if (lanzamientos > 0)
+			gananciasBanca = lanzar(lanzamientos);
 
 		Casino.ganado(gananciasBanca);
-		
+
 	}
 
 	/**
@@ -101,8 +96,11 @@ public class Crupier {
 		return gananciasBanca;
 
 	}
-	
+
 	private int lanzarRecursivo(int lanzamientos, int gananciasBanca) {
+		if (lanzamientos == 0)
+			return gananciasBanca;
+
 		int n;
 		n = ruleta.lanzar();
 		NumeroRuleta numero = ruleta.getNumeroRuleta(n);
@@ -114,17 +112,25 @@ public class Crupier {
 
 		// Aquí cobramos o pagamos a los jugadores
 		// Se cumple que: numero.getN() == n
-		for (Jugador jugador : listaJugadores.getJugadoresEnMesa()) {
+
+		for (int i = 0; i < listaJugadores.getJugadoresEnMesa().size(); i++) {
 			if (numero.getN() == 0)
-				gananciasBanca += this.ganaLaBanca(jugador);
+				gananciasBanca += this.ganaLaBanca(listaJugadores.getJugadoresEnMesa().get(i));
 			else
-				gananciasBanca += this.administrarJugador(jugador, numero);
+				gananciasBanca += this.administrarJugador(listaJugadores.getJugadoresEnMesa().get(i), numero);
+
+			if (listaJugadores.comprobarRetidadaJugador(listaJugadores.getJugadoresEnMesa().get(i))) {
+
+				listaJugadores.retirarJugador(listaJugadores.getJugadoresEnMesa().get(i));
+				i--;
+			}
 		}
 
-		if (lanzamientos == 1)
-			return gananciasBanca;
-		else
-			return lanzarRecursivo((--lanzamientos), gananciasBanca);
+//		 Hay que retirarlo después del bucle, porque si no lanza excepcion.
+//		 Si fuese un bucle
+//		this.retirarJugadoresParaRetirar();
+
+		return lanzarRecursivo((--lanzamientos), gananciasBanca);
 
 	}
 
@@ -141,9 +147,6 @@ public class Crupier {
 		int gananciasBanca = jugador.totalApostado();
 
 		jugador.variarCredito(-gananciasBanca);
-
-		if (listaJugadores.comprobarRetidadaJugador(jugador))
-			listaJugadores.retirarJugador(jugador);
 
 		return gananciasBanca;
 
@@ -250,10 +253,27 @@ public class Crupier {
 		balance = ganado - perdido;
 
 		jugador.variarCredito(balance);
-		if (listaJugadores.comprobarRetidadaJugador(jugador))
-			listaJugadores.retirarJugador(jugador);
 
 		return -balance;
+	}
+
+	/**
+	 * @param jugador
+	 */
+	private void comprobarRetiradaJugador(Jugador jugador) {
+		if (listaJugadores.comprobarRetidadaJugador(jugador)) {
+			jugadoresParaRetirar.add(jugador);
+		}
+	}
+
+	/**
+	 * @param jugador
+	 */
+	private void retirarJugadoresParaRetirar() {
+		for (Jugador jugador : jugadoresParaRetirar) {
+			listaJugadores.retirarJugador(jugador);
+		}
+		jugadoresParaRetirar.clear();
 	}
 
 }

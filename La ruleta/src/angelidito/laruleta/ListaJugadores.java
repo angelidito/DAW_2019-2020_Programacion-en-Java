@@ -384,13 +384,13 @@ public class ListaJugadores {
 
 		boolean retirado = false;
 
-		for (int i = 0; i < this.jugadoresEnMesa.size() && !retirado; i++) {
+		for (int i = 0; !retirado && i < this.jugadoresEnMesa.size(); i++) {
 			if (this.jugadoresEnMesa.get(i).getId() == jugadorParaRetirar.getId()) {
 
 				ListaJugadores.jugadoresRetirados.add(jugadorParaRetirar);
 
 				this.jugadoresEnMesa.remove(i);
-
+				i--;
 				retirado = true;
 
 			}
