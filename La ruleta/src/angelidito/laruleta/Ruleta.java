@@ -50,10 +50,8 @@ public class Ruleta {
 	}
 
 	/**
-	 * Fija el histórico a partir del Fichero dado. Si no tiene el formato deseado
-	 * lo inicializa a 0. Si algun valor es negativo se toma como 0.
+	 * Recupera el histórico.
 	 * 
-	 * @param historico Vector con ocurrencias cada número.
 	 */
 	private static void recuperarHistorico() {
 		setHistorico(GestionCSV.obtenerHistoricoOcurrencias());

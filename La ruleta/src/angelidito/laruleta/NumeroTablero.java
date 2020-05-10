@@ -47,7 +47,7 @@ public class NumeroTablero extends Number implements Comparable<NumeroTablero> {
 	 * tablero de ruleta francesa. Si el número no existe en el tablero o es 0, los
 	 * valores de todos los atributos salvo de {@code n} seran iguales -1.
 	 * 
-	 * @param n El numero al que corresponde el objeto.
+	 * @param numero El numero al que corresponde el objeto.
 	 */
 	public NumeroTablero(int numero) {
 
@@ -143,7 +143,7 @@ public class NumeroTablero extends Number implements Comparable<NumeroTablero> {
 	 * el Numero del parámetro.
 	 * 
 	 * @param numero El Numero a comparar.
-	 * @returns un entero negativo, cero, o un entero positivo si el objeto es
+	 * @return un entero negativo, cero, o un entero positivo si el objeto es
 	 *          menor, igual o mayor que el objeto del parámetro.
 	 */
 	@Override

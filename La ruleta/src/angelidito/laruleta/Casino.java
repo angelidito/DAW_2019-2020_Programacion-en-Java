@@ -68,8 +68,12 @@ public class Casino {
 				mostrarEstadisticas();
 				break;
 
-			case 9:
+			case 8:
 				borrarDatos();
+				break;
+
+			case 9:
+				guardarDatos(crupiers.get(0).getJugadores());
 				break;
 
 			case 0:
@@ -83,7 +87,10 @@ public class Casino {
 		} while (opcion != 0);
 
 		guardarDatos(crupiers.get(0).getJugadores());
-
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("Programa finalizado.");
 	}
 
 	/**
@@ -98,8 +105,9 @@ public class Casino {
 		System.out.println("1 - ¡Juguemos!");
 		System.out.println("2 - Lista de jugadores");
 		System.out.println("3 - Estadísticas");
-		System.out.println("9 - Borrar datos");
-		System.out.println("0 - Guardar y salir.");
+		System.out.println("8 - Borrar datos");
+		System.out.println("9 - Guardar datos");
+		System.out.println("0 - Guardar y salir");
 		System.out.println("");
 
 	}
@@ -108,7 +116,7 @@ public class Casino {
 	 * De entre todos los crupiers da uno a elegir y pregunta cuantos lanzamientos
 	 * hacer. Ahora que sólo hay uno, no da a elegir crupier.
 	 * 
-	 * @param crupiers
+	 * @param crupiers Lista de crupiers.
 	 */
 	private static void jugar(ArrayList<Crupier> crupiers) {
 
@@ -168,11 +176,6 @@ public class Casino {
 		System.out.println("Guardando estadisticas:");
 		Ruleta.guardarHisorico();
 		System.out.println(" ¡Estadisticas guardadas!");
-
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("Programa finalizado.");
 	}
 
 }

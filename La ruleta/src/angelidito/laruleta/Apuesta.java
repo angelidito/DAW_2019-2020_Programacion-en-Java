@@ -211,8 +211,8 @@ public class Apuesta {
 	 * debe de ser analizable como números enteros, en caso de no ser así, devuelve
 	 * un vector del mismo tamaño inicializado a 0.
 	 * 
-	 * @param vectorDeNumeros
-	 * @return
+	 * @param vectorDeNumeros Vector de numeros en formato String.
+	 * @return Un vector de enteros.
 	 */
 	private int[] transformarVector(String[] vectorDeNumeros) {
 
@@ -1128,7 +1128,7 @@ public class Apuesta {
 	/**
 	 * Pregunta y escanea la cantidad a apostar. Sólo admite enteros positivos.
 	 * 
-	 * @returns La cantidad introducida.
+	 * @return La cantidad introducida.
 	 */
 	private int pedirCantidad() {
 		TipoEntero positivo = TipoEntero.POSITIVO;

@@ -62,7 +62,7 @@ public class Crupier {
 	}
 
 	/**
-	 * TODO
+	 * Pregunta el nº de lanzamientos a realizar y los realiza.
 	 */
 	public void preguntarNumeroLanzamientos() {
 		int gananciasBanca = 0;
@@ -92,6 +92,58 @@ public class Crupier {
 	private int lanzar(int lanzamientos) {
 		int gananciasBanca = 0;
 
+		for (int l = 0; l < lanzamientos; l++) {
+
+			int n;
+			n = ruleta.lanzar();
+			NumeroRuleta numero = ruleta.getNumeroRuleta(n);
+
+			if (numero.getN() != n)
+				throw new BadProgramingRTException("Esto no deberia haber pasado nunca.\n"
+						+ "Hay un error en Ruleta.java al crear el array de NumeroRuleta.\n"
+						+ "El índice de la posición no coincide con la N del NumeroRuleta.");
+
+			// Aquí cobramos o pagamos a los jugadores
+			// Se cumple que: numero.getN() == n
+			for (int i = 0; i < listaJugadores.getJugadoresEnMesa().size(); i++) {
+
+				if (numero.getN() == 0)
+					gananciasBanca += this.ganaLaBanca(listaJugadores.getJugadoresEnMesa().get(i));
+				else
+					gananciasBanca += this.administrarJugador(listaJugadores.getJugadoresEnMesa().get(i), numero);
+
+				//
+
+				if (listaJugadores.comprobarRetidadaJugador(listaJugadores.getJugadoresEnMesa().get(i))) {
+
+					listaJugadores.retirarJugador(listaJugadores.getJugadoresEnMesa().get(i));
+					i--;
+				}
+			}
+//			 Hay que retirarlo después del bucle, porque si no lanza excepcion.
+//			 Si fuese un bucle
+//			this.retirarJugadoresParaRetirar();
+
+		}
+
+		System.out.println();
+		System.out.println();
+
+		return gananciasBanca;
+
+	}
+
+	/**
+	 * Realiza lanzamientos en la ruleta y cobra o paga a los jugadores. Devuelve
+	 * una cantidad entera que representa el crédito que ha ganado la banca.
+	 * 
+	 * @param lanzamientos Lanzamientos a realizar.
+	 * 
+	 * @return Crédito que ha ganado la banca.
+	 */
+	private int lanzarRec(int lanzamientos) {
+		int gananciasBanca = 0;
+
 		gananciasBanca = lanzarRecursivo(lanzamientos, gananciasBanca);
 
 		return gananciasBanca;
@@ -100,7 +152,7 @@ public class Crupier {
 
 	private int lanzarRecursivo(int lanzamientos, int gananciasBanca) {
 		if (lanzamientos == 0)
-			return gananciasBanca;
+			return gananciasBanca = 0;
 
 		int n;
 		n = ruleta.lanzar();
@@ -259,7 +311,7 @@ public class Crupier {
 	}
 
 	/**
-	 * @param jugador
+	 * @param jugador Jugador a comprobar
 	 */
 	private void comprobarRetiradaJugador(Jugador jugador) {
 		if (listaJugadores.comprobarRetidadaJugador(jugador)) {
@@ -268,7 +320,6 @@ public class Crupier {
 	}
 
 	/**
-	 * @param jugador
 	 */
 	private void retirarJugadoresParaRetirar() {
 		for (Jugador jugador : jugadoresParaRetirar) {

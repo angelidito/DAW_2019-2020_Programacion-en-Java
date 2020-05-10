@@ -16,12 +16,17 @@ public class BadProgramingRTException extends RuntimeException {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -5718391157398893260L;
+
+	/**
+	 * 
+	 */
 	public BadProgramingRTException() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @param message
+	 * @param message Mensaje
 	 */
 	public BadProgramingRTException(String message) {
 		super(message);
@@ -29,33 +34,33 @@ public class BadProgramingRTException extends RuntimeException {
 		System.err.println(message);
 	}
 
-	/**
-	 * @param cause
-	 */
-	public BadProgramingRTException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public BadProgramingRTException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param message
-	 * @param cause
-	 * @param enableSuppression
-	 * @param writableStackTrace
-	 */
-	public BadProgramingRTException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
-	}
+//	/**
+//	 * @param cause
+//	 */
+//	public BadProgramingRTException(Throwable cause) {
+//		super(cause);
+//		// TODO Auto-generated constructor stub
+//	}
+//
+//	/**
+//	 * @param message
+//	 * @param cause
+//	 */
+//	public BadProgramingRTException(String message, Throwable cause) {
+//		super(message, cause);
+//		// TODO Auto-generated constructor stub
+//	}
+//
+//	/**
+//	 * @param message
+//	 * @param cause
+//	 * @param enableSuppression
+//	 * @param writableStackTrace
+//	 */
+//	public BadProgramingRTException(String message, Throwable cause, boolean enableSuppression,
+//			boolean writableStackTrace) {
+//		super(message, cause, enableSuppression, writableStackTrace);
+//		// TODO Auto-generated constructor stub
+//	}
 
 }

@@ -359,7 +359,7 @@ public class GestionCSV {
 	/**
 	 * Si existe, borra el fichero.
 	 * 
-	 * @param Fichero fichero a eliminar.
+	 * @param fichero Fichero a eliminar.
 	 */
 	private static void eliminarFichero(File fichero) {
 		if (fichero.exists())
