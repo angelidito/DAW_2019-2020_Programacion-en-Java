@@ -1,7 +1,7 @@
 /**
  * 
  */
-package angelidito.laruleta.gestion;
+package angelidito.laruleta;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import angelidito.laruleta.Jugador;
+import angelidito.laruleta.excepciones.BadCSVException;
+import angelidito.laruleta.excepciones.CantidadCamposCSVException;
+import angelidito.laruleta.excepciones.ContenidoCorruptoCSVException;
+import angelidito.laruleta.excepciones.ContenidoNullCSVException;
+import angelidito.laruleta.excepciones.NoCSVException;
 
 /**
  * Clase que gestiona los archivos con extensión CSV. Los escribe y lee cuando

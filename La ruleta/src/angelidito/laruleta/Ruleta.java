@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import angelidito.laruleta.gestion.GestionCSV;
-
 /**
  * 
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>

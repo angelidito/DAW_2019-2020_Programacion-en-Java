@@ -6,7 +6,6 @@ package angelidito.laruleta;
 import java.util.ArrayList;
 
 import angelidito.escaner.Escaner;
-import angelidito.laruleta.gestion.GestionCSV;
 
 /**
  * Contiene y recupera los jugadores.

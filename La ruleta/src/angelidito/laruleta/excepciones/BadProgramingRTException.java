@@ -1,7 +1,7 @@
 /**
  * 
  */
-package angelidito.laruleta;
+package angelidito.laruleta.excepciones;
 
 /**
  * Excepcion a lanzar cuando un se ocurre una situación que no debería ocurrir

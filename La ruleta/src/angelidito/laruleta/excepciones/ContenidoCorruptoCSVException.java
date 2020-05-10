@@ -1,4 +1,4 @@
-package angelidito.laruleta.gestion;
+package angelidito.laruleta.excepciones;
 
 /**
  * Excepcion lanzable por las clases que manejan el guardado y recuperación de

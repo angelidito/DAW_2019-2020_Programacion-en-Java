@@ -3,6 +3,7 @@ package angelidito.laruleta;
 import java.util.ArrayList;
 
 import angelidito.escaner.Escaner;
+import angelidito.laruleta.excepciones.BadProgramingRTException;
 
 /**
  * Es la clase encargada de manejar la ruleta y a los jugadors, así como
@@ -21,7 +22,7 @@ public class Crupier {
 	/**
 	 * Ruleta que aneja el Crupier.
 	 */
-	Ruleta ruleta;
+	private Ruleta ruleta;
 
 	/**
 	 * Identificador del Crupier.

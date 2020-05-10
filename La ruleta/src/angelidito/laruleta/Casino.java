@@ -3,7 +3,6 @@ package angelidito.laruleta;
 import java.util.ArrayList;
 
 import angelidito.escaner.Escaner;
-import angelidito.laruleta.gestion.GestionCSV;
 
 /**
  * 
@@ -13,6 +12,8 @@ import angelidito.laruleta.gestion.GestionCSV;
 public class Casino {
 
 	private static int ganancias = 0;
+
+	private static ArrayList<Crupier> crupiers = new ArrayList<Crupier>();
 
 	/**
 	 * Suma una cantidad a las ganancias.
@@ -25,7 +26,6 @@ public class Casino {
 
 	public static void main(String[] args) {
 
-		ArrayList<Crupier> crupiers = new ArrayList<Crupier>();
 		// TODO: para un futuro se podria arreglar esta clase para que mejase distintos
 		// crupiers. Por el momento en el array list solo habrá 1.
 		/*

@@ -5,9 +5,10 @@ import java.util.Iterator;
 
 import angelidito.escaner.Escaner;
 import angelidito.escaner.TipoEntero;
-import angelidito.laruleta.gestion.BadCSVException;
-import angelidito.laruleta.gestion.CantidadCamposCSVException;
-import angelidito.laruleta.gestion.ContenidoNullCSVException;
+import angelidito.laruleta.excepciones.BadCSVException;
+import angelidito.laruleta.excepciones.BadProgramingRTException;
+import angelidito.laruleta.excepciones.CantidadCamposCSVException;
+import angelidito.laruleta.excepciones.ContenidoNullCSVException;
 
 /**
  * 
