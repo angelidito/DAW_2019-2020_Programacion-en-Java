@@ -357,7 +357,7 @@ public class ListaJugadores {
 
 	/**
 	 * Comprueba si hay que retirar al jugador. Esto es cuando no le queda crédito,
-	 * ha alcanzado el credito objetivo o ha superado las rondas máximas.
+	 * ha alcanzado el credito objetivo o ha alcanzado las rondas máximas.
 	 * 
 	 * @param jugadorParaComprobar jugador qu ehay que comprobar la retirada
 	 * @return {@code true} si hay que retirarlo; {@code false} si no.
@@ -395,10 +395,34 @@ public class ListaJugadores {
 			}
 		}
 		if (retirado) {
+			String mensajeRetirada = "%s ha sido retirado. %s";
+
 			if (jugadorParaRetirar.getCredito() < 0)
 				EasterEgg.huevoDePascua(jugadorParaRetirar.getNombre());
-			else
-				System.out.println("Jugador retirado.");
+
+			else {
+
+				if (jugadorParaRetirar.getCredito() == 0)
+					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
+							"Se le ha agotado el crédito.");
+
+				else if (jugadorParaRetirar.getCredito() >= jugadorParaRetirar.getCreditoObjetivo())
+					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
+							"Ha alcanzado su crédito objetivo");
+
+				else if (jugadorParaRetirar.getRondas() >= jugadorParaRetirar.getRondasMaximas())
+					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
+							"Ha alcanzado sus rondas máximas");
+
+				else
+					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
+							" Motivo desconocido");
+
+				System.out.println(mensajeRetirada);
+				System.out.println();
+
+			}
+
 		} else {
 			System.err.println("No se ha podido retirar al jugador.");
 		}

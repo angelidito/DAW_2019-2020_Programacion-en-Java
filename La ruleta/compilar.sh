@@ -1,5 +1,5 @@
 #!/bin/bash
-nombre=
+nombre=Apuesta
 nombrepaquete=angelidito.laruleta
 rutapaquete=$(echo $nombrepaquete | sed 's/\./\//g')
 

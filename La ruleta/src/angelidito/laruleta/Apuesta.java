@@ -269,7 +269,7 @@ public class Apuesta {
 
 		String enFormato = "";
 
-		enFormato += numeros[0];
+		enFormato += numeros[0].getCantidadApostada();
 		for (int i = 1; i < numeros.length; i++)
 			enFormato += ":" + numeros[i].getCantidadApostada();
 

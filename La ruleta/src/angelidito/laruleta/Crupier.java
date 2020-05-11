@@ -6,8 +6,8 @@ import angelidito.escaner.Escaner;
 import angelidito.laruleta.excepciones.BadProgramingRTException;
 
 /**
- * Clase encargada de manejar la ruleta y a los jugadores. Así como
- * cobrarlos y pagarlos según el número que salga en la ruleta.
+ * Clase encargada de manejar la ruleta y a los jugadores. Así como cobrarlos y
+ * pagarlos según el número que salga en la ruleta.
  * 
  * @author <a href="twitter.com/angelidito">Ángel M. D.</a>
  */
@@ -91,6 +91,7 @@ public class Crupier {
 	 */
 	private int lanzar(int lanzamientos) {
 		int gananciasBanca = 0;
+		int jugadoresRetirados = 0;
 
 		for (int l = 0; l < lanzamientos; l++) {
 
@@ -115,9 +116,10 @@ public class Crupier {
 				//
 
 				if (listaJugadores.comprobarRetidadaJugador(listaJugadores.getJugadoresEnMesa().get(i))) {
-
+					System.out.printf("Lanzamiento nº%d:%n", lanzamientos);
 					listaJugadores.retirarJugador(listaJugadores.getJugadoresEnMesa().get(i));
 					i--;
+					jugadoresRetirados++;
 				}
 			}
 //			 Hay que retirarlo después del bucle, porque si no lanza excepcion.
@@ -125,7 +127,8 @@ public class Crupier {
 //			this.retirarJugadoresParaRetirar();
 
 		}
-
+		if (jugadoresRetirados == 0)
+			System.out.println("Ningun jugador ha sido retirado esta vez, ¡qué suerte!");
 		System.out.println();
 		System.out.println();
 
