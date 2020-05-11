@@ -1,10 +1,10 @@
 #!/bin/bash
-nombre=EnsayosG4D
-nombrepaquete=jcolonia.daw2019.g4d
+nombre=Casino
+nombrepaquete=angelidito.laruleta
 rutapaquete=$(echo $nombrepaquete | sed 's/\./\//g')
 #args=""
 
-salida=g4d.txt
+salida=laruleta.txt
 
 export CLASSPATH=bin
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8

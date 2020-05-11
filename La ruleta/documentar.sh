@@ -1,6 +1,6 @@
 #!/bin/bash
-nombre=EnsayosG4D
-nombrepaquete=jcolonia.daw2019.g4d
+nombre=Apuesta
+nombrepaquete=angelidito.laruleta
 rutapaquete=$(echo $nombrepaquete | sed 's/\./\//g')
 
 CLASSPATH=bin

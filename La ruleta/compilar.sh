@@ -1,6 +1,6 @@
 #!/bin/bash
-nombre=EnsayosG4D
-nombrepaquete=jcolonia.daw2019.g4d
+nombre=
+nombrepaquete=angelidito.laruleta
 rutapaquete=$(echo $nombrepaquete | sed 's/\./\//g')
 
 CLASSPATH=bin
@@ -13,7 +13,7 @@ echo $nombre
 echo ---
 echo
 
-javac -sourcepath src -d bin src/$rutapaquete/$nombre.java
+javac -sourcepath src -d bin src/$rutapaquete/*.java
 
 #tree -f  $CLASSPATH/$rutapaquete
 echo
