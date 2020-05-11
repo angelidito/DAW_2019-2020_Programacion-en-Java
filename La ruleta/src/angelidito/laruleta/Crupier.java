@@ -6,8 +6,8 @@ import angelidito.escaner.Escaner;
 import angelidito.laruleta.excepciones.BadProgramingRTException;
 
 /**
- * Es la clase encargada de manejar la ruleta y a los jugadors, así como
- * cobrarlos y pagarlos según lo que salga en la ruleta.
+ * Clase encargada de manejar la ruleta y a los jugadores. Así como
+ * cobrarlos y pagarlos según el número que salga en la ruleta.
  * 
  * @author <a href="twitter.com/angelidito">Ángel M. D.</a>
  */
