@@ -65,19 +65,29 @@ public class Crupier {
 	 * Pregunta el nº de lanzamientos a realizar y los realiza.
 	 */
 	public void preguntarNumeroLanzamientos() {
-		int gananciasBanca = 0;
-		int lanzamientos = 1;
 		int minLanzamientos = 1;
 		int maxLanzamientos = 1000000;
-
 		System.out.printf("¿Cuantos lanzamientos desea realizar?%n" + "De %d a %d: ", minLanzamientos, maxLanzamientos);
+		int gananciasBanca = 0;
+		int lanzamientos = 1;
+
 		lanzamientos = Escaner.entero(minLanzamientos, maxLanzamientos);
 		System.out.println();
 
-		if (lanzamientos > 0)
+		if (lanzamientos > 0) {
 			gananciasBanca = lanzar(lanzamientos);
+			Casino.ganado(gananciasBanca);
+		}
 
-		Casino.ganado(gananciasBanca);
+		System.out.print("¿Desea lanzar de nuevo?");
+		if (Escaner.yesNoQuestionRecursivo()) {
+			System.out.println();
+			System.out.println();
+			this.preguntarNumeroLanzamientos();
+		} else {
+			System.out.println();
+			System.out.println();
+		}
 
 	}
 
@@ -136,23 +146,7 @@ public class Crupier {
 
 	}
 
-	/**
-	 * Realiza lanzamientos en la ruleta y cobra o paga a los jugadores. Devuelve
-	 * una cantidad entera que representa el crédito que ha ganado la banca.
-	 * 
-	 * @param lanzamientos Lanzamientos a realizar.
-	 * 
-	 * @return Crédito que ha ganado la banca.
-	 */
-	private int lanzarRec(int lanzamientos) {
-		int gananciasBanca = 0;
-
-		gananciasBanca = lanzarRecursivo(lanzamientos, gananciasBanca);
-
-		return gananciasBanca;
-
-	}
-
+	@SuppressWarnings("unused")
 	private int lanzarRecursivo(int lanzamientos, int gananciasBanca) {
 		if (lanzamientos == 0)
 			return gananciasBanca = 0;
@@ -311,24 +305,6 @@ public class Crupier {
 		jugador.variarCredito(balance);
 
 		return -balance;
-	}
-
-	/**
-	 * @param jugador Jugador a comprobar
-	 */
-	private void comprobarRetiradaJugador(Jugador jugador) {
-		if (listaJugadores.comprobarRetidadaJugador(jugador)) {
-			jugadoresParaRetirar.add(jugador);
-		}
-	}
-
-	/**
-	 */
-	private void retirarJugadoresParaRetirar() {
-		for (Jugador jugador : jugadoresParaRetirar) {
-			listaJugadores.retirarJugador(jugador);
-		}
-		jugadoresParaRetirar.clear();
 	}
 
 }

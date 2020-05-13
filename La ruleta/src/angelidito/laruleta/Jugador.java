@@ -580,7 +580,7 @@ public class Jugador {
 			System.out.println("5 - Apuestas a docenas");
 			System.out.println("6 - Apuestas a filas 2 a 1");
 			System.out.println("7 - Retirar toda la apuesta");
-			System.out.println("0 - Volver atrás");
+			System.out.println("0 - Guardar cambios");
 			System.out.println("");
 
 			op = Escaner.entero(0, 7);

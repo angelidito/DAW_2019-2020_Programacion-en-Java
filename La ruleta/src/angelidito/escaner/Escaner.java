@@ -7,20 +7,13 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * 
+ * Clase intermediaria de la clase Scanner. Maneja las excepciones para no
+ * lanzar ninguna y guía al usuario a introdocir lo que tiene que introducir.
  * 
  * @author <a href="twitter.com/angelidito">Ángel M. D.</a>
  */
+@SuppressWarnings("resource")
 public final class Escaner {
-
-	/**
-	 * 
-	 */
-	private static Scanner escaner;
-
-	static {
-		escaner = new Scanner(System.in);
-	}
 
 	/**
 	 * Escanea un número entero positivo por teclado. El método guía al usuario si
@@ -30,6 +23,7 @@ public final class Escaner {
 	 */
 	public static int entero() {
 
+		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado;
 		int numeroIntroducido = 0;
 		boolean textoEsNumero = false;
@@ -51,6 +45,8 @@ public final class Escaner {
 			}
 
 		} while (!textoEsNumero);
+
+		// escaner.close();
 
 		return numeroIntroducido;
 
@@ -67,6 +63,7 @@ public final class Escaner {
 	 */
 	public static int entero(TipoEntero tipoEntero) {
 
+		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado;
 		int numeroIntroducido = 0;
 		boolean textoEsNumero = false;
@@ -89,6 +86,7 @@ public final class Escaner {
 
 		} while (!textoEsNumero);
 
+		// escaner.close();
 		return numeroIntroducido;
 
 	}
@@ -111,7 +109,8 @@ public final class Escaner {
 			max = min;
 		}
 
-		String textoEscaneado;
+		Scanner escaner = new Scanner(System.in);
+		String textoEscaneado = "0x80000000";
 		int numeroIntroducido = -999999;
 		boolean textoEsNumero = false;
 
@@ -136,6 +135,7 @@ public final class Escaner {
 
 		} while (!textoEsNumero || !(min <= numeroIntroducido && numeroIntroducido <= max));
 
+		// escaner.close();
 		return numeroIntroducido;
 
 	}
@@ -163,6 +163,7 @@ public final class Escaner {
 			max = min;
 		}
 
+		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado;
 
 		textoEscaneado = escaner.nextLine();
@@ -184,6 +185,7 @@ public final class Escaner {
 
 		}
 
+		// escaner.close();
 		return textoEscaneado.charAt(0);
 
 	}
@@ -195,6 +197,7 @@ public final class Escaner {
 	 */
 	public static String texto() {
 
+		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado = null;
 		do {
 			try {
@@ -206,45 +209,81 @@ public final class Escaner {
 
 		} while (textoEscaneado == null);
 
+		// escaner.close();
 		return textoEscaneado;
 	}
 
 	/**
-	 * Imprime por pantalla una pregunta tipo si/no. Además de un salto de linea.
+	 * Pide un si o un no y devuelve en consecuencia {@code true} o {@code false}.
 	 * Escanea el texto introducido por teclado hasta que se introduzca una de las
 	 * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
 	 * 
 	 * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
 	 */
-	public static boolean yesNoQuestionNoRecursivo() {
+	public static boolean yesNoQuestion() {
+
+		Scanner escaner = new Scanner(System.in);
 		String texto = "";
 		boolean textoAdecuado = false;
 		boolean yesNo = false;
 		do {
-			System.out.println("[s/n]");
 			try {
 				texto = escaner.next();
 			} catch (Exception e) {
-
+				texto = "";
 			}
 			if (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
-					|| texto.compareToIgnoreCase("si") != 0) {
+					|| texto.compareToIgnoreCase("si") == 0) {
 
 				textoAdecuado = true;
 				yesNo = true;
 
 			} else if (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0) {
-
+				System.out.println("NOOO");
 				textoAdecuado = true;
 				yesNo = false;
 
 			} else {
 
-				System.out.print("Opción no valida, pruebe de nuevo. ");
 
 			}
 
 		} while (!textoAdecuado);
+
+		return yesNo;
+	}
+
+	// METODO CON RECURSIVIDAD
+	/**
+	 * Pide un si o un no y devuelve en consecuencia {@code true} o {@code false}.
+	 * Escanea el texto introducido por teclado hasta que se introduzca una de las
+	 * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
+	 * METODO CON RECURSIVIDAD. No deberia atascar la máquina si está bien escrito.
+	 * 
+	 * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
+	 */
+	public static boolean yesNoQuestionRecursivo() {
+
+		Scanner escaner = new Scanner(System.in);
+		String texto = "";
+		boolean yesNo;
+		try {
+			texto = escaner.next();
+		} catch (Exception e) {
+
+		}
+		if (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
+				|| texto.compareToIgnoreCase("si") == 0) {
+
+			yesNo = true;
+
+		} else if (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0) {
+
+			yesNo = false;
+
+		} else {
+			yesNo = yesNoQuestionRecursivo();
+		}
 
 		return yesNo;
 	}
@@ -256,11 +295,15 @@ public final class Escaner {
 	 * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
 	 * METODO CON RECURSIVIDAD. No deberia atascar la máquina si está bien escrito.
 	 * 
+	 * @param pregunta Pregunta a imprimir por pantalla.
 	 * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
 	 */
-	public static boolean yesNoQuestionRecursivo() {
+	public static boolean yesNoQuestionRecursivo(String pregunta) {
+
+		Scanner escaner = new Scanner(System.in);
 		String texto = "";
-		boolean yesNo = false;
+		boolean yesNo;
+
 		System.out.println("[s/n]");
 		try {
 			texto = escaner.next();
@@ -268,7 +311,7 @@ public final class Escaner {
 
 		}
 		if (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
-				|| texto.compareToIgnoreCase("si") != 0) {
+				|| texto.compareToIgnoreCase("si") == 0) {
 
 			yesNo = true;
 
@@ -278,11 +321,12 @@ public final class Escaner {
 
 		} else {
 
-			System.out.print("Opción no valida, pruebe de nuevo. ");
-			
+			System.out.println("Opción no valida, pruebe de nuevo.");
+
 			yesNo = yesNoQuestionRecursivo();
 		}
 
+		// escaner.close();
 		return yesNo;
 	}
 

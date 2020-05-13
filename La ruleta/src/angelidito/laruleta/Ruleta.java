@@ -64,16 +64,26 @@ public class Ruleta {
 	 * @param ocurrencias Vector con ocurrencias de cada número.
 	 */
 	private static void setHistorico(Integer[] ocurrencias) {
-		if (Ruleta.historico.length != ocurrencias.length)
+		if (Ruleta.historico.length != ocurrencias.length) {
 			for (int i = 0; i < Ruleta.historico.length; i++)
 				Ruleta.historico[i] = new NumeroRuleta(i);
+		}
 		else
 			for (int i = 0; i < Ruleta.historico.length; i++)
-				if (ocurrencias[i] < 0)
+				if (ocurrencias[i] > 0)
 					Ruleta.historico[i] = new NumeroRuleta(i, ocurrencias[i]);
 				else
 					Ruleta.historico[i] = new NumeroRuleta(i);
 
+	}
+
+	/**
+	 * Devuelve el historial de ocurrencias.
+	 * 
+	 * @return El histórico
+	 */
+	public static NumeroRuleta[] getHistorico() {
+		return historico;
 	}
 
 	// tirar seguidas? quizá eso sea mejor en Crupier Y AHORRAMOS LIOS
@@ -97,20 +107,13 @@ public class Ruleta {
 
 		String estadisticas = "";
 		for (NumeroRuleta numero : historico) {
-			estadisticas += String.format("Nº%d: %d ocurrencias; %.3f", numero.getN(), numero.getOcurrencias(),
-					(float) numero.getOcurrencias() * 100 / Ruleta.totalTiradas)+"%\n";
+
+			estadisticas += String.format("%s; %.3f", numero,
+					(float) numero.getOcurrencias() * 100 / Ruleta.totalTiradas) + "%\n";
+
 		}
 
 		return estadisticas;
-	}
-
-	/**
-	 * Devuelve el historial de ocurrencias.
-	 * 
-	 * @return El histórico
-	 */
-	public static NumeroRuleta[] getHistorico() {
-		return historico;
 	}
 
 	public NumeroRuleta getNumeroRuleta(int n) {

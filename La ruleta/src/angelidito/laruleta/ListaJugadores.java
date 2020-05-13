@@ -130,7 +130,7 @@ public class ListaJugadores {
 			System.out.println("3 - Retirar jugadores");
 			System.out.println("4 - Editar jugadores");
 			System.out.println("9 - RAW info.");
-			System.out.println("0 - Volver atrás");
+			System.out.println("0 - Volver al menú principal");
 			System.out.println("");
 
 			opcion = Escaner.entero();
@@ -315,7 +315,7 @@ public class ListaJugadores {
 			System.out.println("3 - Cambiar crédito objetivo");
 			System.out.println("4 - Cambiar rondas máximas");
 			System.out.println("5 - Cambiar apuesta");
-			System.out.println("0 - Volver atrás");
+			System.out.println("0 - Guardar cambios");
 			System.out.println("");
 
 			opcion = Escaner.entero();

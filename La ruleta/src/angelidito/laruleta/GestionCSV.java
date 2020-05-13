@@ -163,16 +163,23 @@ public class GestionCSV {
 			bufferedReader = new BufferedReader(fileReader);
 
 			String linea = bufferedReader.readLine();
+//			System.out.println(linea);
 			int lineasLeidas = 0;
-			while (lineasLeidas < ocurrencias.length && linea != null) {
-				linea = bufferedReader.readLine();
-				// Este método puede lanzar NumberFormatException, que se maneja en un catch
-				int cantidad = Integer.parseInt(linea);
+			if (linea != null && Integer.parseInt(linea) == ocurrencias.length)
+				while (lineasLeidas < ocurrencias.length) {
+					linea = bufferedReader.readLine();
+					// Este método puede lanzar NumberFormatException, que se maneja en un catch
+					int cantidad = Integer.parseInt(linea);
 
-				ocurrencias[lineasLeidas] = cantidad < 0 ? 0 : cantidad;
+					if (cantidad > 0)
+						ocurrencias[lineasLeidas] = cantidad;
+					else
+						ocurrencias[lineasLeidas] = 0;
 
-				lineasLeidas++;
-			}
+//					System.out.println(lineasLeidas + "  -  " + ocurrencias[lineasLeidas]);
+
+					lineasLeidas++;
+				}
 
 			if (lineasLeidas < ocurrencias.length)
 				throw new CantidadCamposCSVException("Cantidad de filas no adecuada en el fichero historico.csv");
@@ -180,7 +187,7 @@ public class GestionCSV {
 		} catch (NoCSVException e) {
 
 			System.err.println("No se ha podido cargar el historial de la Ruleta.");
-//			System.err.println(e.getMessage());
+			System.err.println(e.getMessage());
 			System.err.println();
 
 			for (int i = 0; i < ocurrencias.length; i++)
@@ -191,7 +198,7 @@ public class GestionCSV {
 		} catch (BadCSVException e) {
 
 			System.err.println("No se ha podido cargar el historial de la Ruleta.");
-//			System.err.println(e.getMessage());
+			System.err.println(e.getMessage());
 			System.err.println();
 
 			for (int i = 0; i < ocurrencias.length; i++)
@@ -219,23 +226,25 @@ public class GestionCSV {
 			for (int i = 0; i < ocurrencias.length; i++)
 				ocurrencias[i] = 0;
 
-		}
+		} finally {
 
-//		finally {
+			try {
+
+				if (fileReader != null)
+					fileReader.close();
+
+			} catch (IOException e) {
+
+				System.err.println("ERROR INESPERADO");
+
+				System.err.println();
+				e.printStackTrace();
+
+			}
+		}
+//		for (Integer integer : ocurrencias) {
 //
-//			try {
-//
-//				if (fileReader != null)
-//					fileReader.close();
-//
-//			} catch (IOException e) {
-//
-//				System.err.println("ERROR INESPERADO");
-//
-//				System.err.println();
-//				e.printStackTrace();
-//
-//			}
+//			System.out.println(integer);
 //		}
 
 		return ocurrencias;
