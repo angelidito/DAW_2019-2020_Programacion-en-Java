@@ -4,5 +4,4 @@
 /doc/*
 /*.sh
 laruleta.txt
-
- 
+.DS_Store
