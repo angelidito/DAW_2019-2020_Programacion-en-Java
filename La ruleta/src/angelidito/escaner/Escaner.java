@@ -12,8 +12,9 @@ import java.util.Scanner;
  * 
  * @author <a href="twitter.com/angelidito">Ángel M. D.</a>
  */
-@SuppressWarnings("resource")
 public final class Escaner {
+
+	static Scanner escaner = new Scanner(System.in);
 
 	/**
 	 * Escanea un número entero positivo por teclado. El método guía al usuario si
@@ -23,7 +24,6 @@ public final class Escaner {
 	 */
 	public static int entero() {
 
-		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado;
 		int numeroIntroducido = 0;
 		boolean textoEsNumero = false;
@@ -63,7 +63,6 @@ public final class Escaner {
 	 */
 	public static int entero(TipoEntero tipoEntero) {
 
-		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado;
 		int numeroIntroducido = 0;
 		boolean textoEsNumero = false;
@@ -109,7 +108,6 @@ public final class Escaner {
 			max = min;
 		}
 
-		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado = "0x80000000";
 		int numeroIntroducido = -999999;
 		boolean textoEsNumero = false;
@@ -163,7 +161,6 @@ public final class Escaner {
 			max = min;
 		}
 
-		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado;
 
 		textoEscaneado = escaner.nextLine();
@@ -197,7 +194,6 @@ public final class Escaner {
 	 */
 	public static String texto() {
 
-		Scanner escaner = new Scanner(System.in);
 		String textoEscaneado = null;
 		do {
 			try {
@@ -222,7 +218,6 @@ public final class Escaner {
 	 */
 	public static boolean yesNoQuestion() {
 
-		Scanner escaner = new Scanner(System.in);
 		String texto = "";
 		boolean textoAdecuado = false;
 		boolean yesNo = false;
@@ -245,7 +240,6 @@ public final class Escaner {
 
 			} else {
 
-
 			}
 
 		} while (!textoAdecuado);
@@ -264,7 +258,6 @@ public final class Escaner {
 	 */
 	public static boolean yesNoQuestionRecursivo() {
 
-		Scanner escaner = new Scanner(System.in);
 		String texto = "";
 		boolean yesNo;
 		try {
@@ -300,11 +293,10 @@ public final class Escaner {
 	 */
 	public static boolean yesNoQuestionRecursivo(String pregunta) {
 
-		Scanner escaner = new Scanner(System.in);
 		String texto = "";
 		boolean yesNo;
 
-		System.out.println("[s/n]");
+		System.out.println(pregunta + " [s/n]");
 		try {
 			texto = escaner.next();
 		} catch (Exception e) {
