@@ -3,6 +3,8 @@ package angelidito.laruleta;
 import java.util.ArrayList;
 
 import angelidito.escaner.Escaner;
+import angelidito.vistas.listados.ListadoEstatisticas;
+import angelidito.vistas.menus.MenuCasino;
 
 /**
  * 
@@ -13,7 +15,7 @@ public class Casino {
 
 	private static int ganancias = 0;
 
-	private static ArrayList<Crupier> crupiers = new ArrayList<Crupier>();
+	private static ArrayList<Crupier> crupiers = new ArrayList<Crupier>(1);
 
 	/**
 	 * Suma una cantidad a las ganancias.
@@ -39,19 +41,24 @@ public class Casino {
 		 * las listas de jugadores. Cada crupier el suyo, está claro.
 		 */
 		crupiers.add(new Crupier(new ListaJugadores()));
-
-		System.out.println("Bienvenido al casino Ruleta Afortunada");
-
-		System.out.println("");
+		MenuCasino vistaCasino;
+		MenuCasino.bienvenida();
 
 		int opcion;
+		boolean opcionIncorrecta = false;
 		do {
 
-			mostrarMenu();
+			vistaCasino = new MenuCasino();
 
 			opcion = Escaner.entero();
 
-			System.out.println();
+			if(opcionIncorrecta) {
+				opcionIncorrecta=false;
+				Escaner.avisoOpcionIncorrecta();
+			}
+			else
+			vistaCasino.println();
+		vistaCasino.println();
 
 			switch (opcion) {
 
@@ -65,51 +72,59 @@ public class Casino {
 				break;
 
 			case 3:
-				mostrarEstadisticas();
+				new ListadoEstatisticas(Ruleta.getEstadisticas(), ganancias);
 				break;
 
 			case 8:
-				borrarDatos();
+				borrarDatos(vistaCasino);
 				break;
 
 			case 9:
-				guardarDatos(crupiers.get(0).getJugadores());
+				guardarDatos(vistaCasino, crupiers.get(0).getJugadores());
 				break;
 
 			case 0:
 				// Salir y guardar
 				break;
-
 			default:
-				Escaner.avisoOpcionIncorrecta();
+				opcionIncorrecta = true;
+
 			}
 
 		} while (opcion != 0);
 
-		guardarDatos(crupiers.get(0).getJugadores());
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("Programa finalizado.");
+		guardarDatos(vistaCasino, crupiers.get(0).getJugadores());
+		vistaCasino.fin();
 	}
 
 	/**
-	 * Muestra el menú. Con las opciones disponibles.
+	 * Guarda los datos del programa. Tanto las listas de jugadores, como el
+	 * histórico de la ruleta.
 	 * 
+	 * @param vista
+	 * 
+	 * @param jugadores Lista de jugadores a guardar.
 	 */
-	private static void mostrarMenu() {
+	private static void guardarDatos(MenuCasino v, ListaJugadores jugadores) {
 
-		System.out.println("¡ESTO ES LA RULETA!");
-		System.out.println("");
-		System.out.println("  Escoja una opción:");
-		System.out.println("1 - ¡Juguemos!");
-		System.out.println("2 - Lista de jugadores");
-		System.out.println("3 - Estadísticas");
-		System.out.println("8 - Borrar datos");
-		System.out.println("9 - Guardar datos");
-		System.out.println("0 - Guardar y salir");
-		System.out.println("");
+		v.guardandoJugadores();
 
+		jugadores.guardarJugadores();
+
+		v.jugadoresGuardadosGuardandoEstadisticas();
+
+		Ruleta.guardarHisorico();
+
+		v.estadisticaGuardadas();
+	}
+
+	private static void borrarDatos(MenuCasino vistaCasino) {
+		if (vistaCasino.borrarDatos()) {
+
+			GestionCSV.borrarDatos();
+			vistaCasino.datosBorrados(true);
+		} else
+			vistaCasino.datosBorrados(false);
 	}
 
 	/**
@@ -122,60 +137,6 @@ public class Casino {
 
 		crupiers.get(0).preguntarNumeroLanzamientos();
 
-	}
-
-	/**
-	 * Muestra las estadísticas del historial de ocurrencias.
-	 */
-	private static void mostrarEstadisticas() {
-		// TODO Por el momento está, pero queda soso.
-
-		System.out.println(Ruleta.estadisticas());
-
-		System.out.println("");
-
-		System.out.printf("Hoy la casa ha ganado %d créditos.%n", Casino.ganancias);
-		System.out.println("");
-
-		System.out.println("");
-
-	}
-
-	private static void borrarDatos() {
-
-		System.out.println("Está a punto de borrar los archivos del programa.");
-		System.out.print("Esta acción no puede deshacerse. ¿Esta seguro?");
-		if (Escaner.yesNoQuestionRecursivo()) {
-
-			GestionCSV.borrarDatos();
-			System.out.println("Datos borrados.");
-
-		} else
-			System.out.println("Borrado no realizado.");
-		
-		System.out.println("");
-		System.out.println("");
-
-	}
-
-	/**
-	 * Guarda los datos del programa. Tanto las listas de jugadores, como el
-	 * histórico de la ruleta.
-	 * 
-	 * @param jugadores Lista de jugadores a guardar.
-	 */
-	private static void guardarDatos(ListaJugadores jugadores) {
-
-		System.out.println("Guardando jugadores:");
-		jugadores.guardarJugadores();
-		System.out.println(" ¡Jugadores guardados!");
-
-		System.out.println("");
-		System.out.println("");
-
-		System.out.println("Guardando estadisticas:");
-		Ruleta.guardarHisorico();
-		System.out.println(" ¡Estadisticas guardadas!");
 	}
 
 }

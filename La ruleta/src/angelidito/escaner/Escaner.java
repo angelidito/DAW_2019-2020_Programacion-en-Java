@@ -3,6 +3,8 @@
  */
 package angelidito.escaner;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -12,7 +14,7 @@ import java.util.Scanner;
  * 
  * @author <a href="twitter.com/angelidito">Ángel M. D.</a>
  */
-public final class Escaner {
+public final class Escaner implements Closeable{
 
 	static Scanner escaner = new Scanner(System.in);
 
@@ -329,5 +331,13 @@ public final class Escaner {
 	public static void avisoOpcionIncorrecta() {
 		System.out.println("Asegúrese de que introduce una opción de las disponibles.");
 		System.out.println();
+	}
+
+	@Override
+	public void close() throws IOException {
+		
+		escaner.close();
+		
+		
 	}
 }

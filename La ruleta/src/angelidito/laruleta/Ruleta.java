@@ -103,7 +103,7 @@ public class Ruleta {
 		return ultimoNumero;
 	}
 
-	public static String estadisticas() {
+	public static String getEstadisticas() {
 
 		String estadisticas = "";
 		for (NumeroRuleta numero : historico) {

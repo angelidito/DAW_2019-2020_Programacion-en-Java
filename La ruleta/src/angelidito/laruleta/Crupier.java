@@ -126,7 +126,7 @@ public class Crupier {
 				//
 
 				if (listaJugadores.comprobarRetidadaJugador(listaJugadores.getJugadoresEnMesa().get(i))) {
-					System.out.printf("Lanzamiento nº%d:%n", lanzamientos);
+					System.out.printf("Lanzamiento nº%d:%n", l);
 					listaJugadores.retirarJugador(listaJugadores.getJugadoresEnMesa().get(i));
 					i--;
 					jugadoresRetirados++;
