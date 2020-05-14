@@ -52,13 +52,12 @@ public class Casino {
 
 			opcion = Escaner.entero();
 
-			if(opcionIncorrecta) {
-				opcionIncorrecta=false;
+			if (opcionIncorrecta) {
+				opcionIncorrecta = false;
 				Escaner.avisoOpcionIncorrecta();
-			}
-			else
+			} else
+				vistaCasino.println();
 			vistaCasino.println();
-		vistaCasino.println();
 
 			switch (opcion) {
 
