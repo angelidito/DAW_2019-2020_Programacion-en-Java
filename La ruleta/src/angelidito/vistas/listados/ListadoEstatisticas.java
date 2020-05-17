@@ -7,7 +7,7 @@ package angelidito.vistas.listados;
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  *
  */
-public class ListadoEstatisticas {
+public class ListadoEstatisticas extends Listado {
 
 	/**
 	 * Metodo unico de la clase. Crea la vista y muestra las estadisticas de la
@@ -21,10 +21,23 @@ public class ListadoEstatisticas {
 
 		System.out.println("");
 
-		System.out.printf("Hoy la casa ha ganado %d créditos.%n", ganancias);
-		System.out.println("");
+		if (1 < ganancias)
+			System.out.printf("Hoy la casa ha ganado %d créditos.%n", ganancias);
+		else if (ganancias < -1)
+			System.out.printf("Hoy la casa ha perdido %d créditos.%n", -1 * ganancias);
+		else if (ganancias == 1)
+			System.out.printf("Hoy la casa ha ganado 1 crédito.%n");
+		else if (ganancias == 0)
+			System.out.printf("Hoy la casa no ha ganado nada.%n");
+		else if (ganancias == -1)
+			System.out.printf("Hoy la casa ha perdido 1 crédito.%n");
 
 		System.out.println("");
+
+		waitForEnter();
+
+		System.out.println("");
+
 	}
 
 }

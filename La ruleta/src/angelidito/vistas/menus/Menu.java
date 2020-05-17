@@ -3,53 +3,45 @@
  */
 package angelidito.vistas.menus;
 
+import angelidito.aux.Escaner;
+import angelidito.vistas.Vista;
+
 /**
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  *
  */
-public class Menu {
+public class Menu extends Vista {
 
 	private String cabecera;
-
 	private String[] opciones;
-
-	private int[] numerosOpciones;
 
 	/**
 	 * Crea la vista e imprime por pantalla el menú. Cabecera y opciones.
 	 * 
-	 * @param cabecera        Cabecera del menú.
-	 * @param opciones        Vector con las opciones imprimir.
-	 * @param numerosOpciones Vector que contiene los numeros que son aceptados.
+	 * @param cabecera         Cabecera del menú.
+	 * @param opciones         Vector con las opciones imprimir.
+	 * @param numerosOpciones  Vector que contiene los numeros que son aceptados.
+	 * @param opcionIncorrecta
 	 */
-	public Menu(String cabecera, String[] opciones, int[] numerosOpciones) {
+	public Menu(String cabecera, String[] opciones) {
 
 		this.cabecera = cabecera;
 		this.opciones = opciones;
-		this.numerosOpciones = numerosOpciones;
 
-		printMenu();
 	}
 
 	/**
 	 * @param cabecera the cabecera to set
 	 */
-	public void setCabecera(String cabecera) {
+	protected void setCabecera(String cabecera) {
 		this.cabecera = cabecera;
 	}
 
 	/**
 	 * @param opciones the opciones to set
 	 */
-	public void setOpciones(String[] opciones) {
+	protected void setOpciones(String[] opciones) {
 		this.opciones = opciones;
-	}
-
-	/**
-	 * @param numerosOpciones the numerosOpciones to set
-	 */
-	public void setNumerosOpciones(int[] numerosOpciones) {
-		this.numerosOpciones = numerosOpciones;
 	}
 
 	public void printMenu() {
@@ -61,8 +53,18 @@ public class Menu {
 
 	}
 
-	public void println() {
-		System.out.println();
+	public void printMenu(boolean opcionIncorrecta) {
+		System.out.println(cabecera);
+		for (String op : opciones) {
+			System.out.println(op);
+		}
+		if (opcionIncorrecta) {
+			System.out.println("Asegúrese de que introduce una opción de entre las disponibles.");
+		} else {
+			println();
+		}
+
 	}
+	
 
 }

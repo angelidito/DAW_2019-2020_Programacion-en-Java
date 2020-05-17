@@ -3,8 +3,8 @@ package angelidito.laruleta;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import angelidito.escaner.Escaner;
-import angelidito.escaner.TipoEntero;
+import angelidito.aux.Escaner;
+import angelidito.aux.TipoEntero;
 import angelidito.laruleta.excepciones.BadCSVException;
 import angelidito.laruleta.excepciones.BadProgramingRTException;
 import angelidito.laruleta.excepciones.CantidadCamposCSVException;

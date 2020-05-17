@@ -2,9 +2,13 @@ package angelidito.laruleta;
 
 import java.util.ArrayList;
 
-import angelidito.escaner.Escaner;
+import angelidito.aux.Escaner;
+import angelidito.aux.Pair;
 import angelidito.vistas.listados.ListadoEstatisticas;
+import angelidito.vistas.listados.ListadoJugadores;
+import angelidito.vistas.menus.MenuAdministrarJugadores;
 import angelidito.vistas.menus.MenuCasino;
+import angelidito.vistas.preguntas.PreguntasLanzamientos;
 
 /**
  * 
@@ -13,20 +17,9 @@ import angelidito.vistas.menus.MenuCasino;
  */
 public class Casino {
 
-	private static int ganancias = 0;
+	private static final ArrayList<Crupier> crupiers = new ArrayList<Crupier>(1);
 
-	private static ArrayList<Crupier> crupiers = new ArrayList<Crupier>(1);
-
-	/**
-	 * Suma una cantidad a las ganancias.
-	 * 
-	 * @param cantidad Cantidad a sumar
-	 */
-	public static void ganado(int cantidad) {
-		Casino.ganancias += cantidad;
-	}
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		// TODO: para un futuro se podria arreglar esta clase para que mejase distintos
 		// crupiers. Por el momento en el array list solo habrá 1.
@@ -49,41 +42,36 @@ public class Casino {
 		do {
 
 			vistaCasino = new MenuCasino();
+			vistaCasino.printMenu(opcionIncorrecta);
+
+			opcionIncorrecta = false;
 
 			opcion = Escaner.entero();
 
-			if (opcionIncorrecta) {
-				opcionIncorrecta = false;
-				Escaner.avisoOpcionIncorrecta();
-			} else
-				vistaCasino.println();
 			vistaCasino.println();
 
 			switch (opcion) {
 
 			case 1:
-				jugar(crupiers);
+				escojerCrupier(crupiers);
 				break;
 
 			case 2:
 				// Lista de jugadores
-				crupiers.get(0).getJugadores().menu();
+				menuAdministrarJugadores();
 				break;
 
 			case 3:
-				new ListadoEstatisticas(Ruleta.getEstadisticas(), ganancias);
+				new ListadoEstatisticas(Ruleta.getEstadisticas(), Crupier.getGananciasBanca());
 				break;
 
 			case 8:
 				borrarDatos(vistaCasino);
 				break;
 
-			case 9:
+			case 9: // Guarda pero no sale del bucle
+			case 0: // Gurada y sí se sale del bucle
 				guardarDatos(vistaCasino, crupiers.get(0).getJugadores());
-				break;
-
-			case 0:
-				// Salir y guardar
 				break;
 			default:
 				opcionIncorrecta = true;
@@ -92,8 +80,108 @@ public class Casino {
 
 		} while (opcion != 0);
 
-		guardarDatos(vistaCasino, crupiers.get(0).getJugadores());
 		vistaCasino.fin();
+	}
+
+	/**
+	 * De entre todos los crupiers da uno a elegir y pregunta cuantos lanzamientos
+	 * hacer. Ahora que sólo hay uno, no da a elegir crupier.
+	 * 
+	 * @param crupiers Lista de crupiers.
+	 */
+	private static void escojerCrupier(ArrayList<Crupier> crupiers) {
+
+		preguntarNumeroLanzamientos(crupiers.get(0));
+
+	}
+
+	/**
+	 * Pregunta el nº de lanzamientos a realizar y los realiza.
+	 * 
+	 * @param crupier Crupier que lanza su ruleta.
+	 */
+	private static void preguntarNumeroLanzamientos(Crupier crupier) {
+		PreguntasLanzamientos lanzamiento = new PreguntasLanzamientos();
+
+		int minLanzamientos = 1;
+		int maxLanzamientos = 1000000;
+		int lanzamientos;
+		String mensajeJugadoresRetirados;
+
+		lanzamientos = lanzamiento.numLanzamientos(minLanzamientos, maxLanzamientos);
+
+		mensajeJugadoresRetirados = crupier.lanzar(lanzamientos);
+
+		lanzamiento.mostrar(mensajeJugadoresRetirados);
+
+		if (lanzamiento.lazarDeNuevo())
+			preguntarNumeroLanzamientos(crupier);
+
+	}
+
+	/**
+	 * Menu de jugadores. Permite listar, añadir, retirar y editar jugadores.
+	 * 
+	 */
+	private static void menuAdministrarJugadores() {
+
+		int opcion = 0;
+		boolean opcionIncorrecta = false;
+		do {
+
+			MenuAdministrarJugadores adminJugadores = new MenuAdministrarJugadores();
+			
+			adminJugadores.printMenu(opcionIncorrecta);
+
+			opcionIncorrecta = false;
+
+			opcion = Escaner.entero();
+
+			adminJugadores.println();
+
+			switch (opcion) {
+			case 1:
+				menuListarJugadores();
+				
+				new ListadoJugadores(crupiers.getlistaJugadores);
+				
+				break;
+
+			case 2:
+				this.menuAñadirJugador();
+				break;
+
+			case 3:
+				this.menuRetirarJugador();
+				break;
+
+			case 4:
+				this.menuEditarJugador();
+				break;
+
+			case 9:
+				for (Jugador jugador : jugadoresEnMesa) {
+					System.out.println(jugador.informacion());
+				}
+				break;
+			case 0:
+				// NO TIENE QUE HACER NADA
+				break;
+
+			default:
+				opcionIncorrecta = true;
+			}
+
+		} while (opcion != 0);
+	}
+
+	private static void borrarDatos(MenuCasino vistaCasino) {
+		if (vistaCasino.borrarDatos()) {
+
+			GestionCSV.borrarDatos();
+			vistaCasino.datosBorrados(true);
+		} else
+			vistaCasino.datosBorrados(false);
 	}
 
 	/**
@@ -115,27 +203,6 @@ public class Casino {
 		Ruleta.guardarHisorico();
 
 		v.estadisticaGuardadas();
-	}
-
-	private static void borrarDatos(MenuCasino vistaCasino) {
-		if (vistaCasino.borrarDatos()) {
-
-			GestionCSV.borrarDatos();
-			vistaCasino.datosBorrados(true);
-		} else
-			vistaCasino.datosBorrados(false);
-	}
-
-	/**
-	 * De entre todos los crupiers da uno a elegir y pregunta cuantos lanzamientos
-	 * hacer. Ahora que sólo hay uno, no da a elegir crupier.
-	 * 
-	 * @param crupiers Lista de crupiers.
-	 */
-	private static void jugar(ArrayList<Crupier> crupiers) {
-
-		crupiers.get(0).preguntarNumeroLanzamientos();
-
 	}
 
 }

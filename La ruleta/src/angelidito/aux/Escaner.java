@@ -1,7 +1,7 @@
 /**
  * 
  */
-package angelidito.escaner;
+package angelidito.aux;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.Scanner;
  * 
  * @author <a href="twitter.com/angelidito">Ángel M. D.</a>
  */
-public final class Escaner implements Closeable{
+public final class Escaner implements Closeable {
 
 	static Scanner escaner = new Scanner(System.in);
 
@@ -32,7 +32,7 @@ public final class Escaner implements Closeable{
 
 		do {
 
-			textoEscaneado = escaner.nextLine();
+			textoEscaneado = escaner.next();
 			System.out.println();
 
 			try {
@@ -71,7 +71,7 @@ public final class Escaner implements Closeable{
 
 		do {
 
-			textoEscaneado = escaner.nextLine();
+			textoEscaneado = escaner.next();
 			System.out.println();
 
 			try {
@@ -116,7 +116,7 @@ public final class Escaner implements Closeable{
 
 		do {
 
-			textoEscaneado = escaner.nextLine();
+			textoEscaneado = escaner.next();
 			System.out.println();
 
 			try {
@@ -184,9 +184,7 @@ public final class Escaner implements Closeable{
 
 		}
 
-		// escaner.close();
 		return textoEscaneado.charAt(0);
-
 	}
 
 	/**
@@ -209,6 +207,16 @@ public final class Escaner implements Closeable{
 
 		// escaner.close();
 		return textoEscaneado;
+	}
+
+	/**
+	 * Espera a que el usuario pulse enter.
+	 * 
+	 * @return Un salto de linea.
+	 */
+	public static String Enter() {
+		escaner.nextLine();
+		return "\n";
 	}
 
 	/**
@@ -236,11 +244,8 @@ public final class Escaner implements Closeable{
 				yesNo = true;
 
 			} else if (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0) {
-				System.out.println("NOOO");
 				textoAdecuado = true;
 				yesNo = false;
-
-			} else {
 
 			}
 
@@ -262,6 +267,8 @@ public final class Escaner implements Closeable{
 
 		String texto = "";
 		boolean yesNo;
+
+		System.out.println(" [s/n]");
 		try {
 			texto = escaner.next();
 		} catch (Exception e) {
@@ -335,9 +342,8 @@ public final class Escaner implements Closeable{
 
 	@Override
 	public void close() throws IOException {
-		
+
 		escaner.close();
-		
-		
+
 	}
 }

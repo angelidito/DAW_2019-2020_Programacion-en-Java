@@ -1,6 +1,6 @@
 package angelidito.laruleta;
 
-import angelidito.escaner.Escaner;
+import angelidito.aux.Escaner;
 import angelidito.laruleta.excepciones.BadCSVException;
 import angelidito.laruleta.excepciones.BadProgramingRTException;
 import angelidito.laruleta.excepciones.CantidadCamposCSVException;

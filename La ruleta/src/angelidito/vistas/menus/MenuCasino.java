@@ -3,7 +3,7 @@
  */
 package angelidito.vistas.menus;
 
-import angelidito.escaner.Escaner;
+import angelidito.aux.Escaner;
 
 /**
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
@@ -11,13 +11,16 @@ import angelidito.escaner.Escaner;
  */
 public class MenuCasino extends Menu {
 
-	private final static String cabecera = "¡ESTO ES LA RULETA!\n\n  Escoja una opción:";
-	private final static String[] opciones = { "1 - ¡Juguemos!", "2 - Lista de jugadores", "3 - Estadísticas",
+	private final static String CABECERA = "¡ESTO ES LA RULETA!\n\n  Escoja una opción:";
+	private final static String[] OPCIONES = { "1 - ¡Juguemos!", "2 - Administrar jugadores", "3 - Estadísticas",
 			"8 - Borrar datos", "9 - Guardar datos", "0 - Guardar y salir" };
-	private final static int[] numerosOpciones = { 1, 2, 3, 8, 9, 0 };
+	private final static int[] NUM_OPCIONES = { 1, 2, 3, 8, 9, 0 };
 
+	/**
+	 * Crea la vista e imprime por pantalla el menú. Cabecera y opciones.
+	 */
 	public MenuCasino() {
-		this(cabecera, opciones, numerosOpciones);
+		this(CABECERA, OPCIONES);
 	}
 
 	/**
@@ -27,8 +30,8 @@ public class MenuCasino extends Menu {
 	 * @param opciones        Vector con las opciones imprimir.
 	 * @param numerosOpciones Vector que contiene los numeros que son aceptados.
 	 */
-	private MenuCasino(String cabecera, String[] opciones, int[] numerosOpciones) {
-		super(cabecera, opciones, numerosOpciones);
+	private MenuCasino(String cabecera, String[] opciones) {
+		super(cabecera, opciones);
 	}
 
 	public boolean borrarDatos() {
@@ -64,8 +67,7 @@ public class MenuCasino extends Menu {
 		} else
 			System.out.println("Borrado no realizado.");
 
-		System.out.println("");
-		System.out.println("");
+		println();
 
 	}
 

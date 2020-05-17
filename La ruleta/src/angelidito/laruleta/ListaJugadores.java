@@ -5,7 +5,7 @@ package angelidito.laruleta;
 
 import java.util.ArrayList;
 
-import angelidito.escaner.Escaner;
+import angelidito.aux.Escaner;
 
 /**
  * Contiene y recupera los jugadores.
@@ -36,6 +36,13 @@ public class ListaJugadores {
 	static {
 		numListasJugadores = -1;
 		jugadoresRetirados = null;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 
 	/**
@@ -111,107 +118,6 @@ public class ListaJugadores {
 		GestionCSV.escribirCSV(ficheroEnMesa, jugadoresEnMesa);
 		GestionCSV.escribirCSV(ficheroRetirados, jugadoresRetirados);
 
-	}
-
-	/**
-	 * Menu de jugadores. Permite listar, añadir, retirar y editar jugadores.
-	 * 
-	 */
-	public void menu() {
-
-		int opcion = 0;
-		do {
-
-			System.out.println("Lista de jugadores");
-			System.out.println();
-			System.out.println("  Escoja una opción:");
-			System.out.println("1 - Listar jugadores");
-			System.out.println("2 - Añadir nuevos jugadores");
-			System.out.println("3 - Retirar jugadores");
-			System.out.println("4 - Editar jugadores");
-			System.out.println("9 - RAW info.");
-			System.out.println("0 - Volver al menú principal");
-			System.out.println("");
-
-			opcion = Escaner.entero();
-
-			System.out.println();
-
-			switch (opcion) {
-			case 1:
-				this.menuListarJugadores();
-				break;
-
-			case 2:
-				this.menuAñadirJugador();
-				break;
-
-			case 3:
-				this.menuRetirarJugador();
-				break;
-
-			case 4:
-				this.menuEditarJugador();
-				break;
-
-			case 9:
-				for (Jugador jugador : jugadoresEnMesa) {
-					System.out.println(jugador.informacion());
-				}
-				break;
-			case 0:
-				// NO TIENE QUE HACER NADA
-				break;
-
-			default:
-				Escaner.avisoOpcionIncorrecta();
-			}
-
-		} while (opcion != 0);
-	}
-
-	/**
-	 * Lista los jugadores. NO ES UN MENU. NO da a escojer entre jugadores en mesa y
-	 * jugadores retirados, pero podría ser una opción para más adelante.
-	 * 
-	 */
-	private void menuListarJugadores() {
-
-		listarJugadoresEnMesa();
-
-		System.out.println("");
-
-		listarJugadoresRetirados();
-
-		System.out.println("");
-		System.out.println("");
-
-	}
-
-	/**
-	 * 
-	 */
-	private void listarJugadoresEnMesa() {
-		System.out.println("Jugadores en mesa:");
-
-		if (this.jugadoresEnMesa.size() == 0)
-			System.out.println("\tNingun jugador");
-		else
-			for (Jugador j : this.jugadoresEnMesa)
-				System.out.println("\t" + j.info());
-	}
-
-	/**
-	 * 
-	 */
-	private void listarJugadoresRetirados() {
-		System.out.println("Jugadores retirados:");
-
-		if (ListaJugadores.jugadoresRetirados.size() == 0)
-			System.out.println("\tNingun jugador");
-		else
-			for (Jugador j : ListaJugadores.jugadoresRetirados)
-				System.out.println("\t" + j.info());
 	}
 
 	/**
@@ -379,7 +285,7 @@ public class ListaJugadores {
 	 * 
 	 * @param jugadorParaRetirar jugador a retirar.
 	 */
-	public void retirarJugador(Jugador jugadorParaRetirar) {
+	public String retirarJugador(Jugador jugadorParaRetirar) {
 
 		boolean retirado = false;
 
@@ -394,9 +300,10 @@ public class ListaJugadores {
 
 			}
 		}
-		if (retirado) {
-			String mensajeRetirada = "%s ha sido retirado. %s";
 
+		String mensajeRetirada = "";
+		if (retirado) {
+			mensajeRetirada = "%s ha sido retirado. %s";
 			if (jugadorParaRetirar.getCredito() < 0)
 				EasterEgg.huevoDePascua(jugadorParaRetirar.getNombre());
 
@@ -418,14 +325,13 @@ public class ListaJugadores {
 					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
 							" Motivo desconocido");
 
-				System.out.println(mensajeRetirada);
-				System.out.println();
-
 			}
 
 		} else {
-			System.err.println("No se ha podido retirar al jugador.");
+			mensajeRetirada = "No se ha podido retirar al jugador.";
 		}
+
+		return mensajeRetirada;
 
 	}
 

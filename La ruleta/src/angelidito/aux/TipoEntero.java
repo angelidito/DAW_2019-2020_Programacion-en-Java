@@ -1,7 +1,7 @@
 /**
  * 
  */
-package angelidito.escaner;
+package angelidito.aux;
 
 /**
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
