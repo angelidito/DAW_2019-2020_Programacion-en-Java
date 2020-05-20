@@ -15,7 +15,7 @@ public class EasterEgg {
 
 		String[] eggs = { "%s pagará lo que debe con sangre... O sea, sudor quiero decir: fregará el suelo...",
 				"A %s le acaban de partir las piernas.", "%s está apagado o fuera de cobertura.",
-				"El casino ha enviado a %s a un lugar mejor.", "El funeral de %s será  mañana a las 12:=00.",
+				"El casino ha enviado a %s a un lugar mejor.", "El funeral de %s será  mañana a las 12:00.",
 				"%s ya no está entre nosotros...", "%s ha sido acompañado a la salida. De la vida.",
 				"Parece que %s ha apostado el cuello. Y lo ha perdido...",
 				"Hoy es un buen día para morir, ¿verdad, %s?",

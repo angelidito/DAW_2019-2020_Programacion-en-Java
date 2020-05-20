@@ -1125,18 +1125,5 @@ public class Apuesta {
 		}
 	}
 
-	/**
-	 * Pregunta y escanea la cantidad a apostar. Sólo admite enteros positivos.
-	 * 
-	 * @return La cantidad introducida.
-	 */
-	private int pedirCantidad() {
-		TipoEntero positivo = TipoEntero.POSITIVO;
-
-		System.out.println("¿Qúe cantidad desea apostar?");
-		int cantidad = Escaner.entero(positivo);
-
-		return cantidad;
-
-	}
+	
 }

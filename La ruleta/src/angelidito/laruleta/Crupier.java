@@ -17,6 +17,7 @@ public class Crupier {
 	 * Lista de jugadores que maneja el Crupier.
 	 */
 	private ListaJugadores listaJugadores;
+
 	@SuppressWarnings("unused")
 	private ArrayList<Jugador> jugadoresParaRetirar;
 
@@ -57,9 +58,9 @@ public class Crupier {
 	}
 
 	/**
-	 * @return La Lista de Jugadores.
+	 * @return La Lista de Jugadores
 	 */
-	public ListaJugadores getJugadores() {
+	public ListaJugadores getListaJugadores() {
 		return listaJugadores;
 	}
 

@@ -11,7 +11,8 @@ public class MenuAdministrarJugadores extends Menu {
 
 	private final static String CABECERA = "Administración de jugadores\n\n  Escoja una opción:";
 	private final static String[] OPCIONES = { "1 - Listar jugadores", "2 - Añadir nuevos jugadores",
-			"3 - Retirar jugadores", "4 - Editar jugadores", "9 - Long info.s", "0 - Volver al menú principal" };
+			"3 - Retirar jugadores", "4 - Editar jugadores", "9 - Información detallada (Aviso: muy extensa)",
+			"0 - Volver al menú principal" };
 	private final static int[] NUM_OPCIONES = { 1, 2, 3, 9, 0 };
 
 	/**

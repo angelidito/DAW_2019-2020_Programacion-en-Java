@@ -112,6 +112,28 @@ public class Jugador {
 	 * un crédito o un numero de rondas máximas menor, los mínimos serán de 10. Crea
 	 * la apuesta del jugador sin apostar nada.
 	 * 
+	 * @param nombre          Nombre del jugador.
+	 * @param credito         El crédito del jugador.
+	 * @param creditoObjetivo Crédito con el que el jugador se retirará.
+	 * @param rondasMaximas   Las rondas máximas a jugar.
+	 */
+	public Jugador(String nombre, int credito, int creditoObjetivo, int rondasMaximas) {
+		this.id = numJugadores++;
+		this.nombre = nombre;
+		this.credito = credito > 10 ? credito : 10;
+		this.creditoObjetivo = creditoObjetivo;
+		this.rondasMaximas = rondasMaximas > 10 ? rondasMaximas : Jugador.MAX_INT_VALUE;
+		this.rondas = 0;
+		this.ganado = 0;
+		this.perdido = 0;
+		this.apuesta = new Apuesta();
+	}
+
+	/**
+	 * Crea el Jugador con el crédito y las rondas máximas pasados. Aunque se pase
+	 * un crédito o un numero de rondas máximas menor, los mínimos serán de 10. Crea
+	 * la apuesta del jugador sin apostar nada.
+	 * 
 	 * @param credito         El crédito del jugador.
 	 * @param creditoObjetivo Crédito con el que el jugador se retirará.
 	 * @param rondasMaximas   Las rondas máximas a jugar.
@@ -564,34 +586,6 @@ public class Jugador {
 		return retirar;
 	}
 
-	/**
-	 * Menú de edicion de la Apuesta.
-	 */
-	public void menuEditarApuesta() {
-		int op;
-		do {
-			System.out.printf("Apuesta: %s%n%n", this.getApuesta().info());
-			System.out.println("¿Qué parte desea editar de la apuesta?");
-			System.out.println("  Escoja una opción:");
-			System.out.println("1 - Apuestas números");
-			System.out.println("2 - Apuestas a pares e impares");
-			System.out.println("3 - Apuestas a rojos y negros");
-			System.out.println("4 - Apuestas a mitades");
-			System.out.println("5 - Apuestas a docenas");
-			System.out.println("6 - Apuestas a filas 2 a 1");
-			System.out.println("7 - Retirar toda la apuesta");
-			System.out.println("0 - Guardar cambios");
-			System.out.println("");
-
-			op = Escaner.entero(0, 7);
-
-			System.out.println();
-
-			this.getApuesta().editarApuesta(credito, op);
-
-			System.out.println();
-
-		} while (op != 0);
-	}
+	
 
 }
