@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"angelidito.laruleta"},{"l":"angelidito.laruleta.excepciones"},{"l":"angelidito.vistas"},{"l":"angelidito.vistas.listados"},{"l":"angelidito.vistas.menus"},{"l":"angelidito.vistas.preguntas"}]
