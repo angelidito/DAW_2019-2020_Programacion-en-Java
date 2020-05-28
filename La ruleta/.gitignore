@@ -1,6 +1,12 @@
 /bin/*
 /bin/
 bin
+/doc/*
+/doc/
+doc
+/dox/*
+/dox/
+dox
 /*.sh
 *.sh
 /*.cmd
@@ -10,6 +16,7 @@ Doxyfile
 
 ../.DS_Store
 .DS_Store
+./.DS_Store
 .*
 
 
