@@ -139,7 +139,6 @@ public class GestionCSV {
 	 * 
 	 * @return El histórico a partir de historico.csv
 	 */
-	@SuppressWarnings("resource")
 	public static Integer[] obtenerHistoricoOcurrencias() {
 
 		Integer[] ocurrencias = new Integer[37];
@@ -258,7 +257,6 @@ public class GestionCSV {
 	 * @param nombreFichero nombre del fichero que almacena los jugadores.
 	 * @return ArrayList con los jugadores que contenia el fichero.
 	 */
-	@SuppressWarnings("resource")
 	public static ArrayList<Jugador> obtenerJugadores(String nombreFichero) {
 
 		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
@@ -327,15 +325,15 @@ public class GestionCSV {
 			e.printStackTrace();
 		}
 
-//		finally {
-//			try {
-//				if (fr != null)
-//					fr.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//
-//		}
+		finally {
+			try {
+				if (fr != null)
+					fr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
 
 		return jugadores;
 	}

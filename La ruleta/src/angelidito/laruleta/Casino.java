@@ -1,16 +1,18 @@
 package angelidito.laruleta;
 
-
-import angelidito.aux.Escaner;
+import angelidito.vistas.Escaner;
 import angelidito.vistas.listados.ListadoEstatisticas;
 import angelidito.vistas.listados.ListadoJugadores;
 import angelidito.vistas.menus.MenuAdministrarJugadores;
-import angelidito.vistas.menus.MenuAñadirJugador;
+import angelidito.vistas.menus.MenuAñadirJugadores;
 import angelidito.vistas.menus.MenuCasino;
+import angelidito.vistas.menus.MenuEditarJugadores;
+import angelidito.vistas.menus.MenuRetirarJugadores;
+import angelidito.vistas.preguntas.PreguntaBorradoDatos;
 import angelidito.vistas.preguntas.PreguntasLanzamientos;
 
 /**
- * 
+ * Clase controladora del programa.
  * 
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  */
@@ -20,7 +22,7 @@ public class Casino {
 
 	public static void main(String[] args) throws Exception {
 
-		// TODO: para un futuro se podria arreglar esta clase para que mejase distintos
+		// TO DO: para un futuro se podria arreglar esta clase para que mejase distintos
 		// crupiers. Con un array list.
 		/*
 		 * Habria que contar los archivos que hay que se llamen jugadoresEnMesaXX.csv,
@@ -32,6 +34,9 @@ public class Casino {
 		 * Debería añadirse otro menú para añadir crupiers, que contendría el menú de
 		 * las listas de jugadores. Cada crupier el suyo, está claro.
 		 */
+
+		Escaner escaner = new Escaner();
+
 		MenuCasino vistaCasino;
 		MenuCasino.bienvenida();
 
@@ -65,7 +70,11 @@ public class Casino {
 				break;
 
 			case 8:
-				borrarDatos(vistaCasino);
+				PreguntaBorradoDatos borrado;
+				borrado = new PreguntaBorradoDatos();
+
+				if (borrado.borrarDatos())
+					GestionCSV.borrarDatos();
 				break;
 
 			case 9: // Guarda pero no sale del bucle
@@ -79,6 +88,7 @@ public class Casino {
 
 		} while (opcion != 0);
 
+		escaner.close();
 		vistaCasino.fin();
 	}
 
@@ -149,15 +159,15 @@ public class Casino {
 				break;
 
 			case 2:
-				menuAñadirJugador();
+				menuAñadirJugadores();
 				break;
 
 			case 3:
-//				menuRetirarJugador();
+				menuRetirarJugadores();
 				break;
 
 			case 4:
-//				menuEditarJugador();
+				menuEditarJugadores();
 				break;
 
 			case 9:
@@ -177,19 +187,46 @@ public class Casino {
 		} while (opcion != 0);
 	}
 
+	/**
+	 * Permite editar a los jugadores.
+	 */
+	private static void menuEditarJugadores() {
+
+		MenuEditarJugadores editar;
+		editar = new MenuEditarJugadores(crupier.getListaJugadores());
+
+		editar.printMenu();
+
+		editar.editarJugador();
+
+	}
+
+	/**
+	 * Permite retirar jugadores.
+	 */
+	private static void menuRetirarJugadores() {
+
+		MenuRetirarJugadores retirar;
+		retirar = new MenuRetirarJugadores(crupier.getListaJugadores());
+
+		retirar.printMenu();
+
+		retirar.retirarJugador();
+
+	}
 
 	/**
 	 * Permite añadir un jugador. Estandar o personalizado.
 	 */
-	private static void menuAñadirJugador() {
+	private static void menuAñadirJugadores() {
 
 		int opcion;
-		MenuAñadirJugador menuAñadirJugador;
+		MenuAñadirJugadores menuAñadirJugador;
 		ListaJugadores listaJugadores = crupier.getListaJugadores();
-		
+
 		boolean opcionIncorrecta = false;
 		do {
-			 menuAñadirJugador = new MenuAñadirJugador();
+			menuAñadirJugador = new MenuAñadirJugadores();
 
 			menuAñadirJugador.printMenu(opcionIncorrecta);
 			opcionIncorrecta = false;
@@ -210,7 +247,12 @@ public class Casino {
 				break;
 
 			case 3:
-				listaJugadores.getJugadoresEnMesa().add(menuAñadirJugador.crearJugadorConParametrosPorTeclado());
+
+				Jugador jugador;
+
+				jugador = menuAñadirJugador.crearJugadorConParametrosPorTeclado();
+
+				listaJugadores.getJugadoresEnMesa().add(jugador);
 				break;
 
 			case 0:
@@ -225,21 +267,11 @@ public class Casino {
 
 	}
 
-
-	private static void borrarDatos(MenuCasino vistaCasino) {
-		if (vistaCasino.borrarDatos()) {
-
-			GestionCSV.borrarDatos();
-			vistaCasino.datosBorrados(true);
-		} else
-			vistaCasino.datosBorrados(false);
-	}
-
 	/**
 	 * Guarda los datos del programa. Tanto las listas de jugadores, como el
 	 * histórico de la ruleta.
 	 * 
-	 * @param vista
+	 * @param v         Vista que emplea.
 	 * 
 	 * @param jugadores Lista de jugadores a guardar.
 	 */
@@ -254,6 +286,9 @@ public class Casino {
 		Ruleta.guardarHisorico();
 
 		v.estadisticaGuardadas();
+
+		v.println();
+		v.waitForEnter();
 	}
 
 }

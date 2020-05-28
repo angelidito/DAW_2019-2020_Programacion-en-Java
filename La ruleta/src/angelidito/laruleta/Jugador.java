@@ -1,6 +1,5 @@
 package angelidito.laruleta;
 
-import angelidito.aux.Escaner;
 import angelidito.laruleta.excepciones.BadCSVException;
 import angelidito.laruleta.excepciones.BadProgramingRTException;
 import angelidito.laruleta.excepciones.CantidadCamposCSVException;
@@ -249,7 +248,6 @@ public class Jugador {
 			} catch (CantidadCamposCSVException e) {
 //				System.err.println(e.getMessage());
 				System.err.printf("Apuesta de %s fijada a 0.%n", this.nombre);
-				System.err.println();
 				this.apuesta = new Apuesta();
 
 			}
@@ -501,90 +499,6 @@ public class Jugador {
 		return this.apuesta.totalApostado();
 	}
 
-	/**
-	 * Edita el jugador según la opcion introducida por teclado. Opciones: 1,
-	 * nombre; 2, crédito; 3, crédito objetivo;, 4, rondas máximas; 5, apuesta; 0,
-	 * nada.
-	 * 
-	 * @param opcion 1, para cambiar el nombre; 2, para variar el crédito; 3, para
-	 *               cambiar el crédito objetivo; 4, para cambiar el máximo número
-	 *               de rondas; 5, para editar la apuesta; 0, no hace nada; en
-	 *               cualquier otro caso, informa que la opción es incorrecta.
-	 * 
-	 * @return {@code true} si el jugador ha alcanzado el crédito objetivo o las
-	 *         rondas máximas, o si no tiene crédito; de otra manera, {@code false}
-	 */
-	public boolean editarJugador(int opcion) {
-
-		boolean retirar = false;
-
-		switch (opcion) {
-
-		case 1:
-			System.out.println("Introduzca el nuevo nombre.");
-
-			this.setNombre(Escaner.texto());
-
-			break;
-
-		case 2:
-			System.out.println("Inserte la cantidad a sumar (restará si es negativa).");
-
-			this.variarCredito(
-					Escaner.entero(-1 * Jugador.MAX_INT_VALUE + this.credito, Jugador.MAX_INT_VALUE - this.credito));
-
-			if (this.credito < 1) {
-				retirar = true;
-				System.err.println("Sin credito. El jugador se retirará tras la edición");
-			}
-
-			break;
-
-		case 3:
-			System.out.println("Inserte el nuevo crédito objetivo.");
-			System.out.printf("El actual es: %d.%n", this.getCreditoObjetivo());
-
-			int nuevoCreditoObjetivo = Escaner.entero(0, Jugador.MAX_INT_VALUE);
-			this.setCreditoObjetivo(nuevoCreditoObjetivo);
-
-			if (this.creditoObjetivo <= this.credito) {
-				retirar = true;
-				System.err.println("Crédito objetivo superado. El jugador se retirará tras la edición");
-			}
-
-			break;
-
-		case 4:
-			System.out.println("Inserte el nuevo máximo de rondas.");
-			System.out.printf("El actual es: %d.%n", this.getRondasMaximas());
-
-			int nuevasRondasMaximas = Escaner.entero(1, Jugador.MAX_INT_VALUE);
-			this.setCreditoObjetivo(nuevasRondasMaximas);
-
-			if (this.rondasMaximas <= this.rondas) {
-				retirar = true;
-				System.err.println("Rondas máximas superadas. El jugador se retirará tras la edición");
-			}
-
-			break;
-
-		case 5:
-
-			menuEditarApuesta();
-
-			break;
-
-		case 0:
-			// NO TIENE QUE HACER NADA.
-			// Solo salir.
-			break;
-
-		default:
-			Escaner.avisoOpcionIncorrecta();
-
-		}
-		return retirar;
-	}
 
 	
 

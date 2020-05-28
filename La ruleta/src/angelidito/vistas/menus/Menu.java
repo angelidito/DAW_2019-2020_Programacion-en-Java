@@ -3,7 +3,6 @@
  */
 package angelidito.vistas.menus;
 
-import angelidito.aux.Escaner;
 import angelidito.vistas.Vista;
 
 /**
@@ -16,12 +15,10 @@ public class Menu extends Vista {
 	private String[] opciones;
 
 	/**
-	 * Crea la vista e imprime por pantalla el menú. Cabecera y opciones.
+	 * Crea la vista.
 	 * 
-	 * @param cabecera         Cabecera del menú.
-	 * @param opciones         Vector con las opciones imprimir.
-	 * @param numerosOpciones  Vector que contiene los numeros que son aceptados.
-	 * @param opcionIncorrecta
+	 * @param cabecera Cabecera del menú.
+	 * @param opciones Vector con las opciones imprimir.
 	 */
 	public Menu(String cabecera, String[] opciones) {
 
@@ -44,27 +41,45 @@ public class Menu extends Vista {
 		this.opciones = opciones;
 	}
 
+	/**
+	 * @return the opciones
+	 */
+	protected String[] getOpciones() {
+		return opciones;
+	}
+
+	/**
+	 * Imprime el menú. Cabecera y opciones.
+	 */
 	public void printMenu() {
 		System.out.println(cabecera);
 		for (String opcion : opciones) {
-			System.out.println(opcion);
+			System.out.println(opcion.toString());
 		}
 		println();
 
 	}
 
+	/**
+	 * Imprime el menú. Cabecera y opciones.
+	 * 
+	 * @param opcionIncorrecta Si es positivo imprime la un mensaje.
+	 */
 	public void printMenu(boolean opcionIncorrecta) {
+
 		System.out.println(cabecera);
-		for (String op : opciones) {
+
+		for (String op : opciones)
 			System.out.println(op);
-		}
-		if (opcionIncorrecta) {
+
+//		for (int i = 0; i < opciones.length; i++) 
+//			System.out.println(opciones[i]);
+
+		if (opcionIncorrecta)
 			System.out.println("Asegúrese de que introduce una opción de entre las disponibles.");
-		} else {
+		else
 			println();
-		}
 
 	}
-	
 
 }

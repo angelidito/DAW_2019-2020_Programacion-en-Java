@@ -3,28 +3,37 @@
  */
 package angelidito.vistas.menus;
 
-import angelidito.aux.Escaner;
-import angelidito.aux.TipoEntero;
 import angelidito.laruleta.Apuesta;
 import angelidito.laruleta.Jugador;
+import angelidito.vistas.Escaner;
+import angelidito.vistas.Escaner.TipoEntero;
 
 /**
+ * Menú que permite editar la apuesta.
+ * 
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  *
  */
 public class MenuEditarApuesta extends Menu {
 
+	/**
+	 * Jugador que contiene la apuesta a editar.
+	 */
 	private Jugador jugador;
+	/**
+	 * Apuesta a editar extraida del jugador.
+	 */
 	private Apuesta apuestaParaEditar;
 
-	private final static String[] OPCIONES = { // TODO
-			"1 - Jugador estándar:\\n\\tnombre por defecto\\n\\tcrédito = 10\\n\\trondas máximas = 10",
-			"Jugador estándar con credito personalizado", "3 - Jugador con parámetros personalizados",
-			"0 - Volver atrás" };
-	private final static int[] NUM_OPCIONES = { 1, 2, 3, 0 };
+	private final static String[] OPCIONES = { "1 - Apuestas números", "2 - Apuestas a pares e impares",
+			"3 - Apuestas a rojos y negros", "4 - Apuestas a mitades", "5 - Apuestas a docenas",
+			"6 - Apuestas a filas 2 a 1", "7 - Retirar toda la apuesta", "0 - Guardar cambios" };
+	private final static int[] NUM_OPCIONES = { 1, 2, 3, 5, 6, 7, 0 };
 
 	/**
-	 * Crea la vista e imprime por pantalla el menú. Cabecera y opciones.
+	 * Crea la vista.
+	 * 
+	 * @param jugador Jugador cuya apuesta hay que editar.
 	 */
 	public MenuEditarApuesta(Jugador jugador) {
 		this(String.format("Apuesta: %s%n%n", jugador.getApuesta().info())
@@ -32,48 +41,26 @@ public class MenuEditarApuesta extends Menu {
 	}
 
 	/**
-	 * Crea la vista e imprime por pantalla el menú. Cabecera y opciones.
+	 * Crea la vista.
 	 * 
-	 * @param cabecera        Cabecera del menú.
-	 * @param opciones        Vector con las opciones imprimir.
-	 * @param numerosOpciones Vector que contiene los numeros que son aceptados.
+	 * @param cabecera Cabecera del menú.
+	 * @param opciones Vector con las opciones imprimir.
+	 * @param jugador  Jugador cuya apuesta hay que editar.
 	 */
-	public MenuEditarApuesta(String cabecera, String[] opciones, Jugador jugador) {
+	private MenuEditarApuesta(String cabecera, String[] opciones, Jugador jugador) {
 		super(cabecera, opciones);
 		this.jugador = jugador;
 		this.apuestaParaEditar = jugador.getApuesta();
 	}
 
 	/**
-	 * Menú de edicion de la Apuesta.
+	 * Modifica la apuesta por teclado. El total apostado no puede ser mayor que el
+	 * credito disponible del jugador.
+	 * 
+	 * @param op 1, 2, 3, 4, 5 o 6, según lo que se quiera editar.
 	 */
-	public void editarApuesta() {
-		int op;
-		do {
-			super.printMenu();
-			// TODO
-			System.out.println("1 - Apuestas números");
-			System.out.println("2 - Apuestas a pares e impares");
-			System.out.println("3 - Apuestas a rojos y negros");
-			System.out.println("4 - Apuestas a mitades");
-			System.out.println("5 - Apuestas a docenas");
-			System.out.println("6 - Apuestas a filas 2 a 1");
-			System.out.println("7 - Retirar toda la apuesta");
-			System.out.println("0 - Guardar cambios");
-
-			op = Escaner.entero(0, 7);
-
-			System.out.println();
-
-			apuestaParaEditar.editarApuesta(jugador.getCredito(), op);
-
-			System.out.println();
-
-		} while (op != 0);
-	}
-
-	public void editarOpcion(int creditoDisponible, int op) {
-
+	public void editarApuesta(int op) {
+		int creditoDisponible = jugador.getCredito();
 		int opcion = 0;
 		int cantidad = 0;
 
@@ -338,6 +325,13 @@ public class MenuEditarApuesta extends Menu {
 
 		return cantidad;
 
+	}
+
+	/**
+	 * @return vector con las opciones disponibles
+	 */
+	public static int[] getNumOpciones() {
+		return NUM_OPCIONES;
 	}
 
 }

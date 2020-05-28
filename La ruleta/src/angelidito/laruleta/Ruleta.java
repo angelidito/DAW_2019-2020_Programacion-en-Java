@@ -25,11 +25,11 @@ public class Ruleta {
 	// private static Integer[] historico;
 	private static NumeroRuleta[] historico;
 
-	/**
-	 * No implementado: TODO top diez numeros mas probables
-	 */
-	@SuppressWarnings("unused")
-	private static NumeroRuleta[] topTen;
+//	/**
+//	 * No implementado: TODO top diez numeros mas probables
+//	 */
+//	@SuppressWarnings("unused")
+//	private static NumeroRuleta[] topTen;
 
 	private static int totalTiradas = 0;
 
@@ -42,7 +42,7 @@ public class Ruleta {
 		random = new Random();
 		historico = new NumeroRuleta[37];
 		recuperarHistorico();
-		topTen = new NumeroRuleta[10];
+//		topTen = new NumeroRuleta[10];
 
 		for (NumeroRuleta numero : historico)
 			totalTiradas += numero.getOcurrencias();

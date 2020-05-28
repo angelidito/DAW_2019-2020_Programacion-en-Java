@@ -1,7 +1,5 @@
 package angelidito.laruleta;
 
-import java.util.ArrayList;
-
 import angelidito.laruleta.excepciones.BadProgramingRTException;
 
 /**
@@ -18,8 +16,8 @@ public class Crupier {
 	 */
 	private ListaJugadores listaJugadores;
 
-	@SuppressWarnings("unused")
-	private ArrayList<Jugador> jugadoresParaRetirar;
+//	@SuppressWarnings("unused")
+//	private ArrayList<Jugador> jugadoresParaRetirar;
 
 	/**
 	 * Ruleta que aneja el Crupier.

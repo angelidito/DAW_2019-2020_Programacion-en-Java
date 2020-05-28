@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['setapuesta_379',['setApuesta',['../classangelidito_1_1laruleta_1_1_jugador.html#a1ee78fd5457e0b52f8a925cd1ec2b091',1,'angelidito::laruleta::Jugador']]],
+  ['setapuestasto0_380',['setApuestasTo0',['../classangelidito_1_1laruleta_1_1_apuesta.html#ac7f3a2c639a7eaa5030f38701f3988d8',1,'angelidito::laruleta::Apuesta']]],
+  ['setcabecera_381',['setCabecera',['../classangelidito_1_1vistas_1_1menus_1_1_menu.html#a65c36cd38e2827da892c07c343d4afbd',1,'angelidito::vistas::menus::Menu']]],
+  ['setcantidadapostada_382',['setCantidadApostada',['../classangelidito_1_1laruleta_1_1_numero_apuesta.html#a83dd7537c0fd4248e75e19df1228256d',1,'angelidito::laruleta::NumeroApuesta']]],
+  ['setcredito_383',['setCredito',['../classangelidito_1_1laruleta_1_1_jugador.html#ab0cd21d2fc95b22681712f6ee26d952d',1,'angelidito::laruleta::Jugador']]],
+  ['setcreditoobjetivo_384',['setCreditoObjetivo',['../classangelidito_1_1laruleta_1_1_jugador.html#a70109bbc3bca001d6202bedd680deaf4',1,'angelidito::laruleta::Jugador']]],
+  ['setdocenas_385',['setDocenas',['../classangelidito_1_1laruleta_1_1_apuesta.html#a4d85dde724af406609e6ff910c324dc2',1,'angelidito::laruleta::Apuesta']]],
+  ['setdocenasto0_386',['setDocenasTo0',['../classangelidito_1_1laruleta_1_1_apuesta.html#a4dbd2d48f90748ddf2248c546d021523',1,'angelidito::laruleta::Apuesta']]],
+  ['setmitades_387',['setMitades',['../classangelidito_1_1laruleta_1_1_apuesta.html#a8d93e99a7bdfbdff2ce125ab4d2abdad',1,'angelidito::laruleta::Apuesta']]],
+  ['setmitadesto0_388',['setMitadesTo0',['../classangelidito_1_1laruleta_1_1_apuesta.html#ac57840d90df2bc091f4fa3e3eed02071',1,'angelidito::laruleta::Apuesta']]],
+  ['setmodulos_389',['setModulos',['../classangelidito_1_1laruleta_1_1_apuesta.html#a3389c487c851e1cd519868acf7c38840',1,'angelidito::laruleta::Apuesta']]],
+  ['setmodulosto0_390',['setModulosTo0',['../classangelidito_1_1laruleta_1_1_apuesta.html#abc220a87ab19daef72a3e62fc197bd3e',1,'angelidito::laruleta::Apuesta']]],
+  ['setnombre_391',['setNombre',['../classangelidito_1_1laruleta_1_1_jugador.html#ac0c99949af360417255e8cdd6e6e2a1a',1,'angelidito::laruleta::Jugador']]],
+  ['setnumeros_392',['setNumeros',['../classangelidito_1_1laruleta_1_1_apuesta.html#acc2eaee0ff39fa5d7a03114ed18667c6',1,'angelidito::laruleta::Apuesta']]],
+  ['setnumerosto0_393',['setNumerosTo0',['../classangelidito_1_1laruleta_1_1_apuesta.html#a530ce26314297ea6f018c57894ad9eff',1,'angelidito::laruleta::Apuesta']]],
+  ['setocurrencias_394',['setOcurrencias',['../classangelidito_1_1laruleta_1_1_numero_ruleta.html#af0e178cc8a9cf45a6c4d0d0c3d80a87c',1,'angelidito::laruleta::NumeroRuleta']]],
+  ['setopciones_395',['setOpciones',['../classangelidito_1_1vistas_1_1menus_1_1_menu.html#a56594076b3dad57367f2938bfb4da5b0',1,'angelidito::vistas::menus::Menu']]],
+  ['setparimpar_396',['setParImpar',['../classangelidito_1_1laruleta_1_1_apuesta.html#a10c5376ae9ef1e30585ee62044147743',1,'angelidito::laruleta::Apuesta']]],
+  ['setparimparto0_397',['setParImparTo0',['../classangelidito_1_1laruleta_1_1_apuesta.html#a3e38b31e4a41496e08ccde17fad6555a',1,'angelidito::laruleta::Apuesta']]],
+  ['setrojonegro_398',['setRojoNegro',['../classangelidito_1_1laruleta_1_1_apuesta.html#af912c8f31819114b5e7d67b5345bfa85',1,'angelidito::laruleta::Apuesta']]],
+  ['setrojonegroto0_399',['setRojoNegroTo0',['../classangelidito_1_1laruleta_1_1_apuesta.html#aa335683319c4cf1019d7ac8ec0e71fe9',1,'angelidito::laruleta::Apuesta']]],
+  ['setrondas_400',['setRondas',['../classangelidito_1_1laruleta_1_1_jugador.html#a9167404627ac7dab708073f4e541caef',1,'angelidito::laruleta::Jugador']]],
+  ['setrondasmaximas_401',['setRondasMaximas',['../classangelidito_1_1laruleta_1_1_jugador.html#a918a65daa6adfb58ff145792d79ddba7',1,'angelidito::laruleta::Jugador']]]
+];

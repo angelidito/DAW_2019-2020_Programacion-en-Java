@@ -3,11 +3,11 @@
  */
 package angelidito.vistas.preguntas;
 
-import java.util.Scanner;
-
-import angelidito.aux.Escaner;
+import angelidito.vistas.Escaner;
 
 /**
+ * Pregunta la cantidad de lanzamientos a realizar.
+ * 
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  *
  */

@@ -3,20 +3,28 @@
  */
 package angelidito.vistas;
 
-import angelidito.aux.Escaner;
-
 /**
+ * 
+ * Clase madre de las vistas. Inlcluye tres métodos: println, waitForEnter y
+ * mostrar.
+ * 
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  *
  */
 public class Vista {
 
+	/**
+	 * Imprime por pantalla un salto de linea. Lo sé, muy inútil, era para ahorrarme
+	 * algo de tiempo escribiendo saltos de linea.
+	 */
 	public void println() {
 		System.out.println();
 	}
 
-	public static void waitForEnter() {
-
+	/**
+	 * Espera a que el usuario pulse enter antes de continuar.
+	 */
+	public void waitForEnter() {
 		System.out.println("Pulsa Enter para continuar...");
 		Escaner.Enter();
 	}
@@ -29,7 +37,6 @@ public class Vista {
 	 * @param str El objeto a imprimir por pantalla.
 	 */
 	public <O> void mostrar(O str) {
-
 		System.out.println(str);
 	}
 }

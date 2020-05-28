@@ -4,6 +4,8 @@
 package angelidito.vistas.listados;
 
 /**
+ * Listado de las estadisticas de la ruleta.
+ * 
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  *
  */

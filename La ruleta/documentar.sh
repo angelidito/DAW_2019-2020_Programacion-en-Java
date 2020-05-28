@@ -1,6 +1,6 @@
 #!/bin/bash
 nombre=Apuesta
-nombrepaquete=angelidito.laruleta
+nombrepaquete=angelidito
 rutapaquete=$(echo $nombrepaquete | sed 's/\./\//g')
 
 CLASSPATH=bin

@@ -1,16 +1,22 @@
 package angelidito.vistas.listados;
 
-import java.util.ArrayList;
-
 import angelidito.laruleta.Jugador;
 import angelidito.laruleta.ListaJugadores;
 
+/**
+ * Lista la información de los jugadores.
+ * 
+ * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
+ *
+ */
 public class ListadoJugadores extends Listado {
 
 	private ListaJugadores listaJugadores;
 
 	/**
 	 * Lista los jugadores.
+	 * 
+	 * @param listaJugadores Donde están las listas de jugadores.
 	 */
 	public ListadoJugadores(ListaJugadores listaJugadores) {
 
@@ -19,7 +25,7 @@ public class ListadoJugadores extends Listado {
 	}
 
 	/**
-	 * 
+	 * Lista la información abreviada e los jugadores.
 	 */
 	public void infoJugadores() {
 		this.infoJugadoresEnMesa();
@@ -37,7 +43,7 @@ public class ListadoJugadores extends Listado {
 	}
 
 	/**
-	 * 
+	 * Lista la información abreviada e los jugadores en mesa.
 	 */
 	private void infoJugadoresEnMesa() {
 		System.out.println("Jugadores en mesa:");
@@ -49,8 +55,8 @@ public class ListadoJugadores extends Listado {
 				System.out.println("\t" + j.info());
 	}
 
-	/**
-	 * 
+	 /** 
+	 * Lista la información abreviada e los jugadores retirados.
 	 */
 	private void infoJugadoresRetirados() {
 		System.out.println("Jugadores retirados:");
@@ -64,6 +70,7 @@ public class ListadoJugadores extends Listado {
 
 	/**
 	 * 
+	 * Lista la información extensa de los jugadores en mesa.
 	 */
 	public void informacionJugadores() {
 		this.informacionJugadoresEnMesa();
@@ -81,7 +88,7 @@ public class ListadoJugadores extends Listado {
 	}
 
 	/**
-	 * 
+	 * Lista la información extensa e los jugadores en mesa.
 	 */
 	private void informacionJugadoresEnMesa() {
 		System.out.println("Jugadores en mesa:");
@@ -94,7 +101,7 @@ public class ListadoJugadores extends Listado {
 	}
 
 	/**
-	 * 
+	 * Lista la información extensa e los jugadores retirados.
 	 */
 	private void informacionJugadoresRetirados() {
 		System.out.println("Jugadores retirados:");

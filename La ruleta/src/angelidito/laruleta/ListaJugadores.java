@@ -5,10 +5,8 @@ package angelidito.laruleta;
 
 import java.util.ArrayList;
 
-import angelidito.aux.Escaner;
-
 /**
- * Contiene y recupera los jugadores.
+ * Contiene, recupera y administra a los jugadores.
  * 
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  */
@@ -120,71 +118,6 @@ public class ListaJugadores {
 
 	}
 
-	
-
-	/**
-	 * Permite la edición de los jugadores en mesa. Permite editar nombres, crédito,
-	 * crédito objetivo, rondas máximas y apuestas.
-	 */
-	private void menuEditarJugador() {
-		int opcion;
-		boolean retirar = false;
-
-		System.out.println("Editando jugadores");
-		System.out.println("");
-
-		Jugador jugadorParaEditar = selecionarJugador();
-
-		do {
-
-			System.out.printf("Ha slecionado a %s%n%n", jugadorParaEditar.info());
-
-			System.out.println("  Escoja una opción:");
-			System.out.println("1 - Cambiar nombre");
-			System.out.println("2 - Variar crédito");
-			System.out.println("3 - Cambiar crédito objetivo");
-			System.out.println("4 - Cambiar rondas máximas");
-			System.out.println("5 - Cambiar apuesta");
-			System.out.println("0 - Guardar cambios");
-			System.out.println("");
-
-			opcion = Escaner.entero();
-
-			System.out.println();
-
-			retirar = jugadorParaEditar.editarJugador(opcion) ? true : false;
-
-			System.out.println();
-
-		} while (opcion != 0);
-
-		if (retirar)
-			this.retirarJugador(jugadorParaEditar);
-
-	}
-
-	/**
-	 * Menú con las opciones para retirar a un jugador.
-	 */
-	private void menuRetirarJugador() {
-
-		System.out.println("Retirada de jugadores");
-		System.out.println("");
-
-		Jugador jugadorParaRetirar = this.selecionarJugador();
-
-		System.out.printf("Va a retirar al siguiente jugador: %s%n", jugadorParaRetirar.info());
-		System.out.print("Esta acción no se puede deshacer. ¿Está seguro?");
-
-		if (Escaner.yesNoQuestionRecursivo()) {
-			this.retirarJugador(jugadorParaRetirar);
-		} else
-			System.out.println("El jugador no ha sido retirado");
-
-		System.out.println("");
-
-	}
-
 	/**
 	 * Comprueba si hay que retirar al jugador. Esto es cuando no le queda crédito,
 	 * ha alcanzado el credito objetivo o ha alcanzado las rondas máximas.
@@ -207,7 +140,8 @@ public class ListaJugadores {
 	 * Retira a un jugador. Lo quita de jugadores en mesa y lo pasa a jugadores
 	 * retirados.
 	 * 
-	 * @param jugadorParaRetirar jugador a retirar.
+	 * @param jugadorParaRetirar Jugador a retirar.
+	 * @return Mensaje de retirada o no del jugador.
 	 */
 	public String retirarJugador(Jugador jugadorParaRetirar) {
 
@@ -227,7 +161,7 @@ public class ListaJugadores {
 
 		String mensajeRetirada = "";
 		if (retirado) {
-			mensajeRetirada = "%s ha sido retirado. %s";
+			mensajeRetirada = "%s ha sido retirado.%s";
 			if (jugadorParaRetirar.getCredito() < 0)
 				EasterEgg.huevoDePascua(jugadorParaRetirar.getNombre());
 
@@ -235,19 +169,18 @@ public class ListaJugadores {
 
 				if (jugadorParaRetirar.getCredito() == 0)
 					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
-							"Se le ha agotado el crédito.");
+							" Se le ha agotado el crédito.");
 
 				else if (jugadorParaRetirar.getCredito() >= jugadorParaRetirar.getCreditoObjetivo())
 					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
-							"Ha alcanzado su crédito objetivo");
+							" Ha alcanzado su crédito objetivo");
 
 				else if (jugadorParaRetirar.getRondas() >= jugadorParaRetirar.getRondasMaximas())
 					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
-							"Ha alcanzado sus rondas máximas");
+							" Ha alcanzado sus rondas máximas");
 
 				else
-					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(),
-							" Motivo desconocido");
+					mensajeRetirada = String.format(mensajeRetirada, jugadorParaRetirar.getNombre(), "");
 
 			}
 
@@ -260,28 +193,18 @@ public class ListaJugadores {
 	}
 
 	/**
-	 * Pide selecionar por teclado un jugador de la lista de jugadores en mesa.
+	 * Devuelve un vector con la lista de jugadores en mesa
 	 * 
-	 * @return El Jugador selecionado.
+	 * @return Vector con la lista numerada de jugadores.
 	 */
-	private Jugador selecionarJugador() {
+	public String[] listadoJugadoresEnMesa() {
 
-		Jugador jugadorSelecionado = null;
+		String[] listado = new String[this.jugadoresEnMesa.size()];
 
-		do {
+		for (int i = 0; i < this.jugadoresEnMesa.size(); i++)
+			listado[i] = String.format("%d - %s", (i + 1), this.jugadoresEnMesa.get(i).info());
 
-			System.out.println(" Seleccione un jugador:");
-
-			for (int i = 0; i < this.jugadoresEnMesa.size(); i++)
-				System.out.printf("%d - %s%n", (i + 1), this.jugadoresEnMesa.get(i).info());
-
-			int numeroJugador = Escaner.entero(1, this.jugadoresEnMesa.size()) - 1;
-
-			jugadorSelecionado = this.jugadoresEnMesa.get(numeroJugador);
-
-		} while (jugadorSelecionado == null);
-
-		return jugadorSelecionado;
+		return listado;
 	}
 
 	/**
