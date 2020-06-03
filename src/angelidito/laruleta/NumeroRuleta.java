@@ -1,12 +1,18 @@
 package angelidito.laruleta;
 
+/**
+ * Representa los números de la ruleta. Hereda de {@code NumeroTablero} y guarda además
+ * las ocurrencias de cada número.
+ *
+ * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
+ */
 public class NumeroRuleta extends NumeroTablero {
 	private static final long serialVersionUID = -6284727951773680634L;
 
 	/**
 	 * Ocurrencias del número {@code n}.
 	 */
-	private int ocurrencias = 0;
+	private int ocurrencias;
 
 	/**
 	 * @return Las ocurrencias del número.
@@ -43,9 +49,8 @@ public class NumeroRuleta extends NumeroTablero {
 
 	@Override
 	public String toString() {
-		String str = String.format("Nº%02d - %d ocurrencias", this.getN(), this.ocurrencias);
-		
-		return str;
+
+		return String.format("Nº%02d - %d ocurrencias", this.getN(), this.ocurrencias);
 	}
 
 }

@@ -22,11 +22,11 @@ public class Ruleta {
 	 * a 36, el valor de la posición indica el número de ocurrencias del número
 	 * correspondiente a esa posición.
 	 */
-	// private static Integer[] historico;
-	private static NumeroRuleta[] historico;
+	// private static Integer[] histórico;
+	private static final NumeroRuleta[] histórico;
 
 //	/**
-//	 * No implementado: TODO top diez numeros mas probables
+//	 * TODO: top diez numeros mas probables
 //	 */
 //	@SuppressWarnings("unused")
 //	private static NumeroRuleta[] topTen;
@@ -36,15 +36,15 @@ public class Ruleta {
 	/**
 	 * Objeto con el que se generán los números.
 	 */
-	private static Random random;
+	private static final Random random;
 
 	static {
 		random = new Random();
-		historico = new NumeroRuleta[37];
+		histórico = new NumeroRuleta[37];
 		recuperarHistorico();
 //		topTen = new NumeroRuleta[10];
 
-		for (NumeroRuleta numero : historico)
+		for (NumeroRuleta numero : histórico)
 			totalTiradas += numero.getOcurrencias();
 
 	}
@@ -54,7 +54,7 @@ public class Ruleta {
 	 * 
 	 */
 	private static void recuperarHistorico() {
-		setHistorico(GestionCSV.obtenerHistoricoOcurrencias());
+		setHistórico(GestionCSV.obtenerHistoricoOcurrencias());
 	}
 
 	/**
@@ -63,27 +63,18 @@ public class Ruleta {
 	 * 
 	 * @param ocurrencias Vector con ocurrencias de cada número.
 	 */
-	private static void setHistorico(Integer[] ocurrencias) {
-		if (Ruleta.historico.length != ocurrencias.length) {
-			for (int i = 0; i < Ruleta.historico.length; i++)
-				Ruleta.historico[i] = new NumeroRuleta(i);
+	private static void setHistórico(Integer[] ocurrencias) {
+		if (Ruleta.histórico.length != ocurrencias.length) {
+			for (int i = 0; i < Ruleta.histórico.length; i++)
+				Ruleta.histórico[i] = new NumeroRuleta(i);
 		}
 		else
-			for (int i = 0; i < Ruleta.historico.length; i++)
+			for (int i = 0; i < Ruleta.histórico.length; i++)
 				if (ocurrencias[i] > 0)
-					Ruleta.historico[i] = new NumeroRuleta(i, ocurrencias[i]);
+					Ruleta.histórico[i] = new NumeroRuleta(i, ocurrencias[i]);
 				else
-					Ruleta.historico[i] = new NumeroRuleta(i);
+					Ruleta.histórico[i] = new NumeroRuleta(i);
 
-	}
-
-	/**
-	 * Devuelve el historial de ocurrencias.
-	 * 
-	 * @return El histórico
-	 */
-	public static NumeroRuleta[] getHistorico() {
-		return historico;
 	}
 
 	// tirar seguidas? quizá eso sea mejor en Crupier Y AHORRAMOS LIOS
@@ -97,7 +88,7 @@ public class Ruleta {
 
 		this.ultimoNumero = Ruleta.random.nextInt(37);
 
-		Ruleta.historico[ultimoNumero].añadirOcurrencia();
+		Ruleta.histórico[ultimoNumero].añadirOcurrencia();
 		++Ruleta.totalTiradas;
 
 		return ultimoNumero;
@@ -105,30 +96,21 @@ public class Ruleta {
 
 	public static String getEstadisticas() {
 
-		String estadisticas = "";
-		for (NumeroRuleta numero : historico) {
+		StringBuilder estadisticas = new StringBuilder();
+		for (NumeroRuleta numero : histórico) {
 
-			estadisticas += String.format("%s; %.3f", numero,
-					(float) numero.getOcurrencias() * 100 / Ruleta.totalTiradas) + "%\n";
+			estadisticas.append(String.format("%s; %.3f", numero,
+					(float) numero.getOcurrencias() * 100 / Ruleta.totalTiradas)).append("%\n");
 
 		}
 
-		return estadisticas;
+		return estadisticas.toString();
 	}
 
 	public NumeroRuleta getNumeroRuleta(int n) {
 
-		return Ruleta.historico[n];
+		return Ruleta.histórico[n];
 
-	}
-
-	/**
-	 * Devuelve el total de tiradas.
-	 * 
-	 * @return El total de tiradas.
-	 */
-	public static int getTotalTiradas() {
-		return totalTiradas;
 	}
 
 	/**
@@ -136,13 +118,13 @@ public class Ruleta {
 	 * primera fila será 37 (el nº de filas que vendrán despues), las siguientes
 	 * contendrán las ocurrencias.
 	 */
-	public static void guardarHisorico() {
+	public static void guardarHistórico() {
 
 		String nombreFichero = "historico.csv";
 
-		Integer[] ocurrencias = new Integer[Ruleta.historico.length];
+		Integer[] ocurrencias = new Integer[Ruleta.histórico.length];
 		for (int i = 0; i < ocurrencias.length; i++) {
-			ocurrencias[i] = Ruleta.historico[i].getOcurrencias();
+			ocurrencias[i] = Ruleta.histórico[i].getOcurrencias();
 		}
 
 		List<Integer> listaHistorico = Arrays.asList(ocurrencias);
@@ -160,24 +142,4 @@ public class Ruleta {
 		this.ultimoNumero = 0;
 
 	}
-
-	// Cambio de planes. Codigo CADUCADO. en vez de todo en una linea,
-	// irá cada cada ocurrencia de historico en una fila.
-//	/**
-//	 * Devuelve en formato CSV el histórico de la ruleta.
-//	 * 
-//	 * @return Un texto con formato CSV con el histórico.
-//	 */
-//	private static String historicoToFormatoCSV() {
-//
-//		String historicoEnFormatoCSV = "";
-//
-//		historicoEnFormatoCSV += historico[0];
-//
-//		for (int i = 1; i < historico.length; i++)
-//			historicoEnFormatoCSV += ";" + historico[i];
-//
-//		return historicoEnFormatoCSV;
-//	}
-
 }

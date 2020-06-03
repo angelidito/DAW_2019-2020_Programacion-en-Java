@@ -1,6 +1,3 @@
-/**
- * 
- */
 package angelidito.laruleta;
 
 import java.io.BufferedReader;
@@ -47,10 +44,11 @@ public class GestionCSV {
 	public static <E> void escribirCSV(String nombreFichero, List<E> lista) {
 
 		File fichero = new File(nombreFichero);
+
 		fichero.delete();
 
 		FileWriter fileWriter = null;
-		PrintWriter printWriter = null;
+		PrintWriter printWriter;
 		try {
 			fileWriter = new FileWriter(nombreFichero, true);
 			printWriter = new PrintWriter(fileWriter);
@@ -148,7 +146,7 @@ public class GestionCSV {
 		File fichero = new File(nombreFichero);
 
 		FileReader fileReader = null;
-		BufferedReader bufferedReader = null;
+		BufferedReader bufferedReader;
 
 		try {
 
@@ -170,12 +168,7 @@ public class GestionCSV {
 					// Este método puede lanzar NumberFormatException, que se maneja en un catch
 					int cantidad = Integer.parseInt(linea);
 
-					if (cantidad > 0)
-						ocurrencias[lineasLeidas] = cantidad;
-					else
-						ocurrencias[lineasLeidas] = 0;
-
-//					System.out.println(lineasLeidas + "  -  " + ocurrencias[lineasLeidas]);
+					ocurrencias[lineasLeidas] = Math.max(cantidad, 0);
 
 					lineasLeidas++;
 				}
@@ -189,8 +182,7 @@ public class GestionCSV {
 			System.err.println(e.getMessage());
 			System.err.println();
 
-			for (int i = 0; i < ocurrencias.length; i++)
-				ocurrencias[i] = 0;
+			Arrays.fill(ocurrencias, 0);
 
 			GestionCSV.escribirCSV(nombreFichero, Arrays.asList(ocurrencias));
 
@@ -200,8 +192,7 @@ public class GestionCSV {
 			System.err.println(e.getMessage());
 			System.err.println();
 
-			for (int i = 0; i < ocurrencias.length; i++)
-				ocurrencias[i] = 0;
+			Arrays.fill(ocurrencias, 0);
 
 		} catch (NumberFormatException e) {
 
@@ -209,8 +200,7 @@ public class GestionCSV {
 			System.err.println("Contenido no numérico en " + nombreFichero + ", se procede a formatear su contenido.");
 
 			System.err.println();
-			for (int i = 0; i < ocurrencias.length; i++)
-				ocurrencias[i] = 0;
+			Arrays.fill(ocurrencias, 0);
 
 			GestionCSV.escribirCSV(nombreFichero, Arrays.asList(ocurrencias));
 
@@ -222,8 +212,7 @@ public class GestionCSV {
 			System.err.println();
 			e.printStackTrace();
 
-			for (int i = 0; i < ocurrencias.length; i++)
-				ocurrencias[i] = 0;
+			Arrays.fill(ocurrencias, 0);
 
 		} finally {
 
@@ -262,7 +251,7 @@ public class GestionCSV {
 		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 		FileReader fr = null;
-		BufferedReader br = null;
+		BufferedReader br;
 
 		try {
 

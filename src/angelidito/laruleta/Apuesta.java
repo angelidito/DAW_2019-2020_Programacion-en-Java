@@ -142,7 +142,7 @@ public class Apuesta {
 			throw new ContenidoNullCSVException("Contenido nulo al recuperar la acpuesta:");
 
 		String[] vectores = ultimaColumnaDelCSV.split("#");
-		// Si coincide la longitud, bien; si no, todo a 0.
+		/* Si coincide la longitud, bien; si no, todos a 0. */
 		if (vectores.length != 6)
 			throw new CantidadCamposCSVException("No hay campos suficientes para recuperar la puesta:");
 
@@ -157,7 +157,7 @@ public class Apuesta {
 		String[] modulosStr = vectores[5].split(":");
 
 		// Numeros
-		// Si coincide la longitud, bien; si no, todo a 0.
+		// Si coincide la longitud, bien; si no, todos a 0.
 		// Esta estructura se repite en los siguientes if-else
 		if (this.numeros.length != cantidadesANumerosStr.length)
 			this.setNumerosTo0();
@@ -263,43 +263,43 @@ public class Apuesta {
 	@Override
 	public String toString() {
 
-		String enFormato = "";
+		StringBuilder enFormato = new StringBuilder();
 
-		enFormato += numeros[0].getCantidadApostada();
+		enFormato.append(numeros[0].getCantidadApostada());
 		for (int i = 1; i < numeros.length; i++)
-			enFormato += ":" + numeros[i].getCantidadApostada();
+			enFormato.append(":").append(numeros[i].getCantidadApostada());
 
-		enFormato += "#";
+		enFormato.append("#");
 
-		enFormato += parImpar[0];
+		enFormato.append(parImpar[0]);
 		for (int i = 1; i < parImpar.length; i++)
-			enFormato += ":" + parImpar[i];
+			enFormato.append(":").append(parImpar[i]);
 
-		enFormato += "#";
+		enFormato.append("#");
 
-		enFormato += rojoNegro[0];
+		enFormato.append(rojoNegro[0]);
 		for (int i = 1; i < rojoNegro.length; i++)
-			enFormato += ":" + rojoNegro[i];
+			enFormato.append(":").append(rojoNegro[i]);
 
-		enFormato += "#";
+		enFormato.append("#");
 
-		enFormato += mitades[0];
+		enFormato.append(mitades[0]);
 		for (int i = 1; i < mitades.length; i++)
-			enFormato += ":" + mitades[i];
+			enFormato.append(":").append(mitades[i]);
 
-		enFormato += "#";
+		enFormato.append("#");
 
-		enFormato += docenas[0];
+		enFormato.append(docenas[0]);
 		for (int i = 1; i < docenas.length; i++)
-			enFormato += ":" + docenas[i];
+			enFormato.append(":").append(docenas[i]);
 
-		enFormato += "#";
+		enFormato.append("#");
 
-		enFormato += modulos[0];
+		enFormato.append(modulos[0]);
 		for (int i = 1; i < modulos.length; i++)
-			enFormato += ":" + modulos[i];
+			enFormato.append(":").append(modulos[i]);
 
-		return enFormato;
+		return enFormato.toString();
 	}
 
 	/**
@@ -309,94 +309,94 @@ public class Apuesta {
 	 * @return La información de lo apostado.
 	 */
 	public String info() {
-		String info = "";
+		StringBuilder info = new StringBuilder();
 		int totalAnotado = 0;
 
 		for (NumeroApuesta numero : this.numeros)
 			if (numero.getCantidadApostada() > 0) {
-				info += String.format("%d al nº%d. ", numero.getCantidadApostada(), numero.getN());
+				info.append(String.format("%d al nº%d. ", numero.getCantidadApostada(), numero.getN()));
 				totalAnotado += numero.getCantidadApostada();
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.parImpar[0] > 0) {
-				info += String.format("%d a pares. ", this.parImpar[0]);
+				info.append(String.format("%d a pares. ", this.parImpar[0]));
 				totalAnotado += this.parImpar[0];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.parImpar[1] > 0) {
-				info += String.format("%d a impares. ", this.parImpar[1]);
+				info.append(String.format("%d a impares. ", this.parImpar[1]));
 				totalAnotado += this.parImpar[1];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.rojoNegro[0] > 0) {
-				info += String.format("%d al rojo. ", this.rojoNegro[0]);
+				info.append(String.format("%d al rojo. ", this.rojoNegro[0]));
 				totalAnotado += this.rojoNegro[0];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.rojoNegro[1] > 0) {
-				info += String.format("%d al negro. ", this.rojoNegro[1]);
+				info.append(String.format("%d al negro. ", this.rojoNegro[1]));
 				totalAnotado += this.rojoNegro[1];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.mitades[0] > 0) {
-				info += String.format("%d a la primera mitad. ", this.mitades[0]);
+				info.append(String.format("%d a la primera mitad. ", this.mitades[0]));
 				totalAnotado += this.mitades[0];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.mitades[1] > 0) {
-				info += String.format("%d a la segunda mitad. ", this.mitades[1]);
+				info.append(String.format("%d a la segunda mitad. ", this.mitades[1]));
 
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.docenas[0] > 0) {
-				info += String.format("%d a la primera docena. ", this.docenas[0]);
+				info.append(String.format("%d a la primera docena. ", this.docenas[0]));
 				totalAnotado += this.docenas[0];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.docenas[1] > 0) {
-				info += String.format("%d a la segunda docena. ", this.docenas[1]);
+				info.append(String.format("%d a la segunda docena. ", this.docenas[1]));
 				totalAnotado += this.docenas[1];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.docenas[2] > 0) {
-				info += String.format("%d a la tercera docena. ", this.docenas[2]);
+				info.append(String.format("%d a la tercera docena. ", this.docenas[2]));
 				totalAnotado += this.docenas[2];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.modulos[1] > 0) {
-				info += String.format("%d a la primera fila 2 a 1. ", this.modulos[1]);
+				info.append(String.format("%d a la primera fila 2 a 1. ", this.modulos[1]));
 				totalAnotado += this.modulos[1];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.modulos[2] > 0) {
-				info += String.format("%d a la segunda fila 2 a 1. ", this.modulos[2]);
+				info.append(String.format("%d a la segunda fila 2 a 1. ", this.modulos[2]));
 				totalAnotado += this.modulos[2];
 			}
 
 		if (totalAnotado < this.totalApostado())
 			if (this.modulos[0] > 0) {
-				info += String.format("%d a la tercera fila 2 a 1. ", this.modulos[0]);
+				info.append(String.format("%d a la tercera fila 2 a 1. ", this.modulos[0]));
 				totalAnotado += this.modulos[0];
 			}
 
 		if (totalAnotado == 0)
-			info = "ninguna";
+			info = new StringBuilder("ninguna");
 
 		if (totalAnotado != this.totalApostado())
 			throw new BadProgramingRTException("ERROR DE CONTEO EN Apuesta.info()");
 
-		return info;
+		return info.toString();
 	}
 
 	/**
@@ -413,11 +413,10 @@ public class Apuesta {
 			cantidades[i] = numeros[i].getCantidadApostada();
 		}
 
-		String informacion = "***    numeros   = " + Arrays.toString(cantidades) + "\n***    parImpar  = "
+		return "***    numeros   = " + Arrays.toString(cantidades) + "\n***    parImpar  = "
 				+ Arrays.toString(parImpar) + "\n***    rojoNegro = " + Arrays.toString(rojoNegro) + "\n***    mitades   = "
 				+ Arrays.toString(mitades) + "\n***    docenas   = " + Arrays.toString(docenas) + "\n***    modulos   = "
 				+ Arrays.toString(modulos);
-		return informacion;
 	}
 
 	// ****** Métodos para ajustar las apuestas ********
@@ -852,7 +851,7 @@ public class Apuesta {
 	 * 
 	 * 
 	 * @param cantidades Vector de valores que no se desea que sean menores que 0.
-	 * @return Un vector con que contendrá en cada posicion el valor que tenía si
+	 * @return Un vector con que contendrá en cada posición el valor que tenía si
 	 *         este era mayor que 0 y si era menor, contendrá el valor 0.
 	 */
 	private int[] asegurarCantidadNoNegativa(int[] cantidades) {

@@ -8,7 +8,7 @@ import java.util.Random;
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  *
  */
-public class EasterEgg {
+class EasterEgg {
 
 	public static void huevoDePascua(String nombreDelJugador) {
 		Random r = new Random();

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package angelidito.laruleta;
 
 import java.util.ArrayList;
@@ -159,7 +156,7 @@ public class ListaJugadores {
 			}
 		}
 
-		String mensajeRetirada = "";
+		String mensajeRetirada;
 		if (retirado) {
 			mensajeRetirada = "%s ha sido retirado.%s";
 			if (jugadorParaRetirar.getCredito() < 0)

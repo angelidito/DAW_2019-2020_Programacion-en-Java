@@ -20,7 +20,7 @@ public class Casino {
 
 	private static final Crupier crupier = new Crupier(new ListaJugadores());
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
 		// TO DO: para un futuro se podria arreglar esta clase para que mejase distintos
 		// crupiers. Con un array list.
@@ -134,7 +134,7 @@ public class Casino {
 	 */
 	private static void menuAdministrarJugadores() {
 
-		int opcion = 0;
+		int opcion;
 		boolean opcionIncorrecta = false;
 		do {
 
@@ -283,7 +283,7 @@ public class Casino {
 
 		v.jugadoresGuardadosGuardandoEstadisticas();
 
-		Ruleta.guardarHisorico();
+		Ruleta.guardarHistórico();
 
 		v.estadisticaGuardadas();
 

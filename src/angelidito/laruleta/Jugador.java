@@ -7,7 +7,7 @@ import angelidito.laruleta.excepciones.ContenidoCorruptoCSVException;
 import angelidito.laruleta.excepciones.ContenidoNullCSVException;
 
 /**
- * 
+ * Clase con los datos de los jugadores.
  * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
  *
  */
@@ -97,7 +97,7 @@ public class Jugador {
 	public Jugador(int credito) {
 		this.id = numJugadores++;
 		this.nombre = "SinNombre" + String.format("%02d", ++jugadoresSinNombre);
-		this.credito = credito > 10 ? credito : 10;
+		this.credito = Math.max(credito, 10);
 		this.creditoObjetivo = Jugador.MAX_INT_VALUE;
 		this.rondasMaximas = Jugador.MAX_INT_VALUE;
 		this.rondas = 0;
@@ -119,7 +119,7 @@ public class Jugador {
 	public Jugador(String nombre, int credito, int creditoObjetivo, int rondasMaximas) {
 		this.id = numJugadores++;
 		this.nombre = nombre;
-		this.credito = credito > 10 ? credito : 10;
+		this.credito = Math.max(credito, 10);
 		this.creditoObjetivo = creditoObjetivo;
 		this.rondasMaximas = rondasMaximas > 10 ? rondasMaximas : Jugador.MAX_INT_VALUE;
 		this.rondas = 0;
@@ -140,7 +140,7 @@ public class Jugador {
 	public Jugador(int credito, int creditoObjetivo, int rondasMaximas) {
 		this.id = numJugadores++;
 		this.nombre = "SinNombre" + String.format("%02d", ++jugadoresSinNombre);
-		this.credito = credito > 10 ? credito : 10;
+		this.credito = Math.max(credito, 10);
 		this.creditoObjetivo = creditoObjetivo;
 		this.rondasMaximas = rondasMaximas > 10 ? rondasMaximas : Jugador.MAX_INT_VALUE;
 		this.rondas = 0;
@@ -220,7 +220,7 @@ public class Jugador {
 						"No hay campos suficientes para recuperar el jugador:" + lineaDelCSV);
 
 			this.credito = Integer.parseInt(columnas[1]);
-			this.creditoObjetivo = Integer.parseInt(columnas[2]) > 10 ? Integer.parseInt(columnas[2]) : 10;
+			this.creditoObjetivo = Math.max(Integer.parseInt(columnas[2]), 10);
 			this.rondasMaximas = Integer.parseInt(columnas[3]) > 10 ? Integer.parseInt(columnas[2]) : 10;
 			this.rondas = Integer.parseInt(columnas[4]);
 			this.ganado = Integer.parseInt(columnas[5]);
@@ -299,10 +299,7 @@ public class Jugador {
 	 * @param credito a crédito a fijar.
 	 */
 	public void setCredito(int credito) {
-		if (credito < 0)
-			this.credito = 0;
-		else
-			this.credito = credito;
+		this.credito = Math.max(credito, 0);
 	}
 
 	/**

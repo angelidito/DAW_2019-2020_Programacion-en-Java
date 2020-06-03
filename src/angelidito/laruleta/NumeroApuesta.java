@@ -13,7 +13,7 @@ public class NumeroApuesta extends NumeroTablero {
 	/**
 	 * Cantidad apostada al número {@code n}.
 	 */
-	private int cantidadApostada = 0;
+	private int cantidadApostada;
 
 	/**
 	 * @return la cantidad apostada.

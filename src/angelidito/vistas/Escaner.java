@@ -1,6 +1,3 @@
-/**
- * 
- */
 package angelidito.vistas;
 
 import java.io.Closeable;
@@ -10,414 +7,412 @@ import java.util.Scanner;
 /**
  * Clase intermediaria de la clase Scanner. Maneja las excepciones para no
  * lanzar ninguna y guía al usuario a introdocir lo que tiene que introducir.
- * 
+ *
  * @author <a href="twitter.com/angelidito">Ángel M. D.</a>
  */
 public final class Escaner implements Closeable {
 
-	/**
-	 * Enumeración empleada en un método.
-	 * 
-	 * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
-	 */
-	public enum TipoEntero {
-		POSITIVO, NEGATIVO
-	}
+    // Boolean indicating if this scanner has been closed
+    private static boolean closed;
+    private static Scanner escaner;
 
-	/**
-	 * Excepción lanzable cuando el escaner está cerrado, pero se quiere usar.
-	 * 
-	 * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
-	 */
-	static class ClosedEscanerRTException extends RuntimeException {
+    static {
+        closed = false;
+        escaner = new Scanner(System.in);
+    }
 
-		private static final long serialVersionUID = -431915956388917354L;
+    /**
+     * Abre el escaner si está cerrado.
+     */
+    public Escaner() {
+        if (closed)
+            open();
+    }
 
-		/**
-		 * @param message Mensaje de la excepción.
-		 */
-		public ClosedEscanerRTException(String message) {
-			super(message);
-		}
-	}
+    /**
+     * Escanea un número entero positivo por teclado. El método guía al usuario si
+     * se empeña en no introducir un número analizable hasta que lo hace.
+     *
+     * @return El número dentro del rango introducido por el usuario.
+     */
+    public static int entero() {
+        checkNotClosed();
 
-	// Boolean indicating if this scanner has been closed
-	private static boolean closed = false;
+        String textoEscaneado;
+        int numeroIntroducido = 0;
+        boolean textoEsNumero;
 
-	private static Scanner escaner = new Scanner(System.in);
-	
-	
-	
+        do {
 
-	/**
-	 * Abre el escaner si está cerrado.
-	 */
-	public Escaner() {
-		if (closed)
-			open();
-	}
+            textoEscaneado = escaner.nextLine();
+            System.out.println();
 
-	/**
-	 * Escanea un número entero positivo por teclado. El método guía al usuario si
-	 * se empeña en no intruducir un número analizable hasta que lo hace.
-	 * 
-	 * @return El número dentro del rango introducido por el usuario.
-	 */
-	public static int entero() {
-		checkNotClosed();
+            try {
+                numeroIntroducido = Integer.parseInt(textoEscaneado);
+                textoEsNumero = true;
 
-		String textoEscaneado;
-		int numeroIntroducido = 0;
-		boolean textoEsNumero = false;
+            } catch (NumberFormatException e) {
 
-		do {
+                System.out.println("Error. Introduzca un número.");
+                textoEsNumero = false;
 
-			textoEscaneado = escaner.nextLine();
-			System.out.println();
+            }
 
-			try {
-				numeroIntroducido = Integer.parseInt(textoEscaneado);
-				textoEsNumero = true;
+        } while (!textoEsNumero);
 
-			} catch (NumberFormatException e) {
+        return numeroIntroducido;
 
-				System.out.println("Error. Introduzca un número.");
-				textoEsNumero = false;
+    }
 
-			}
+    /**
+     * Escanea un número entero por teclado. Mayor/menor o igual que 0 según el
+     * parámetro. El método guía al usuario si se empeña en no introducir un número
+     * analizable hasta que lo hace.
+     *
+     * @param tipoEntero Tipo de entero que se quiere escanear. POSITIVO, 0 o mayor;
+     *                   NEGATIVO, 0 o menor.
+     * @return El número dentro del rango introducido por el usuario.
+     */
+    public static int entero(TipoEntero tipoEntero) {
+        checkNotClosed();
 
-		} while (!textoEsNumero);
+        String textoEscaneado;
+        int numeroIntroducido = 0;
+        boolean textoEsNumeroValido = false;
 
-		// escaner.close();
+        do {
+            textoEscaneado = escaner.nextLine();
+            System.out.println();
 
-		return numeroIntroducido;
+            try {
+                numeroIntroducido = Integer.parseInt(textoEscaneado);
 
-	}
+            } catch (NumberFormatException e) {
+                System.out.println("Error. Introduzca un número.");
+            }
 
-	/**
-	 * Escanea un número entero por teclado. Mayor/menor o igual que 0 según el
-	 * parámetro. El método guía al usuario si se empeña en no intruducir un número
-	 * analizable hasta que lo hace.
-	 * 
-	 * @param tipoEntero Tipo de entero que se quiere escanear. POSITIVO, 0 o mayor;
-	 *                   NEGATIVO, 0 o menor.
-	 * @return El número dentro del rango introducido por el usuario.
-	 */
-	public static int entero(TipoEntero tipoEntero) {
-		checkNotClosed();
+            switch (tipoEntero) {
+                case POSITIVO:
+                    if (numeroIntroducido > -1)
+                        textoEsNumeroValido = true;
+                    break;
+                case NEGATIVO:
+                    if (numeroIntroducido < 1)
+                        textoEsNumeroValido = true;
+                    break;
+            }
 
-		String textoEscaneado;
-		int numeroIntroducido = 0;
-		boolean textoEsNumero = false;
+        } while (!textoEsNumeroValido);
 
-		do {
+        // escaner.close();
+        return numeroIntroducido;
 
-			textoEscaneado = escaner.nextLine();
-			System.out.println();
+    }
 
-			try {
-				numeroIntroducido = Integer.parseInt(textoEscaneado);
-				textoEsNumero = true;
+    /**
+     * Escanea el número entero introducido por teclado. Sólo aceptará un número
+     * entero que se encuentre entre los parámetros min y max, ambos inclusive. El
+     * método guía al usuario si se empeña en no introducir un número analizable
+     * hasta que lo hace. Si min es mayor que max, ambos se fijarán en el mayor de
+     * los dos.
+     *
+     * @param min Valor mínimo der rango
+     * @param max Valor máximo der rango
+     * @return El número escaneado dentro del rango.
+     */
+    public static int entero(int min, int max) {
+        checkNotClosed();
 
-			} catch (NumberFormatException e) {
+        if (min > max)
+            max = min;
 
-				System.out.println("Error. Introduzca un número.");
-				textoEsNumero = false;
 
-			}
+        String textoEscaneado;
+        int numeroIntroducido = -999999;
+        boolean textoEsNumero = false;
 
-		} while (!textoEsNumero);
+        do {
 
-		// escaner.close();
-		return numeroIntroducido;
+            textoEscaneado = escaner.nextLine();
+            System.out.println();
 
-	}
+            try {
+                numeroIntroducido = Integer.parseInt(textoEscaneado);
+                textoEsNumero = true;
 
-	/**
-	 * Escanea el número entero introducido por teclado. Sólo aceptará un número
-	 * entero que se encuentre entre los parámetros min y max, ambos inclusive. El
-	 * método guía al usuario si se empeña en no intruducir un número analizable
-	 * hasta que lo hace. Si min es mayor que max o max es mayor que min, ambos se
-	 * fijaran en el mayor de los dos.
-	 * 
-	 * @param min Valor mínimo der rango
-	 * @param max Valor máximo der rango
-	 * @return El número escaneado dentro del rango.
-	 */
-	public static int entero(int min, int max) {
-		checkNotClosed();
+                if (!(min <= numeroIntroducido && numeroIntroducido <= max))
+                    System.out.printf("El número debe estar entre %d y %d, ambos inclusive.%n", min, max);
 
-		if (min > max || max < min) {
-			min = Math.max(max, min);
-			max = min;
-		}
+            } catch (NumberFormatException e) {
+                System.out.println("Error. Introduzca de nuevo el número.");
+            }
 
-		String textoEscaneado = "0x80000000";
-		int numeroIntroducido = -999999;
-		boolean textoEsNumero = false;
+        } while (!textoEsNumero || !(min <= numeroIntroducido && numeroIntroducido <= max));
 
-		do {
+        // escaner.close();
+        return numeroIntroducido;
 
-			textoEscaneado = escaner.nextLine();
-			System.out.println();
+    }
 
-			try {
-				numeroIntroducido = Integer.parseInt(textoEscaneado);
-				textoEsNumero = true;
+    /**
+     * Escanea el dígito introducido por teclado y lo devuelve como un carácter.
+     * Sólo aceptará un dígito que se encuentre entre los parámetros min y max,
+     * ambos inclusive. El método guía al usuario si se empeña en no intruducir lo
+     * que debe hasta que lo hace. Tanto el mínimo como el máximo deben estar entre
+     * 0 y 9, ambos inclusive. Si min es mayor que max, ambos se fijaran en el mayor
+     * de los dos.
+     *
+     * @param min Mínimo valor del dígito
+     * @param max Máximo valor del dígito
+     * @return El carácter correspondiente al número dentro del rango introducido
+     * por el usuario.
+     */
+    public static char caracterNumericoEnRango(int min, int max) {
+        checkNotClosed();
+        if (min < 0)
+            min = 0;
+        if (max > 9)
+            max = 9;
+        if (min > max)
+            max = min;
 
-				if (!(min <= numeroIntroducido && numeroIntroducido <= max))
-					System.out.printf("El número debe estar entre %d y %d, ambos inclusive.%n", min, max);
+        String textoEscaneado;
 
-			} catch (NumberFormatException e) {
+        textoEscaneado = escaner.nextLine();
+        System.out.println();
 
-				System.out.println("Error. Introduzca de nuevo el número.");
-				textoEsNumero = false;
+        while (textoEscaneado.length() != 1 || !Character.isDigit(textoEscaneado.charAt(0))
+                || !(min <= Integer.parseInt(textoEscaneado.substring(0, 1))
+                && Integer.parseInt(textoEscaneado.substring(0, 1)) <= max)) {
 
-			}
+            if (textoEscaneado.length() != 1) {
+                System.out.println("Debe introducir un único número.");
+            } else {
+                System.out.println("Por favor, escriba un solo número.");
+                System.out.printf("Debe de estar entre %d y %d.%n", min, max);
+            }
 
-		} while (!textoEsNumero || !(min <= numeroIntroducido && numeroIntroducido <= max));
+            textoEscaneado = escaner.nextLine();
+            System.out.println();
 
-		// escaner.close();
-		return numeroIntroducido;
+        }
 
-	}
+        return textoEscaneado.charAt(0);
+    }
 
-	/**
-	 * Escanea el dígito introducido por teclado y lo devuelve como un carácter.
-	 * Sólo aceptará un dígito que se encuentre entre los parámetros min y max,
-	 * ambos inclusive. El método guía al usuario si se empeña en no intruducir lo
-	 * que debe hasta que lo hace. Tanto el mínimo como el máximo deben estar entre
-	 * 0 y 9, ambos inclusive. Si min es mayor que max o max es mayor que min, ambos
-	 * se fijaran en el mayor de los dos.
-	 * 
-	 * @param min Mínimo valor del dígito
-	 * @param max Máximo valor del dijito
-	 * @return El carácter correspondiente al número dentro del rango introducido
-	 *         por el usuario.
-	 */
-	public static char caracterNumericoEnRango(int min, int max) {
-		checkNotClosed();
-		if (min < 0)
-			min = 0;
-		if (max > 9)
-			max = 9;
-		if (min > max || max < min) {
-			min = Math.max(max, min);
-			max = min;
-		}
+    /**
+     * Escanea el texto introducido por teclado.
+     *
+     * @return El texto escaneado.
+     */
+    public static String texto() {
+        checkNotClosed();
 
-		String textoEscaneado;
+        String textoEscaneado = null;
+        do {
+            try {
+                textoEscaneado = escaner.nextLine();
+            } catch (NoSuchElementException e) {
+                System.err.println("No ha introducido nada.");
+                System.out.println("Vuelva a intentarlo.");
+            }
 
-		textoEscaneado = escaner.nextLine();
-		System.out.println();
+        } while (textoEscaneado == null || textoEscaneado.length() < 1);
 
-		while (textoEscaneado.length() != 1 || !Character.isDigit(textoEscaneado.charAt(0))
-				|| !(min <= Integer.parseInt(textoEscaneado.substring(0, 1))
-						&& Integer.parseInt(textoEscaneado.substring(0, 1)) <= max)) {
+        // escaner.close();
+        return textoEscaneado;
+    }
 
-			if (textoEscaneado.length() != 1) {
-				System.out.println("Debe introducir un único número.");
-			} else {
-				System.out.println("Por favor, escriba un solo número.");
-				System.out.printf("Debe de estar entre %d y %d.%n", min, max);
-			}
-
-			textoEscaneado = escaner.nextLine();
-			System.out.println();
-
-		}
-
-		return textoEscaneado.charAt(0);
-	}
-
-	/**
-	 * Escanea el texto introducido por teclado.
-	 * 
-	 * @return El texto escaneado.
-	 */
-	public static String texto() {
-		checkNotClosed();
-
-		String textoEscaneado = null;
-		do {
-			try {
-				textoEscaneado = escaner.nextLine();
-			} catch (NoSuchElementException e) {
-				System.err.println("No ha introducido nada.");
-				System.out.println("Vuelva a intentarlo.");
-			}
-
-		} while (textoEscaneado == null || textoEscaneado.length() < 1);
-
-		// escaner.close();
-		return textoEscaneado;
-	}
-
-	/**
-	 * Espera a que el usuario pulse enter.
-	 * 
-	 * @return Un salto de linea.
-	 */
-	public static String Enter() {
-		checkNotClosed();
+    /**
+     * Espera a que el usuario pulse enter.
+     */
+    public static void Enter() {
+        checkNotClosed();
 //		do {
-		escaner.nextLine();
+        escaner.nextLine();
 //		} while (!str.isBlank());
-		return "\n";
-	}
+    }
 
-	/**
-	 * Pide un si o un no y devuelve en consecuencia {@code true} o {@code false}.
-	 * Escanea el texto introducido por teclado hasta que se introduzca una de las
-	 * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
-	 * 
-	 * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
-	 */
-	public static boolean yesNoQuestion() {
-		checkNotClosed();
+    /**
+     * Pide un si o un no y devuelve en consecuencia {@code true} o {@code false}.
+     * Escanea el texto introducido por teclado hasta que se introduzca una de las
+     * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
+     *
+     * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
+     */
+    public static boolean yesNoQuestion() {
+        checkNotClosed();
 
-		String texto = "";
-		boolean textoAdecuado = false;
-		boolean yesNo = false;
-		do {
-			try {
-				texto = escaner.nextLine();
-			} catch (Exception e) {
-				texto = "";
-			}
-			if (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
-					|| texto.compareToIgnoreCase("si") == 0) {
+        String texto;
+        boolean textoAdecuado = false;
+        boolean yesNo = false;
+        do {
+            try {
+                texto = escaner.nextLine();
+            } catch (Exception e) {
+                texto = null;
+            }
 
-				textoAdecuado = true;
-				yesNo = true;
+            if (texto != null && (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
+                    || texto.compareToIgnoreCase("si") == 0)) {
 
-			} else if (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0) {
-				textoAdecuado = true;
-				yesNo = false;
+                textoAdecuado = true;
+                yesNo = true;
 
-			}
+            } else if (texto != null && (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0)) {
+                textoAdecuado = true;
+                yesNo = false;
+            }
 
-		} while (!textoAdecuado);
+        } while (!textoAdecuado);
 
-		return yesNo;
-	}
+        return yesNo;
+    }
 
-	// METODO CON RECURSIVIDAD
-	/**
-	 * Pide un si o un no y devuelve en consecuencia {@code true} o {@code false}.
-	 * Escanea el texto introducido por teclado hasta que se introduzca una de las
-	 * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
-	 * METODO CON RECURSIVIDAD. No deberia atascar la máquina si está bien escrito.
-	 * 
-	 * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
-	 */
-	public static boolean yesNoQuestionRecursivo() {
-		checkNotClosed();
+    /**
+     * Pide un si o un no y devuelve en consecuencia {@code true} o {@code false}.
+     * Escanea el texto introducido por teclado hasta que se introduzca una de las
+     * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
+     * METODO CON RECURSIVIDAD. No deberia atascar la máquina si está bien escrito.
+     *
+     * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
+     */
+    public static boolean yesNoQuestionRecursivo() {
+        checkNotClosed();
 
-		String texto = "";
-		boolean yesNo;
+        String texto = "";
+        boolean yesNo;
 
-		System.out.println(" [s/n]");
-		try {
-			texto = escaner.nextLine();
-		} catch (Exception e) {
+        System.out.println(" [s/n]");
+        try {
+            texto = escaner.nextLine();
+        } catch (Exception e) {
 
-		}
-		if (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
-				|| texto.compareToIgnoreCase("si") == 0) {
+        }
+        if (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
+                || texto.compareToIgnoreCase("si") == 0) {
 
-			yesNo = true;
+            yesNo = true;
 
-		} else if (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0) {
+        } else if (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0) {
 
-			yesNo = false;
+            yesNo = false;
 
-		} else {
-			yesNo = yesNoQuestionRecursivo();
-		}
+        } else {
+            yesNo = yesNoQuestionRecursivo();
+        }
 
-		return yesNo;
-	}
+        return yesNo;
+    }
 
-	// METODO CON RECURSIVIDAD
-	/**
-	 * Imprime por pantalla una pregunta tipo si/no. Además de un salto de linea.
-	 * Escanea el texto introducido por teclado hasta que se introduzca una de las
-	 * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
-	 * METODO CON RECURSIVIDAD. No deberia atascar la máquina si está bien escrito.
-	 * 
-	 * @param pregunta Pregunta a imprimir por pantalla.
-	 * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
-	 */
-	public static boolean yesNoQuestionRecursivo(String pregunta) {
-		checkNotClosed();
+    /**
+     * Imprime por pantalla una pregunta tipo si/no. Además de un salto de linea.
+     * Escanea el texto introducido por teclado hasta que se introduzca una de las
+     * siguiente opciones: s, si, sí, n, no. No atiende a mayúsculas o minúsculas.
+     * METODO CON RECURSIVIDAD. No deberia atascar la máquina si está bien escrito.
+     *
+     * @param pregunta Pregunta a imprimir por pantalla.
+     * @return {@code true} o {@code false}, dependiendo si la respusta es si o no.
+     */
+    public static boolean yesNoQuestionRecursivo(String pregunta) {
+        checkNotClosed();
 
-		String texto = "";
-		boolean yesNo;
+        String texto = "";
+        boolean yesNo;
 
-		System.out.println(pregunta + " [s/n]");
-		try {
-			texto = escaner.nextLine();
-		} catch (Exception e) {
+        System.out.println(pregunta + " [s/n]");
+        try {
+            texto = escaner.nextLine();
+        } catch (Exception e) {
 
-		}
-		if (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
-				|| texto.compareToIgnoreCase("si") == 0) {
+        }
+        if (texto.compareToIgnoreCase("s") == 0 || texto.compareToIgnoreCase("sí") == 0
+                || texto.compareToIgnoreCase("si") == 0) {
 
-			yesNo = true;
+            yesNo = true;
 
-		} else if (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0) {
+        } else if (texto.compareToIgnoreCase("n") == 0 || texto.compareToIgnoreCase("no") == 0) {
 
-			yesNo = false;
+            yesNo = false;
 
-		} else {
+        } else {
 
-			System.out.println("Opción no valida, pruebe de nuevo.");
+            System.out.println("Opción no valida, pruebe de nuevo.");
 
-			yesNo = yesNoQuestionRecursivo();
-		}
+            yesNo = yesNoQuestionRecursivo();
+        }
 
-		// escaner.close();
-		return yesNo;
-	}
+        // escaner.close();
+        return yesNo;
+    }
 
-	/**
-	 * Imprime por pantalla un aviso. Este dice: Asegúrese de que introduce una
-	 * opción de las disponibles. Ademas, dos saltos de línea.
-	 */
-	public static void avisoOpcionIncorrecta() {
-		System.out.println("Asegúrese de que introduce una opción de las disponibles.");
-		System.out.println();
-	}
+    // METODO CON RECURSIVIDAD
 
-	/**
-	 * Abre de nuevo el escaner. Si y sólo si estába cerrado. Si no, no hace nada.
-	 */
-	public void open() {
-		if (closed)
-			escaner = new Scanner(System.in);
-	}
+    /**
+     * Imprime por pantalla un aviso. Este dice: Asegúrese de que introduce una
+     * opción de las disponibles. Ademas, dos saltos de línea.
+     */
+    public static void avisoOpcionIncorrecta() {
+        System.out.println("Asegúrese de que introduce una opción de las disponibles.");
+        System.out.println();
+    }
 
-	/**
-	 * Si el escaner no está cerrado, lo cierra.
-	 */
-	@Override
-	public void close() {
-		if (!closed) {
-			escaner.close();
-			closed = true;
-		}
+    // METODO CON RECURSIVIDAD
 
-	}
+    /**
+     * Lanza ClosedEscanerRTException si el escaner está cerrado. Si está abierto no
+     * hace nada.
+     *
+     * @throws ClosedEscanerRTException Si el escaner está cerrado.
+     */
+    private static void checkNotClosed() {
+        if (closed)
+            throw new ClosedEscanerRTException("El escaner está cerrado.");
+    }
 
-	/**
-	 * Lanza ClosedEscanerRTException si el escaner está cerrado. Si está abierto no
-	 * hace nada.
-	 * 
-	 * @throws ClosedEscanerRTException Si el escaner está cerrado.
-	 */
-	private static void checkNotClosed() {
-		if (closed)
-			throw new ClosedEscanerRTException("El escaner está cerrado.");
-	}
+    /**
+     * Abre de nuevo el escaner. Si y sólo si estába cerrado. Si no, no hace nada.
+     */
+    public void open() {
+        if (closed)
+            escaner = new Scanner(System.in);
+    }
+
+    /**
+     * Si el escaner no está cerrado, lo cierra.
+     */
+    @Override
+    public void close() {
+        if (!closed) {
+            escaner.close();
+            closed = true;
+        }
+
+    }
+
+    /**
+     * Enumeración empleada en un método.
+     *
+     * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
+     */
+    public enum TipoEntero {
+        POSITIVO, NEGATIVO
+    }
+
+    /**
+     * Excepción lanzable cuando el escaner está cerrado, pero se quiere usar.
+     *
+     * @author <a href="https://twitter.com/angelidito">Ángel M. D.</a>
+     */
+    static class ClosedEscanerRTException extends RuntimeException {
+
+        private static final long serialVersionUID = -431915956388917354L;
+
+        /**
+         * @param message Mensaje de la excepción.
+         */
+        public ClosedEscanerRTException(String message) {
+            super(message);
+        }
+    }
 }
