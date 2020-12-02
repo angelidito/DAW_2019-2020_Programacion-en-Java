@@ -1,6 +1,6 @@
 # DAW 2019-2020
  
-Creo que este es el proyecto más ambicioso que me he propuesto **hasta la fecha**. Sobretodo, teniendo en cuenta que he partido prácticamente de cero, sólo con una idea vaga en la cabeza.
+Creo que este ha sio el proyecto más ambicioso que me había propuesto. Sobretodo, teniendo en cuenta que he partido prácticamente de cero, sólo con una idea vaga en la cabeza.
 
 El programa resultante es un proto-casino con una ruleta francesa.
 Se pueden añadir jugadores, que tendrán nombre, crédito, un crédito objetivo, un número de rondas máximas y una apuesta, entre otras cosas.
